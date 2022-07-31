@@ -10,17 +10,6 @@ public class SysRole {
   private java.sql.Timestamp createTime;
   private String remark;
 
-  @Override
-  public String toString() {
-    return "SysRole{" +
-            "roleId=" + roleId +
-            ", roleParentId=" + roleParentId +
-            ", roleName='" + roleName + '\'' +
-            ", delFlag='" + delFlag + '\'' +
-            ", createTime=" + createTime +
-            ", remark='" + remark + '\'' +
-            '}';
-  }
 
   public long getRoleId() {
     return roleId;

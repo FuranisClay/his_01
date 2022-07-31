@@ -10,17 +10,6 @@ public class Disecategory {
   private long dicaType;
   private long delMark;
 
-  @Override
-  public String toString() {
-    return "Disecategory{" +
-            "id=" + id +
-            ", dicaCode='" + dicaCode + '\'' +
-            ", dicaName='" + dicaName + '\'' +
-            ", sequenceNo=" + sequenceNo +
-            ", dicaType=" + dicaType +
-            ", delMark=" + delMark +
-            '}';
-  }
 
   public long getId() {
     return id;

@@ -1,50 +1,53 @@
 package com.heu.his;
 
+import com.heu.his.mapper.DrugsMapper;
 import com.heu.his.mapper.RegisterMapper;
-import com.heu.his.mapper.RegistlevelMapper;
-import com.heu.his.mapper.SysMenuMapper;
-import com.heu.his.mapper.UserMapper;
+import com.heu.his.pojo.Checkapply;
+import com.heu.his.pojo.Drugs;
 import com.heu.his.pojo.Register;
-import com.heu.his.pojo.Registlevel;
-import com.heu.his.pojo.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Timestamp;
+
 @SpringBootTest
 class HisApplicationTests {
-
     @Autowired
-    UserMapper userMapper;
-
+    DrugsMapper drugsMapper;
     @Autowired
     RegisterMapper registerMapper;
-
-    @Autowired
-    RegistlevelMapper registlevelMapper;
-
-    @Autowired
-    SysMenuMapper sysMenuMapper;
-
     @Test
     void contextLoads() {
 
-        sysMenuMapper.getSysMenuList(1);
-
-//        一对多查询
-//        Registlevel registlevel = registlevelMapper.getRegistlevelById(1);
-//        System.out.println(registlevel.getEmps().size());
-
-//        多对一查询
-//        registerMapper.getRegisterListAndRL();
-
-//      查询代码测试
-//        java.util.List<User> list=userMapper.getUserList();
-//        for(User e:list){
-//            System.out.println(e);
+        //测试查询药品
+//        java.util.List<Drugs> list=drugsMapper.getDrugsList("心",0);
+//        for (Drugs d:list){
+//            System.out.println(d.toString());
 //        }
-//        模糊查询测试
-        registerMapper.getRegisterList("李",1);
+
+//        //测试添加药品
+//        Drugs drugs = new Drugs();
+//        drugs.setId(3);
+//        drugs.setDrugsCode("754545544");
+//        drugs.setDrugsName("cqcqcqc");
+//        Timestamp timestamp = new Timestamp(2019-03-01);
+//        drugs.setCreationDate(timestamp);
+//        int n = drugsMapper.insertDrugs(drugs);
+
+        //测试通过患者病历号查询对应药品信息
+        java.util.List<Drugs> drugs=registerMapper.selectDrugsByRegisterId(1);
+        for (Drugs d:drugs) {
+            System.out.println(d.toString());
+        }
+
+        java.util.List<Integer> amount = registerMapper.selectDrugsAmountById(1);
+        System.out.println(amount);
+
+        //测试通过id查询病历号对应项目信息
+//        java.util.List<Checkapply> checkapply = registerMapper.selectCheckApplyByRegistId(9);
+//        System.out.println(checkapply.toString());
+
     }
 
 }

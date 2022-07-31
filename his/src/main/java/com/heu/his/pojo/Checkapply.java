@@ -1,6 +1,8 @@
 package com.heu.his.pojo;
 
 
+import java.util.List;
+
 public class Checkapply {
 
   private long id;
@@ -19,8 +21,15 @@ public class Checkapply {
   private java.sql.Timestamp checkTime;
   private String result;
   private java.sql.Timestamp resultTime;
-  private long state;
-  private long recordType;
+  private java.util.List<Fmeditem> fmeditems;
+
+  public List<Fmeditem> getFmeditems() {
+    return fmeditems;
+  }
+
+  public void setFmeditems(List<Fmeditem> fmeditems) {
+    this.fmeditems = fmeditems;
+  }
 
   @Override
   public String toString() {
@@ -45,6 +54,10 @@ public class Checkapply {
             ", recordType=" + recordType +
             '}';
   }
+
+  private long state;
+  private long recordType;
+
 
   public long getId() {
     return id;

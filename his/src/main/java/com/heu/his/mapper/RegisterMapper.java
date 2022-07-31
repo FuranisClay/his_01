@@ -1,45 +1,35 @@
 package com.heu.his.mapper;
 
+import com.heu.his.pojo.Checkapply;
+import com.heu.his.pojo.Drugs;
+import com.heu.his.pojo.Fmeditem;
 import com.heu.his.pojo.Register;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+/**
+ * @author legend
+ * @create 2022-07-31-9:30
+ */
 @Mapper
 public interface RegisterMapper {
+    @Select("<script>select * from register where 1=1"+
+            "<if test=\"caseNumber!=null and caseNumber!=''\">and CaseNumber=#{caseNumber} </if>" +
+            "<if test=\"realName!=null and realName!=''\">and RealName=#{realName} </if></script>")
+    java.util.List<Register> selectByNameNumber(@Param("realName") String realName, @Param("caseNumber") String caseNumber);
 
-    /**
-     * 查询挂号患者信息
-     * @param rn  患者姓名
-     * @return
-     */
+    @Select("select * from drugs where id in (select DrugsID from prescriptiondetailed where PrescriptionID in (select ID from prescription where  RegistID =#{id}))")
+    java.util.List<Drugs> selectDrugsByRegisterId(int id);
+    @Select("select Amount from prescriptiondetailed where PrescriptionID in (select ID from prescription where RegistID=#{id})")
+    java.util.List<Integer> selectDrugsAmountById(int id);
+
     @Results({
-            @Result(property = "id",column = "id",id = true),
-            @Result(property = "registlevel",column = "RegistLeID",
-                    one = @One(select = "com.heu.his.mapper.RegistlevelMapper.getRegistlevelByIdOne"))
+            @Result(property = "registId",column = "registId",id = true),
+            @Result(property = "fmeditems",column = "itemID",many = @Many(select = "com.heu.his.mapper.RegisterMapper.getFmeditemById"))
     })
-    @Select("<script>select * from register where 1=1 " +
-            "<if test=\"rn!=null and rn!=''\">and RealName like concat('%',#{rn},'%')</if>" +
-            "</script>")
-    java.util.List<Register> getRegisterListAndRL(
-            @Param(value = "rn") String rn);
-
-    /**
-     * 一对多  根据挂号编号查询改编号下的多有患者
-     * @param ReLeId 挂号类型编号
-     * @return 返回某个类型下的所有患者
-     */
-    @Select("select * from register where RegistLeID=#{ReLeId}")
-    java.util.List<Register> getRegistListByRL(int ReLeId);
-
-    /**
-     * 多对一  查询挂号患者的挂号编号
-     * @param rn  患者姓名
-     * @param rli  患者编号
-     * @return
-     */
-    @Select("<script>select * from register where 1=1 " +
-            "<if test=\"rn!=null and rn!=''\">and RealName like concat('%',#{rn},'%')</if>" +
-            "<if test=\"rli>0\">and RegistLeID=#{rli}</if>" +
-            "</script>")
-    java.util.List<Register> getRegisterList(
-            @Param(value = "rn") String rn, @Param(value = "rli") int rli);
+    @Select("select * from checkapply where RegistID=#{id}")
+    java.util.List<Checkapply> selectCheckApplyByRegistId(int id);
+    @Select("select * from fmeditem where id=#{id}")
+    Fmeditem getFmeditemById(int id);
 }

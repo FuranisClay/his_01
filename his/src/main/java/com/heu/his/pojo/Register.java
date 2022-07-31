@@ -22,20 +22,11 @@ public class Register {
   private java.sql.Timestamp registTime;
   private long registerId;
   private long visitState;
-  private long phoneNumber;
 
 
-  //  改患者的挂号编号的信息
-  private Registlevel registlevel;
-
-  public Registlevel getRegistlevel() {
-    return registlevel;
+  public long getId() {
+    return id;
   }
-
-  public void setRegistlevel(Registlevel registlevel) {
-    this.registlevel = registlevel;
-  }
-
 
   @Override
   public String toString() {
@@ -59,28 +50,13 @@ public class Register {
             ", registTime=" + registTime +
             ", registerId=" + registerId +
             ", visitState=" + visitState +
-            ", phoneNumber=" + phoneNumber +
-            ", registlevel=" + registlevel +
             '}';
-  }
-
-
-  public long getPhoneNumber() {
-    return phoneNumber;
-  }
-
-  public void setPhoneNumber(long phoneNumber) {
-    this.phoneNumber = phoneNumber;
-  }
-
-
-  public long getId() {
-    return id;
   }
 
   public void setId(long id) {
     this.id = id;
   }
+
 
   public String getCaseNumber() {
     return caseNumber;

@@ -8,15 +8,6 @@ public class Constanttype {
   private String constantTypeName;
   private long delMark;
 
-  @Override
-  public String toString() {
-    return "Constanttype{" +
-            "id=" + id +
-            ", constantTypeCode='" + constantTypeCode + '\'' +
-            ", constantTypeName='" + constantTypeName + '\'' +
-            ", delMark=" + delMark +
-            '}';
-  }
 
   public long getId() {
     return id;

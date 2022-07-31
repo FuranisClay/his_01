@@ -8,15 +8,6 @@ public class Registwork {
   private java.sql.Timestamp startTime;
   private java.sql.Timestamp endTime;
 
-  @Override
-  public String toString() {
-    return "Registwork{" +
-            "id=" + id +
-            ", registerId=" + registerId +
-            ", startTime=" + startTime +
-            ", endTime=" + endTime +
-            '}';
-  }
 
   public long getId() {
     return id;

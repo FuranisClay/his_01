@@ -8,15 +8,6 @@ public class Checkrelation {
   private long checkTempId;
   private String position;
 
-  @Override
-  public String toString() {
-    return "Checkrelation{" +
-            "id=" + id +
-            ", checkProjId=" + checkProjId +
-            ", checkTempId=" + checkTempId +
-            ", position='" + position + '\'' +
-            '}';
-  }
 
   public long getId() {
     return id;

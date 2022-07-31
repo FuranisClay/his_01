@@ -16,24 +16,14 @@ public class Drugs {
   private java.sql.Timestamp creationDate;
   private java.sql.Timestamp lastUpdateDate;
   private long delMark;
+  private int amount;
 
-  @Override
-  public String toString() {
-    return "Drugs{" +
-            "id=" + id +
-            ", drugsCode='" + drugsCode + '\'' +
-            ", drugsName='" + drugsName + '\'' +
-            ", drugsFormat='" + drugsFormat + '\'' +
-            ", drugsUnit='" + drugsUnit + '\'' +
-            ", manufacturer='" + manufacturer + '\'' +
-            ", drugsDosageId=" + drugsDosageId +
-            ", drugsTypeId=" + drugsTypeId +
-            ", drugsPrice=" + drugsPrice +
-            ", mnemonicCode='" + mnemonicCode + '\'' +
-            ", creationDate=" + creationDate +
-            ", lastUpdateDate=" + lastUpdateDate +
-            ", delMark=" + delMark +
-            '}';
+  public int getAmount() {
+    return amount;
+  }
+
+  public void setAmount(int amount) {
+    this.amount = amount;
   }
 
   public long getId() {
@@ -125,6 +115,24 @@ public class Drugs {
     this.mnemonicCode = mnemonicCode;
   }
 
+  @Override
+  public String toString() {
+    return "Drugs{" +
+            "id=" + id +
+            ", drugsCode='" + drugsCode + '\'' +
+            ", drugsName='" + drugsName + '\'' +
+            ", drugsFormat='" + drugsFormat + '\'' +
+            ", drugsUnit='" + drugsUnit + '\'' +
+            ", manufacturer='" + manufacturer + '\'' +
+            ", drugsDosageId=" + drugsDosageId +
+            ", drugsTypeId=" + drugsTypeId +
+            ", drugsPrice=" + drugsPrice +
+            ", mnemonicCode='" + mnemonicCode + '\'' +
+            ", creationDate=" + creationDate +
+            ", lastUpdateDate=" + lastUpdateDate +
+            ", delMark=" + delMark +
+            '}';
+  }
 
   public java.sql.Timestamp getCreationDate() {
     return creationDate;
