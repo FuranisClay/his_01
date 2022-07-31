@@ -3,7 +3,7 @@
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-	  <router-link to="/drugstore">Drugstore</router-link>
+	  <!-- <router-link to="/drugstore">Drugstore</router-link> -->
 	
 	<!-- <div class="drugstore" style="margin-top: 20px;">
 	<el-container style="height: 600px; border: 0px solid">
