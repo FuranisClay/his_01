@@ -1,6 +1,8 @@
 package com.heu.his.pojo;
 
 
+import java.util.List;
+
 public class Registlevel {
 
   private long id;
@@ -11,6 +13,31 @@ public class Registlevel {
   private long registQuota;
   private long delMark;
 
+  //  储存改编号下的多个患者
+  private java.util.List<Register> emps;
+
+  public List<Register> getEmps() {
+    return emps;
+  }
+
+  public void setEmps(List<Register> emps) {
+    this.emps = emps;
+  }
+
+
+
+  @Override
+  public String toString() {
+    return "Registlevel{" +
+            "id=" + id +
+            ", registCode='" + registCode + '\'' +
+            ", registName='" + registName + '\'' +
+            ", sequenceNo=" + sequenceNo +
+            ", registFee=" + registFee +
+            ", registQuota=" + registQuota +
+            ", delMark=" + delMark +
+            '}';
+  }
 
   public long getId() {
     return id;

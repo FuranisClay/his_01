@@ -22,6 +22,29 @@ public class Checkapply {
   private long state;
   private long recordType;
 
+  @Override
+  public String toString() {
+    return "Checkapply{" +
+            "id=" + id +
+            ", medicalId=" + medicalId +
+            ", registId=" + registId +
+            ", itemId=" + itemId +
+            ", name='" + name + '\'' +
+            ", objective='" + objective + '\'' +
+            ", position='" + position + '\'' +
+            ", isUrgent=" + isUrgent +
+            ", num=" + num +
+            ", creationTime=" + creationTime +
+            ", doctorId=" + doctorId +
+            ", checkOperId=" + checkOperId +
+            ", resultOperId=" + resultOperId +
+            ", checkTime=" + checkTime +
+            ", result='" + result + '\'' +
+            ", resultTime=" + resultTime +
+            ", state=" + state +
+            ", recordType=" + recordType +
+            '}';
+  }
 
   public long getId() {
     return id;

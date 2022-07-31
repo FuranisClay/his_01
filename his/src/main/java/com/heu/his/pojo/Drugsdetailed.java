@@ -11,6 +11,8 @@ public class Drugsdetailed {
   private String frequency;
 
 
+
+
   public long getId() {
     return id;
   }

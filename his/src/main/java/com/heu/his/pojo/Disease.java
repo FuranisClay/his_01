@@ -9,6 +9,17 @@ public class Disease {
   private long diseCategoryId;
   private long delMark;
 
+  @Override
+  public String toString() {
+    return "Disease{" +
+            "id=" + id +
+            ", diseaseCode='" + diseaseCode + '\'' +
+            ", diseaseName='" + diseaseName + '\'' +
+            ", diseaseIcd='" + diseaseIcd + '\'' +
+            ", diseCategoryId=" + diseCategoryId +
+            ", delMark=" + delMark +
+            '}';
+  }
 
   public long getId() {
     return id;

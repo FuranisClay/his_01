@@ -22,6 +22,56 @@ public class Register {
   private java.sql.Timestamp registTime;
   private long registerId;
   private long visitState;
+  private long phoneNumber;
+
+
+  //  改患者的挂号编号的信息
+  private Registlevel registlevel;
+
+  public Registlevel getRegistlevel() {
+    return registlevel;
+  }
+
+  public void setRegistlevel(Registlevel registlevel) {
+    this.registlevel = registlevel;
+  }
+
+
+  @Override
+  public String toString() {
+    return "Register{" +
+            "id=" + id +
+            ", caseNumber='" + caseNumber + '\'' +
+            ", realName='" + realName + '\'' +
+            ", gender=" + gender +
+            ", iDnumber='" + iDnumber + '\'' +
+            ", birthDate=" + birthDate +
+            ", age=" + age +
+            ", ageType='" + ageType + '\'' +
+            ", homeAddress='" + homeAddress + '\'' +
+            ", visitDate=" + visitDate +
+            ", noon='" + noon + '\'' +
+            ", deptId=" + deptId +
+            ", userId=" + userId +
+            ", registLeId=" + registLeId +
+            ", settleId=" + settleId +
+            ", isBook='" + isBook + '\'' +
+            ", registTime=" + registTime +
+            ", registerId=" + registerId +
+            ", visitState=" + visitState +
+            ", phoneNumber=" + phoneNumber +
+            ", registlevel=" + registlevel +
+            '}';
+  }
+
+
+  public long getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(long phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
 
 
   public long getId() {
@@ -31,7 +81,6 @@ public class Register {
   public void setId(long id) {
     this.id = id;
   }
-
 
   public String getCaseNumber() {
     return caseNumber;

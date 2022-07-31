@@ -17,6 +17,24 @@ public class Drugs {
   private java.sql.Timestamp lastUpdateDate;
   private long delMark;
 
+  @Override
+  public String toString() {
+    return "Drugs{" +
+            "id=" + id +
+            ", drugsCode='" + drugsCode + '\'' +
+            ", drugsName='" + drugsName + '\'' +
+            ", drugsFormat='" + drugsFormat + '\'' +
+            ", drugsUnit='" + drugsUnit + '\'' +
+            ", manufacturer='" + manufacturer + '\'' +
+            ", drugsDosageId=" + drugsDosageId +
+            ", drugsTypeId=" + drugsTypeId +
+            ", drugsPrice=" + drugsPrice +
+            ", mnemonicCode='" + mnemonicCode + '\'' +
+            ", creationDate=" + creationDate +
+            ", lastUpdateDate=" + lastUpdateDate +
+            ", delMark=" + delMark +
+            '}';
+  }
 
   public long getId() {
     return id;

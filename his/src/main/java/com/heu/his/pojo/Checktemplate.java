@@ -11,6 +11,18 @@ public class Checktemplate {
   private long recordType;
   private long delMark;
 
+  @Override
+  public String toString() {
+    return "Checktemplate{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", userId=" + userId +
+            ", creationTime=" + creationTime +
+            ", scope='" + scope + '\'' +
+            ", recordType=" + recordType +
+            ", delMark=" + delMark +
+            '}';
+  }
 
   public long getId() {
     return id;

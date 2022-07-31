@@ -10,6 +10,17 @@ public class Department {
   private long deptType;
   private long delMark;
 
+  @Override
+  public String toString() {
+    return "Department{" +
+            "id=" + id +
+            ", deptCode='" + deptCode + '\'' +
+            ", deptName='" + deptName + '\'' +
+            ", deptCategoryId=" + deptCategoryId +
+            ", deptType=" + deptType +
+            ", delMark=" + delMark +
+            '}';
+  }
 
   public long getId() {
     return id;

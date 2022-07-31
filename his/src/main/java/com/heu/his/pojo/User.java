@@ -13,6 +13,31 @@ public class User {
   private long deptId;
   private long registLeId;
   private long delMark;
+  private long roleId;
+
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", userName='" + userName + '\'' +
+            ", password='" + password + '\'' +
+            ", realName='" + realName + '\'' +
+            ", useType=" + useType +
+            ", docTitleId=" + docTitleId +
+            ", isScheduling='" + isScheduling + '\'' +
+            ", deptId=" + deptId +
+            ", registLeId=" + registLeId +
+            ", delMark=" + delMark +
+            '}';
+  }
+
+  public long getRoleId() {
+    return roleId;
+  }
+
+  public void setRoleId(long roleId) {
+    this.roleId = roleId;
+  }
 
 
   public long getId() {
