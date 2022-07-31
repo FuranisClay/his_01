@@ -1,0 +1,232 @@
+<template>
+  <div class="drugs">
+	<el-form>
+		<el-input v-model="drugsId" placeholder="请输入药品id" style="width: 20%;margin-right: 20px;"></el-input>
+		<el-input v-model="drugsName" placeholder="请输入药品名称" style="width: 20%;margin-right: 20px;"></el-input>
+		<el-button @click="submit" id="search" style="width: 15%;margin-right: 20px;">搜索</el-button>
+	</el-form>
+	<hr>
+	<el-button @click="insert()">新增</el-button>
+	<hr>
+	<el-table :data="drugslist1" class="drugsTable">
+		<el-table-column prop="id" label="药品id"></el-table-column>
+		<el-table-column prop="drugsCode" label="药品编码"></el-table-column>
+		<el-table-column prop="drugsName" label="药品名称"></el-table-column>
+		<el-table-column prop="drugsFormat" label="药品规格"></el-table-column>
+		<el-table-column prop="manufacturer" label="生产厂商"></el-table-column>
+		<el-table-column prop="drugsPrice" label="药品单价"></el-table-column>
+		<el-table-column>
+			<template slot-scope="scope">
+			        <el-button icon="el-icon-edit" @click="update(scope.row)"></el-button>
+			        <el-button icon="el-icon-delete" @click="delRow(scope.row,scope.$index)"></el-button>
+			      </template>
+		</el-table-column>
+	</el-table>
+	<!-- 分页 -->
+	<el-pagination
+	  background
+	  page-size="pageSize"
+	  layout="prev, pager, next"
+	  :total="drugslist.length"
+	  @current-change="dopaging"
+	  >
+	</el-pagination>
+	<!-- 修改 -->
+	<el-dialog
+	  title="信息更改"
+	  :visible.sync="dialogVisible"
+	  width="40%"
+	  :before-close="handleClose">
+	  <el-form label-width="200px">
+		  <el-form-item label="药品id">
+			  <el-input :disabled="true" v-model="updateRow.id" id="updateInput"></el-input>
+		  </el-form-item>
+		  <el-form-item label="药品编码">
+		  			  <el-input v-model="updateRow.drugsCode" id="updateInput"></el-input>
+		  </el-form-item>
+		  <el-form-item label="药品名称">
+		  			  <el-input v-model="updateRow.drugsName" id="updateInput"></el-input>
+		  </el-form-item>
+		  <el-form-item label="药品规格">
+		  			  <el-input v-model="updateRow.drugsFormat" id="updateInput"></el-input>
+		  </el-form-item>
+		  <el-form-item label="生产厂商">
+		  			  <el-input v-model="updateRow.manufacturer" id="updateInput"></el-input>
+		  </el-form-item>
+		  <el-form-item label="药品单价">
+		  			  <el-input v-model="updateRow.drugsPrice" id="updateInput"></el-input>
+		  </el-form-item>
+		  <el-form-item>
+		  			  <el-button @click="submitUpdate">提交</el-button>
+					  <el-button @click="dialogVisible = false">取消</el-button>
+		  </el-form-item>
+	  </el-form>
+	</el-dialog>
+	<!-- 新增 -->
+	<el-dialog
+	  title="增加药品"
+	  :visible.sync="dialogVisible1"
+	    width="40%"
+	    :before-close="handleClose">
+	    <el-form label-width="200px">
+	  	  <el-form-item label="药品id">
+	  		  <el-input v-model="insertRow.id" id="updateInput"></el-input>
+	  	  </el-form-item>
+	  	  <el-form-item label="药品编码">
+	  	  			  <el-input v-model="insertRow.drugsCode" id="updateInput"></el-input>
+	  	  </el-form-item>
+	  	  <el-form-item label="药品名称">
+	  	  			  <el-input v-model="insertRow.drugsName" id="updateInput"></el-input>
+	  	  </el-form-item>
+	  	  <el-form-item label="药品规格">
+	  	  			  <el-input v-model="insertRow.drugsFormat" id="updateInput"></el-input>
+	  	  </el-form-item>
+	  	  <el-form-item label="生产厂商">
+	  	  			  <el-input v-model="insertRow.manufacturer" id="updateInput"></el-input>
+	  	  </el-form-item>
+	  	  <el-form-item label="药品单价">
+	  	  			  <el-input v-model="insertRow.drugsPrice" id="updateInput"></el-input>
+	  	  </el-form-item>
+		  <el-form-item label="创建时间" id="creationDate">
+		  			 <!-- <el-date-picker
+		  			       v-model="dt"
+		  			       type="datetime"
+		  			       placeholder="选择日期时间"
+						   value-format="yyyy-MM-dd HH:mm:ss">
+		  			     </el-date-picker> -->
+					<el-input v-model="insertRow.creationDate" id="updateInput" placeholder="输入时间年-月-日"
+						   value-format="yyyy-MM-dd HH:mm:ss" type="datetime"></el-input>
+		  </el-form-item>
+	  	  <el-form-item>
+	  	  			  <el-button @click="submitInsert()">提交</el-button>
+	  				  <el-button @click="dialogVisible1 = false">取消</el-button>
+	  	  </el-form-item>
+	    </el-form>
+	  </el-dialog>
+  </div>
+</template>
+<style>
+	.el-form{
+		text-align: left;
+		/* position: relative; */
+	}
+	#search{
+		width: 60%;
+		/* position: absolute; */
+		/* margin-left: 100px; */
+	}
+	.drugs{
+		text-align: left;
+	}
+	#updateInput{
+		width: 80%;
+	}
+</style>
+<script>
+	export default{
+		name:'Drugs',
+		data(){
+			return{
+				drugslist:[],
+				drugslist1:[],
+				drugsId:0,
+				drugsName:'',
+				dialogVisible:false,
+				dialogVisible1:false,
+				updateRow:{},
+				insertRow:{
+					drugsId:'',
+					drugsName:'',
+					drugsCode:'',
+					drugsPrice:'',
+					drugsFormat:'',
+					manufacturer:'',
+					creationDate:''
+				},
+				pageSize:7,
+				currPage:1
+			}
+		},
+		methods:{
+			fun(){
+				
+			},
+			//删除药品
+			delRow(row){
+				// this.dopaging(this.currPage)
+				// this.updateRow=row
+				let that = this
+				this.$axios.get("http://localhost:8080/drugs/deleteById?id="+row.id).then(function(res){
+					let drugsName=that.drugsName
+					let drugsId=that.drugsId
+					that.$axios.get("http://localhost:8080/drugs/list?drugsName="+drugsName+"&id="+drugsId).then(function(res){
+						that.drugslist=res.data
+						that.dopaging(that.currPage)
+					})
+				})
+			},
+			handleClose(done) {
+			        this.$confirm('确认关闭？')
+			          .then(_ => {
+			            done();
+			          })
+			          .catch(_ => {});
+			},
+			//修改
+			update(row){
+				this.updateRow=row
+				this.dialogVisible=true
+			},
+			submitUpdate(){
+				let updateRow=this.updateRow
+				this.$axios.get("http://localhost:8080/drugs/insert?drugs="+updateRow).then(function(res){
+					// that.drugslist=res.data
+				})
+			},
+			insert(){
+				this.dialogVisible1=true
+			},
+			//查询药品
+			submit(){
+				let drugsName=this.drugsName
+				let drugsId=this.drugsId
+				let that = this
+				this.$axios.get("http://localhost:8080/drugs/list?drugsName="+drugsName+"&id="+drugsId).then(function(res){
+					that.drugslist=res.data
+					that.drugslist1=that.drugslist.slice(0,7)
+				})
+			},
+			//新增药品
+			submitInsert(){
+				// let that = this
+				let insertRow=this.insertRow
+				// insertRow.creationDate=dt
+				console.log(typeof(insertRow.drugsId))
+				console.log(typeof(insertRow.drugsCode))
+				console.log(typeof(insertRow.drugsName))
+				console.log(typeof(insertRow.creationDate))
+				console.log(typeof(insertRow.drugsPrice))
+				this.dialogVisible1=false
+				this.$axios.get("http://localhost:8080/drugs/insert?drugs="+insertRow).then(function(res){
+					
+				})
+			},
+			//分页操作
+			dopaging(currPage){
+				this.currPage=currPage
+				let start=(currPage-1)*this.pageSize
+				let end=currPage*this.pageSize
+				this.drugslist1=this.drugslist.slice(start,end)
+				
+			}
+			},
+			created() {
+				let that=this;
+				that.$axios.get("http://localhost:8080/drugs/list?id=0").then(function(res){
+					// console.log(res)
+					that.drugslist=res.data
+					that.drugslist1=that.drugslist.slice(0,7)
+				})
+			}
+	}
+</script>

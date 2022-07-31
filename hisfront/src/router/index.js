@@ -1,60 +1,54 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-// import ReferVeiw from '../views/ReferView.vue'
-// import RegistrationView from '../views/RegistrationView.vue'
-// import BackId from '../views/BackId.vue'
-// import GainId from '../views/GainId.vue'
-// import App from '../App.vue'
 
 Vue.use(VueRouter)
 
-const routes = [{
-		path: '/',
-		name: 'home',
-		component: HomeView
-	},
-	{
-		path: '/registrationview',
-		name: 'registrationview',
-		component: () => import('../views/RegistrationView.vue'),
-		children: [{
-				// 窗口挂号
-				path: '/registration/onsite',
-				name: 'onsite',
-				component: () => import('../components/registration/onsite_registratiion.vue')
-			},
-			{
-				// 窗口退号
-				path: '/registration/recored',
-				name: 'record',
-				component: () => import('../components/registration/registration_record.vue')
-			},
-			{
-				// 收费
-				path: '/registration/charge',
-				name: 'charge',
-				component: () => import('../components/registration/expense_charge.vue')
-			},
-			{
-				// 退费
-				path: '/registration/refund',
-				name: 'refund',
-				component: () => import('../components/registration/expense_refund.vue')
-			},
-			{
-				// 费用记录查看
-				path: '/registration/manage',
-				name: 'manage',
-				component: () => import('../components/registration/expense_manage.vue')
-			}
-		]
-	}
-
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView
+  },
+  {
+    path: '/about',
+    name: 'about',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+	path:'/drugstore',
+	name:'drugstore',
+	component:()=>import('../views/Drugstore.vue')
+  },
+  {
+	path:'/drugstore/drugs',
+	name:'drugs',
+	component:()=>import('../views/Drugs.vue')
+  },
+  {
+	path:'/drugstore/give',
+	name:'give',
+	component:()=>import('../views/Give.vue')
+  },
+  {
+  	path:'/drugstore/out',
+  	name:'out',
+  	component:()=>import('../views/Out.vue')
+  },
+  {
+  	path:'/drugstore/history',
+  	name:'history',
+  	component:()=>import('../views/History.vue')
+  }
 ]
 
 const router = new VueRouter({
-	routes
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 })
 
 export default router
