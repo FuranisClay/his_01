@@ -16,6 +16,11 @@ public class UserController {
 
     @Autowired
     IUserService userService;
+	
+	@RequestMapping("/list")
+    public List list(String name, Integer id) {
+        return userService.getUserList("", 0);
+    }
 
     @RequestMapping("/validate")
     public User validate(String rn,String pw){
