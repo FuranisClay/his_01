@@ -19,6 +19,22 @@ public class FmeditemService implements IFmeditemService {
     FmeditemMapper fmeditemMapper;
 
     @Override
+    public int updateFmeditemById(Fmeditem fmeditem) {
+        return fmeditemMapper.updateFmeditemById(fmeditem);
+    }
+
+    @Override
+    public int deleteFmeditemById(int id) {
+        return fmeditemMapper.deleteFmeditemById(id);
+    }
+
+    @Override
+    public int getFmeditemMaxId() {
+        return fmeditemMapper.getFmeditemMaxId();
+    }
+
+
+    @Override
     public List<Fmeditem> getFmeditemList() {
         return fmeditemMapper.getFmeditemList();
     }

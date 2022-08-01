@@ -12,4 +12,10 @@ public interface IFmeditemService {
 
     List<Fmeditem> getFmeditemList();
 
+    int getFmeditemMaxId();
+
+    int deleteFmeditemById(int id);
+
+    int updateFmeditemById(Fmeditem fmeditem);
+
 }
