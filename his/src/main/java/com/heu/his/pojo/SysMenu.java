@@ -1,6 +1,8 @@
 package com.heu.his.pojo;
 
 
+import java.util.List;
+
 public class SysMenu {
 
   private long menuId;
@@ -9,7 +11,15 @@ public class SysMenu {
   private String url;
   private String visible;
   private String remark;
+  java.util.List<SysMenu> childMenu;
 
+  public List<SysMenu> getChildMenu() {
+    return childMenu;
+  }
+
+  public void setChildMenu(List<SysMenu> childMenu) {
+    this.childMenu = childMenu;
+  }
 
   public long getMenuId() {
     return menuId;

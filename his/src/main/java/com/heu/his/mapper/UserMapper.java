@@ -16,7 +16,7 @@ public interface UserMapper {
      * @param pwd 登录密码
      * @return
      */
-    @Select("select * from user where RealName=#{rn} and Password=#{pwd}")
+    @Select("select * from user where UserName=#{rn} and Password=#{pwd}")
     User validate(@Param(value = "rn") String rn,@Param(value = "pwd") String pwd);
 
     @Select("<script>select * from user where 1=1" +
