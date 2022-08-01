@@ -1,5 +1,6 @@
 package com.heu.his.mapper;
 
+import com.heu.his.pojo.Constantitem;
 import com.heu.his.pojo.Drugs;
 import org.apache.ibatis.annotations.*;
 
@@ -27,4 +28,6 @@ public interface DrugsMapper {
             "</script>")
     int updateDelmark(int[] arr);
 //    @Update("update drugs   ")
+    @Select("select * from constantitem where id > 110")
+    java.util.List<Constantitem> getConstantitemById();
 }

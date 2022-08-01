@@ -1,6 +1,7 @@
 package com.heu.his.controller;
 
 import com.heu.his.Iservice.IDrugsService;
+import com.heu.his.pojo.Constantitem;
 import com.heu.his.pojo.Drugs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,20 +33,24 @@ public class DrugsController {
         return iDrugsService.deleteById(id);
     }
     @RequestMapping("/insertDrugs")
-    public int insertDrugs(Object drugs) throws ParseException {
-//        Drugs drugs1 = new Drugs();
-//        drugs1.setId(drugs.id);
-//        drugs1.setDrugsCode(drugs.drugsCode);
-//        drugs1.setDrugsName(drugs.drugsName);
-//        drugs1.setDrugsFormat(drugs.drugsFormat);
-//        drugs1.setDrugsPrice(drugs.drugsPrice);
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        long dt = sdf.parse(drugs.creationDate).getTime();
-//        Timestamp timestamp = new Timestamp(dt);
-//        drugs1.setCreationDate(timestamp);
-//        return iDrugsService.insertDrugs(drugs1);
-        return 0;
+    public int insertDrugs(Drugs1 drugs) throws ParseException {
+        Drugs drugs1 = new Drugs();
+        drugs1.setId(drugs.id);
+        drugs1.setDrugsCode(drugs.drugsCode);
+        drugs1.setDrugsName(drugs.drugsName);
+        drugs1.setDrugsFormat(drugs.drugsFormat);
+        drugs1.setDrugsPrice(drugs.drugsPrice);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        long dt = sdf.parse(drugs.creationDate).getTime();
+        Timestamp timestamp = new Timestamp(dt);
+        drugs1.setCreationDate(timestamp);
+        return iDrugsService.insertDrugs(drugs1);
+//        return 0;
     }
+    @RequestMapping("/getConstantItem")
+    public java.util.List<Constantitem> getConstantitemById(){
+        return iDrugsService.getConstantitemById();
+    };
 }
 class Drugs1{
     int id;

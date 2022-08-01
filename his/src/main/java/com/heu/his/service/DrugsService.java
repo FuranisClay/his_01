@@ -2,6 +2,7 @@ package com.heu.his.service;
 
 import com.heu.his.Iservice.IDrugsService;
 import com.heu.his.mapper.DrugsMapper;
+import com.heu.his.pojo.Constantitem;
 import com.heu.his.pojo.Drugs;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +29,7 @@ public class DrugsService implements IDrugsService {
     public int insertDrugs(Drugs drugs){
         return drugsMapper.insertDrugs(drugs);
     }
+    public java.util.List<Constantitem> getConstantitemById(){
+        return drugsMapper.getConstantitemById();
+    };
 }

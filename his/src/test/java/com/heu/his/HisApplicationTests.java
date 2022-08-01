@@ -3,6 +3,7 @@ package com.heu.his;
 import com.heu.his.mapper.DrugsMapper;
 import com.heu.his.mapper.RegisterMapper;
 import com.heu.his.pojo.Checkapply;
+import com.heu.his.pojo.Constantitem;
 import com.heu.his.pojo.Drugs;
 import com.heu.his.pojo.Register;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,11 @@ class HisApplicationTests {
 //        for (Drugs d:list){
 //            System.out.println(d.toString());
 //        }
+        //测试获取药剂类型
+//        java.util.List<Constantitem> list=drugsMapper.getConstantitemById();
+//        for (Constantitem c:list){
+//            System.out.println(c.toString());
+//        }
 
 //        //测试添加药品
 //        Drugs drugs = new Drugs();
@@ -36,13 +42,13 @@ class HisApplicationTests {
 //        int n = drugsMapper.insertDrugs(drugs);
 
         //测试通过患者病历号查询对应药品信息
-        java.util.List<Drugs> drugs=registerMapper.selectDrugsByRegisterId(1);
-        for (Drugs d:drugs) {
-            System.out.println(d.toString());
-        }
-
-        java.util.List<Integer> amount = registerMapper.selectDrugsAmountById(1);
-        System.out.println(amount);
+//        java.util.List<Drugs> drugs=registerMapper.selectDrugsByRegisterId(37);
+//        for (Drugs d:drugs) {
+//            System.out.println(d.toString());
+//        }
+//
+//        java.util.List<Integer> amount = registerMapper.selectDrugsAmountById(37);
+//        System.out.println(amount);
 
         //测试通过id查询病历号对应项目信息
 //        java.util.List<Checkapply> checkapply = registerMapper.selectCheckApplyByRegistId(9);
