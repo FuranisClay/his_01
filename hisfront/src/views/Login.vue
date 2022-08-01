@@ -28,7 +28,7 @@
                 let en = this.ename
                 let pw = this.pwd
                 let that = this
-                this.$axios.get("http://localhost:8080/user/validate?rn=" + en + "&pw=" + pw).then(function (res) {
+                this.$axios.get("http://localhost:8080/User/validate?rn=" + en + "&pw=" + pw).then(function (res) {
                     console.log(res.data)
                     if (res.data == null || res.data == "") {
                         that.$message.error("登录失败，请重新尝试！")

@@ -3,14 +3,14 @@
         <el-container>
             <el-header>
                 <el-row>
-                    <el-col span="2">{{$store.state.emp.realName}},欢迎登录</el-col>
-                    <el-col span="22">个人信息/退出登录</el-col>
+                    <el-col :span="2">{{$store.state.emp.realName}},欢迎登录</el-col>
+                    <el-col :span="22">个人信息/退出登录</el-col>
                 </el-row>
             </el-header>
             <el-container>
                 <el-aside width="200px">
                     <el-menu
-                            router=true
+                            :router=true
                             default-active="2"
                             class="el-menu-vertical-demo">
                         <el-submenu v-for="sysmenu,index in sysMenuList" :index="index">
