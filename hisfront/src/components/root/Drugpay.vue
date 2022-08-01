@@ -13,9 +13,9 @@
                     <el-form-item prop="prescriptionCode" style="position: absolute;">
                         <el-input
                                 name="prescriptionCode"
-                                v-model="queryDeptString"
+                                v-model="queryDrugString"
                                 type="text"
-                                placeholder="请输入科室编号">
+                                placeholder="请输入拼音助记码">
                         </el-input>
                     </el-form-item>
                 </el-col>
@@ -23,8 +23,8 @@
                     <el-form-item>
                         <el-button
                                 type="primary"
-                                @click="queryDept"
-                                icon="el-icon-search">查询科室
+                                @click="querydrug"
+                                icon="el-icon-search">查询非药品收费项目
                         </el-button>
                     </el-form-item>
                 </el-col>
@@ -32,7 +32,8 @@
                     <el-form-item>
                         <el-button
                                 type="primary"
-                                icon="el-icon-search">新增科室
+                                @click="addDialog"
+                                icon="el-icon-search">新增非药品收费项目
                         </el-button>
                     </el-form-item>
                 </el-col>
@@ -50,13 +51,13 @@
                 <el-table-column
                         prop="id"
                         label="ID"
-                        width="90px"
+                        width="50px"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="itemCode"
                         label="项目编码"
-                        width="130px"
+                        width="95px"
                         align="center">
                 </el-table-column>
                 <el-table-column
@@ -68,7 +69,7 @@
                 <el-table-column
                         prop="itemName"
                         label="项目名称"
-                        width="130px"
+                        width="80px"
                         align="center">
                 </el-table-column>
                 <el-table-column
@@ -116,12 +117,107 @@
                 <el-table-column
                         label="编辑">
                     <template #default="scope">
-                        <el-button @click="" icon="el-icon-edit">修改</el-button>
-                        <el-button @click="" icon="el-icon-delete">删除</el-button>
+                        <el-button @click="changeDialog(scope.row)" icon="el-icon-edit">修改</el-button>
+                        <el-button @click="deleteDialog(scope.row)" icon="el-icon-delete">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </template>
+
+
+
+        <!--        修改对话框-->
+        <el-dialog title="非药品收费项目信息修改" :visible.sync="changeDialogVisible" width="25%">
+            <el-form>
+                <el-form-item label="ID" :label-width="formLabelWidth">
+                    <el-input v-model="changeRow.id" disabled="true" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="项目编码" :label-width="formLabelWidth">
+                    <el-input v-model="changeRow.itemCode" disabled="true" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="拼音助记码" :label-width="formLabelWidth">
+                    <el-input v-model="changeRow.mnemonicCode" disabled="true" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="项目名称" :label-width="formLabelWidth">
+                    <el-input v-model="changeRow.itemName" @input="changeTurnPinyin" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="规格" :label-width="formLabelWidth">
+                    <el-input v-model="changeRow.format" @input="turnPinyin" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="单价" :label-width="formLabelWidth">
+                    <el-input v-model="changeRow.price" @input="turnPinyin" style="width: 75%;"></el-input>
+                </el-form-item>
+
+                <el-form-item label="所属费用科目名称" :label-width="formLabelWidth">
+                    <el-select v-model="changeRow.expClassId">
+                        <el-option
+                                v-for="item in expenseclassList"
+                                :label="item.expName"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="执行科室名称" :label-width="formLabelWidth">
+                    <el-select v-model="changeRow.deptId">
+                        <el-option
+                                v-for="item in deptlist"
+                                :label="item.deptName"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="changeDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitSave">确 定</el-button>
+            </div>
+        </el-dialog>
+
+
+        <!--        新增科室对话框-->
+        <el-dialog title="新增科室信息" :visible.sync="addDialogVisible" width="25%">
+            <el-form>
+                <el-form-item label="科室ID" :label-width="formLabelWidth">
+                    <el-input v-model="addRow.id" disabled="true" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="科室编号" :label-width="formLabelWidth">
+                    <el-input v-model="addRow.deptCode" disabled="true" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="科室名称" :label-width="formLabelWidth">
+                    <el-input v-model="addRow.deptName" @input="addPinyin" style="width: 75%;"></el-input>
+                </el-form-item>
+                <!--                <el-form-item label="科室分类" :label-width="formLabelWidth">-->
+                <!--                    <el-input v-model="addRow.deptCategoryId" style="width: 75%;"></el-input>-->
+                <!--                </el-form-item>-->
+                <el-form-item label="科室分类" :label-width="formLabelWidth">
+                    <el-select v-model="addRow.expClassId">
+                        <el-option
+                                v-for="item in expenseclassList"
+                                :label="item.expName"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <!--                <el-form-item label="科室类型" :label-width="formLabelWidth">-->
+                <!--                    <el-input v-model="addRow.deptType" style="width: 75%;"></el-input>-->
+                <!--                </el-form-item>-->
+                <el-form-item label="科室类型" :label-width="formLabelWidth">
+                    <el-select v-model="addRow.deptType" placeholder="请选择科室类型">
+                        <el-option label="临床" value="1"></el-option>
+                        <el-option label="医技" value="2"></el-option>
+                        <el-option label="财务" value="3"></el-option>
+                        <el-option label="行政" value="4"></el-option>
+                        <el-option label="其他" value="5"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="addDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitAdd">确 定</el-button>
+            </div>
+        </el-dialog>
+
+
         <template>
             <div class="block">
                 <el-pagination
@@ -136,18 +232,117 @@
 </template>
 
 <script>
+    import {pinyin} from '../../../src/chineseTurnPinyin.js'
     export default {
         data() {
             return {
-                medlist: []
+                formLabelWidth: '20%',
+                maxid: 0,
+                medlist: [],
+                queryDrugString:"",
+                changeDialogVisible: false,
+                addDialogVisible: false,
+                changeRow: {},
+                deleteRow:{},
+                addRow:{},
+                deptlist: [],
+                expenseclassList:[]
             }
+        },
+        methods:{
+            changeTurnPinyin() {
+                // console.log(pinyin.getCamelChars(this.changeRow.registName).toLowerCase())
+                this.changeRow.mnemonicCode = pinyin.getCamelChars(this.changeRow.itemName).toUpperCase();
+            },
+            submitAdd(){
+                this.addDialogVisible = false
+                console.log(this.addRow)
+                let ue = this.$qs.stringify(this.addRow)
+                this.$axios.get("http://localhost:8080/register/add?"+ue).then(function (res) {
+                    console.log(res)
+                })
+            },
+            submitSave() {
+                console.log(this.changeRow)
+                this.changeDialogVisible = false
+                delete this.changeRow.department    //删除多余的属性，不用往后台传递
+                delete this.changeRow.expenseclass
+                this.changeRow.lastUpdateDate=
+                console.log(this.changeRow)
+                //修改保存到数据库中，以json对象为单位进行传参
+                let ue = this.$qs.stringify(this.changeRow)
+                this.$axios.get("http://localhost:8080/fmeditem/update?"+ue).then(function (res) {
+                    console.log(res)
+                })
+            },
+            addDialog(){
+                this.addDialogVisible = true
+                this.addRow.id = this.maxid + 1
+            },
+            changeDialog(row) {
+                this.changeDialogVisible = true
+                console.log(row)
+                this.changeRow = row
+            },
+            deleteDialog(row){
+                this.deleteRow = row
+                console.log(this.deleteRow)
+                this.open()
+            },
+            querydrug(){
+                let that = this
+                this.$axios.get("http://localhost:8080/fmeditem/list?string=" + this.queryDrugString).then(function (res) {
+                    that.medlist = res.data
+                })
+                console.log(this.queryDrugString)
+            },
+            open() {
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    // this.$message({
+                    //     type: 'success',
+                    //     message: '删除成功!'
+                    // });
+                    this.deleteDialogTrue()
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            deleteDialogTrue(){
+                let that = this
+                this.$axios.get("http://localhost:8080/fmeditem/delete?id="+that.deleteRow.id).then(function (res) {
+                    console.log(res)
+                    console.log(that.deleteRow.id)
+                })
+            },
         },
         name: "Drugpay",
         created() {
             let that = this
             this.$axios.get("http://localhost:8080/fmeditem/list").then(function (res) {
                 that.medlist = res.data
+                console.log("listsdfsafasfasfasfsadfasfdasfadsfsadfa")
                 console.log(res.data)
+            })
+            this.$axios.get("http://localhost:8080/fmeditem/maxid").then(function (res) {
+                that.maxid = res.data
+                // console.log(res.data)
+            })
+            this.$axios.get("http://localhost:8080/expenseclass/expenseclasslist").then(function (res) {
+                that.expenseclassList = res.data
+                // console.log("123")
+                // console.log(res.data)
+            })
+            this.$axios.get("http://localhost:8080/dept/list").then(function (res) {
+                that.deptlist = res.data
+                // console.log("部门")
+                // console.log(res.data)
             })
         }
     }

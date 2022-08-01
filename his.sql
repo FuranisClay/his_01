@@ -34051,17 +34051,29 @@ insert into sys_menu values('103',  '收费', '1',  '/registration/charge',  '1'
 insert into sys_menu values('104',  '退费', '1',  '/registration/refund',  '1', '退费菜单');
 insert into sys_menu values('105',  '费用记录查询', '1',  '/registration/manage',  '1', '记录查询菜单');
 
+insert into sys_menu values('201',  '患者查看', '2',  '/doctor/physician_patient','1', '患者查看菜单');
+insert into sys_menu values('202',  '医生诊疗:病历首页', '2',  '/doctor/home_medical_record', '1','医生诊疗:病历首页菜单');
+insert into sys_menu values('203',  '医生诊疗:检查申请', '2',  '/doctor/check_request', '1', '医生诊疗:检查申请菜单');
+insert into sys_menu values('204',  '医生诊疗:检验申请', '2',  '/doctor/inspection_request', '1', '医生诊疗:检验申请菜单');
+insert into sys_menu values('205',  '医生诊疗:看诊记录', '2',  '/doctor/physician-history','1', '医生诊疗:看诊记录菜单');
+insert into sys_menu values('206',  '医生诊疗:检查结果查看', '2',  '/doctor/check_results', '1','医生诊疗:检查结果查看菜单');
+insert into sys_menu values('207',  '医生诊疗:检验结果查看', '2',  '/doctor/inspection_results', '1','医生诊疗:检验结果查看菜单');
+insert into sys_menu values('208',  '医生诊疗:门诊确诊', '2',  '/doctor/outpatient_diagnosis', '1','医生诊疗:门诊确诊菜单');
+insert into sys_menu values('209',  '医生诊疗:开立处方', '2',  '/doctor/write_prescription', '1','医生诊疗:开立处方菜单');
+insert into sys_menu values('210',  '医生诊疗:处置申请', '2',  '/doctor/disposal_request', '1','医生诊疗:处置申请菜单');
+insert into sys_menu values('211',  '费用查询', '2',  '/doctor/expense_query', '1','费用查询菜单');
+
 insert into sys_menu values('501',  '药房发药', '5',  '/drugstore/give','1', '药房发药菜单');
 insert into sys_menu values('502',  '药房退药', '5',  '/drugstore/out', '1','药房退药菜单');
 insert into sys_menu values('503',  '药房管理', '5',  '/drugstore/drugs', '1', '药房管理菜单');
 insert into sys_menu values('504',  '交易记录', '5',  '/drugstore/history', '1', '交易记录菜单');
 
-insert into sys_menu values('701',  '用户管理', '7',  '/drugstore/give','1', '用户管理菜单');
-insert into sys_menu values('702',  '科室管理', '7',  '/drugstore/drug', '1','科室管理菜单');
-insert into sys_menu values('703',  '挂号级别管理', '7',  '/drugstore/storage', '1', '挂号级别管理菜单');
-insert into sys_menu values('704',  '诊断目录管理', '7',  '/drugstore/history', '1', '诊断目录管理菜单');
-insert into sys_menu values('705',  '非药品收费项目管理', '7',  '/drugstore/give','1', '非药品收费项目管理菜单');
-insert into sys_menu values('706',  '医生排班管理', '7',  '/drugstore/drug', '1','医生排班管理菜单');
+insert into sys_menu values('701',  '用户管理', '7',  '/root/user','1', '用户管理菜单');
+insert into sys_menu values('702',  '科室管理', '7',  '/root/department', '1','科室管理菜单');
+insert into sys_menu values('703',  '挂号级别管理', '7',  '/root/register', '1', '挂号级别管理菜单');
+insert into sys_menu values('704',  '诊断目录管理', '7',  '/root/contents', '1', '诊断目录管理菜单');
+insert into sys_menu values('705',  '非药品收费项目管理', '7',  '/root/drugpay','1', '非药品收费项目管理菜单');
+insert into sys_menu values('706',  '医生排班管理', '7',  '/root/schedule', '1','医生排班管理菜单');
 
 -- ----------------------------
 -- 角色和菜单/权限关联表  角色1-N菜单
@@ -34083,3 +34095,4 @@ insert into sys_role_menu values ('2', '4');
 insert into sys_role_menu values ('2', '5');
 insert into sys_role_menu values ('2', '6');
 insert into sys_role_menu values ('1', '7');
+insert into sys_role_menu values ('3', '2');

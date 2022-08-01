@@ -50,13 +50,13 @@
                 <el-table-column
                         prop="id"
                         label="用户ID"
-                        width="90px"
+                        width="70px"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="userName"
                         label="登录名"
-                        width="130px"
+                        width="90px"
                         align="center">
                 </el-table-column>
                 <el-table-column
@@ -74,19 +74,19 @@
                 <el-table-column
                         prop="useType"
                         label="用户类别"
-                        width="130px"
+                        width="60px"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="docTitleId"
                         label="医生职称"
-                        width="130px"
+                        width="60px"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="isScheduling"
                         label="是否参与排班"
-                        width="130px"
+                        width="110px"
                         align="center">
                 </el-table-column>
                 <el-table-column
