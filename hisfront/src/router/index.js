@@ -18,11 +18,51 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
+  {
+    path: '/his',
+    name: 'his',
+    component: () => import('../views/HisIndex.vue'),
+    children: [
+      {
+        path: '/root/user',
+        name: 'user',
+        component:()=>import('../components/root/User.vue')
+      },
+      {
+        path: '/root/department',
+        name: 'department',
+        component:()=>import('../components/root/Department.vue')
+      },
+      {
+        path: '/root/register',
+        name: 'register',
+        component:()=>import('../components/root/Register.vue')
+      },
+      {
+        path: '/root/contents',
+        name: 'contents',
+        component:()=>import('../components/root/Contents.vue')
+      },
+      {
+        path: '/root/drugpay',
+        name: 'drugpay',
+        component:()=>import('../components/root/Drugpay.vue')
+      },
+      {
+        path: '/root/schedule',
+        name: 'schedule',
+        component:()=>import('../components/root/Schedule.vue')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/Login.vue')
+  }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 
