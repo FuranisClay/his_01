@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
 
@@ -16,4 +18,12 @@ public interface UserMapper {
      */
     @Select("select * from user where RealName=#{rn} and Password=#{pwd}")
     User validate(@Param(value = "rn") String rn,@Param(value = "pwd") String pwd);
+
+    @Select("<script>select * from user where 1=1" +
+            "<if test=\"name!=null and name != ''\">and UserName=#{name}</if>" +
+            "<if test=\"id>0\">and ID=#{id}</if>" +
+            "</script>")
+    List<User> getUserList(String name, Integer id);
+
+
 }

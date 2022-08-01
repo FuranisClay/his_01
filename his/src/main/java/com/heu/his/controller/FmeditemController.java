@@ -1,4 +1,4 @@
-package com.heu.his.Controller;
+package com.heu.his.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.heu.his.Iservice.IFmeditemService;

@@ -3,6 +3,8 @@ package com.heu.his.mapper;
 import com.heu.his.pojo.Registlevel;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface RegistlevelMapper {
 

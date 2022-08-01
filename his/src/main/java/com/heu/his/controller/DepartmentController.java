@@ -1,4 +1,4 @@
-package com.heu.his.Controller;
+package com.heu.his.controller;
 
 import com.heu.his.Iservice.IDepartmentService;
 import com.heu.his.pojo.Department;

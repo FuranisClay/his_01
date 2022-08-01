@@ -1,4 +1,4 @@
-package com.heu.his.Controller;
+package com.heu.his.controller;
 
 import com.heu.his.Iservice.IRegistlevelService;
 import com.heu.his.pojo.Registlevel;

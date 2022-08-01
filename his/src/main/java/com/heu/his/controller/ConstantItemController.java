@@ -1,4 +1,4 @@
-package com.heu.his.Controller;
+package com.heu.his.controller;
 
 import com.heu.his.Iservice.IConstantItemService;
 import com.heu.his.pojo.Constantitem;
