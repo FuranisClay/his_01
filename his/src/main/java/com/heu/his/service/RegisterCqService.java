@@ -1,7 +1,7 @@
 package com.heu.his.service;
 
-import com.heu.his.Iservice.IRegisterService;
-import com.heu.his.mapper.RegisterMapper;
+import com.heu.his.Iservice.IRegisterCqService;
+import com.heu.his.mapper.RegisterCqMapper;
 import com.heu.his.pojo.Checkapply;
 import com.heu.his.pojo.Drugs;
 import com.heu.his.pojo.Fmeditem;
@@ -15,22 +15,22 @@ import org.springframework.stereotype.Service;
  * @create 2022-07-31-9:41
  */
 @Service
-public class RegisterService implements IRegisterService {
+public class RegisterCqService implements IRegisterCqService {
     @Autowired
-    RegisterMapper registerMapper;
+    RegisterCqMapper registerCqMapper;
     public java.util.List<Register> selectByNameNumber(@Param("realName") String realName, @Param("caseNumber") String caseNumber){
-        return registerMapper.selectByNameNumber(realName,caseNumber);
+        return registerCqMapper.selectByNameNumber(realName,caseNumber);
     }
     public java.util.List<Drugs> selectDrugsByRegisterId(int id){
-        return registerMapper.selectDrugsByRegisterId(id);
+        return registerCqMapper.selectDrugsByRegisterId(id);
     };
     public java.util.List<Integer> selectDrugsAmountById(int id){
-        return registerMapper.selectDrugsAmountById(id);
+        return registerCqMapper.selectDrugsAmountById(id);
     };
     public java.util.List<Checkapply> selectCheckApplyByRegistId(int id){
-        return registerMapper.selectCheckApplyByRegistId(id);
+        return registerCqMapper.selectCheckApplyByRegistId(id);
     };
     public Fmeditem getFmeditemById(int id){
-        return registerMapper.getFmeditemById(id);
+        return registerCqMapper.getFmeditemById(id);
     };
 }

@@ -1,7 +1,7 @@
 package com.heu.his.service;
 
-import com.heu.his.Iservice.IDrugsService;
-import com.heu.his.mapper.DrugsMapper;
+import com.heu.his.Iservice.IDrugsCqService;
+import com.heu.his.mapper.DrugsCqMapper;
 import com.heu.his.pojo.Constantitem;
 import com.heu.his.pojo.Drugs;
 import org.apache.ibatis.annotations.Param;
@@ -15,21 +15,24 @@ import java.util.List;
  * @create 2022-07-30-15:37
  */
 @Service
-public class DrugsService implements IDrugsService {
+public class DrugsCqService implements IDrugsCqService {
     @Autowired
-    DrugsMapper drugsMapper;
+    DrugsCqMapper drugsCqMapper;
 
     public List<Drugs> getDrugsList(@Param("drugsName") String drugsName, @Param("id") int id){
-        return drugsMapper.getDrugsList(drugsName,id);
+        return drugsCqMapper.getDrugsList(drugsName,id);
     }
 
     public int deleteById(int id){
-        return drugsMapper.deleteById(id);
+        return drugsCqMapper.deleteById(id);
     }
     public int insertDrugs(Drugs drugs){
-        return drugsMapper.insertDrugs(drugs);
+        return drugsCqMapper.insertDrugs(drugs);
     }
     public java.util.List<Constantitem> getConstantitemById(){
-        return drugsMapper.getConstantitemById();
+        return drugsCqMapper.getConstantitemById();
+    };
+    public boolean updateById(Drugs drugs){
+        return drugsCqMapper.updateById(drugs);
     };
 }

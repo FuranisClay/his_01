@@ -1,11 +1,8 @@
 package com.heu.his;
 
-import com.heu.his.mapper.DrugsMapper;
-import com.heu.his.mapper.RegisterMapper;
-import com.heu.his.pojo.Checkapply;
-import com.heu.his.pojo.Constantitem;
+import com.heu.his.mapper.DrugsCqMapper;
+import com.heu.his.mapper.RegisterCqMapper;
 import com.heu.his.pojo.Drugs;
-import com.heu.his.pojo.Register;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,9 +12,9 @@ import java.sql.Timestamp;
 @SpringBootTest
 class HisApplicationTests {
     @Autowired
-    DrugsMapper drugsMapper;
+    DrugsCqMapper drugsCqMapper;
     @Autowired
-    RegisterMapper registerMapper;
+    RegisterCqMapper registerCqMapper;
     @Test
     void contextLoads() {
 
@@ -34,12 +31,12 @@ class HisApplicationTests {
 
 //        //测试添加药品
 //        Drugs drugs = new Drugs();
-//        drugs.setId(3);
+//        drugs.setId(2972);
 //        drugs.setDrugsCode("754545544");
 //        drugs.setDrugsName("cqcqcqc");
 //        Timestamp timestamp = new Timestamp(2019-03-01);
 //        drugs.setCreationDate(timestamp);
-//        int n = drugsMapper.insertDrugs(drugs);
+//        drugsCqMapper.insertDrugs(drugs);
 
         //测试通过患者病历号查询对应药品信息
 //        java.util.List<Drugs> drugs=registerMapper.selectDrugsByRegisterId(37);

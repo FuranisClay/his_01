@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.*;
  * @create 2022-07-30-15:36
  */
 @Mapper
-public interface DrugsMapper {
+public interface DrugsCqMapper {
     @Select("<script>select * from drugs where 1=1" +
             "<if test=\"drugsName!=null and drugsName!=''\">and DrugsName like concat('%',#{drugsName},'%') </if>" +
             "<if test=\"id>0\">and ID=#{id}</if></script>")
@@ -30,4 +30,10 @@ public interface DrugsMapper {
 //    @Update("update drugs   ")
     @Select("select * from constantitem where id > 110")
     java.util.List<Constantitem> getConstantitemById();
+
+    @Update("update drugs set DrugsCode =#{drugsCode},DrugsName=#{drugsName},DrugsFormat=#{drugsFormat},DrugsUnit=#{drugsUnit}" +
+            ",Manufacturer=#{manufacturer},DrugsDosageID=#{drugsDosageId},DrugsTypeID=#{drugsTypeId},DrugsPrice=#{drugsPrice},MnemonicCode=#{mnemonicCode}," +
+            "CreationDate=#{creationDate},LastUpdateDate=#{lastUpdateDate}" +
+            "where id=#{id}")
+    boolean updateById(Drugs drugs);
 }

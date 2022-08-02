@@ -19,6 +19,11 @@ public class ExpenseclassService implements IExpenseclassService {
     ExpenseclassMapper expenseclassMapper;
 
     @Override
+    public Expenseclass getExpenseclassByID(int id) {
+        return expenseclassMapper.getExpenseclassByID(id);
+    }
+
+    @Override
     public List<Expenseclass> getExpenseclassList() {
         return expenseclassMapper.getExpenseclassList();
     }

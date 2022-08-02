@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * @create 2022-07-31-9:30
  */
 @Mapper
-public interface RegisterMapper {
+public interface RegisterCqMapper {
     @Select("<script>select * from register where 1=1"+
             "<if test=\"caseNumber!=null and caseNumber!=''\">and CaseNumber=#{caseNumber} </if>" +
             "<if test=\"realName!=null and realName!=''\">and RealName=#{realName} </if></script>")
@@ -26,7 +26,8 @@ public interface RegisterMapper {
 
     @Results({
             @Result(property = "registId",column = "registId",id = true),
-            @Result(property = "fmeditems",column = "itemID",many = @Many(select = "com.heu.his.mapper.RegisterMapper.getFmeditemById"))
+            @Result(property = "freditems",column = "itemID"),
+            @Result(property = "fmeditems",column = "itemID",many = @Many(select = "com.heu.his.mapper.RegisterCqMapper.getFmeditemById"))
     })
     @Select("select * from checkapply where RegistID=#{id}")
     java.util.List<Checkapply> selectCheckApplyByRegistId(int id);
