@@ -120,7 +120,7 @@
 	    :before-close="handleClose">
 	    <el-form label-width="100px">
 	  	  <el-form-item label="药品id">
-	  		  <el-input v-model="insertRow.id" id="updateInput"></el-input>
+	  		  <el-input :disabled=true v-model="insertRow.id" id="updateInput"></el-input>
 	  	  </el-form-item>
 	  	  <el-form-item label="药品编码">
 	  	  			  <el-input v-model="insertRow.drugsCode" id="updateInput"></el-input>
@@ -144,7 +144,7 @@
 	  	  			  <el-input v-model="insertRow.drugsPrice" id="updateInput"></el-input>
 	  	  </el-form-item>
 		  <el-form-item label="药品剂型">
-		  			  <el-select v-model="insertRow.drugsDosageId" placeholder="请选择">
+		  			  <el-select v-model="insertRow.constantName" placeholder="请选择">
 		  			      <el-option
 		  			        v-for="item in options1"
 		  			        :key="item.id"
@@ -279,8 +279,15 @@
 					// that.drugslist=res.data
 				})
 			},
+			
+			// 药品插入
 			insert(){
+				let insertRow=this.insertRow
+				// console.log(this.drugslist.length+">>>>>>>>>>>>>>")
+				insertRow.id=this.drugslist[this.drugslist.length-1].id+1
+				// console.log(insertRow.id)
 				this.dialogVisible1=true
+				// console.log(this.drugslist.length)
 			},
 			//查询药品
 			submit(){
@@ -296,15 +303,20 @@
 			submitInsert(){
 				// let that = this
 				let insertRow=this.insertRow
+				let ue = this.$qs.stringify(insertRow)
 				// insertRow.creationDate=dt
 				// console.log(insertRow)
-				console.log(typeof(insertRow.id))
-				console.log(typeof(insertRow.drugsCode))
-				console.log(typeof(insertRow.drugsName))
-				console.log(typeof(insertRow.creationDate))
-				console.log(typeof(insertRow.drugsPrice))
-				this.$axios.get("http://localhost:8080/drugs/insert?drugs"+insertRow).then(function(res){
+				// console.log(insertRow.id)
+				// console.log(typeof(insertRow.drugsCode))
+				// console.log(typeof(insertRow.drugsName))
+				// console.log(typeof(insertRow.creationDate))
+				// console.log(typeof(insertRow.drugsPrice))
+				this.$axios.get("http://localhost:8080/drugs/insertDrugs?"+ue).then(function(res){
 					
+				})
+				that.$axios.get("http://localhost:8080/drugs/list?id=0").then(function(res){
+					// console.log(res)
+					that.drugslist=res.data
 				})
 				this.dialogVisible1=false
 			},

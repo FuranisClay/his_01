@@ -75,6 +75,81 @@ const routes = [
 	  	  name:'history',
 	  	  component:()=>import('../components/drugstore/History.vue')
 	  },
+	  
+		{
+		  //患者查看
+		  path:'/doctor/physician_patient',
+		  name:'physician_patient',
+		  component:()=> import('../components/doctor/Physician_patient.vue')
+	   },
+	   // {
+		 //  //医生诊疗
+	   // 	  path:'/doctor',
+	   // 	  name:'doctor',
+	   // 	  component:()=> import('../views/Doctor.vue')
+	   // },
+	   {
+		  //费用查询
+		  path:'/doctor/expense_query',
+		  name:'expense_query',
+		  component:()=> import('../components/doctor/Expense_query.vue')
+	   },
+	   
+	   
+	  {
+		  //医生诊疗.1.病历首页
+		  path:'/doctor/home_medical_record',
+		  name:'home_medical_record',
+		  component:()=> import('../components/doctor/Home_medical_record.vue')
+	  },
+	   {
+		  //医生诊疗.2.检查申请
+		  path:'/doctor/check_request',
+		  name:'check_request',
+		  component:()=> import('../components/doctor/Check_request.vue')
+	   },
+	   {
+		  //医生诊疗.3.检验申请
+		  path:'/doctor/inspection_request',
+		  name:'inspection_request',
+		  component:()=> import('../components/doctor/Inspection_request.vue')
+	   },
+	   {
+		  //医生诊疗.4.看诊记录
+		  path:'/doctor/physician-history',
+		  name:'physician-history',
+		  component:()=> import('../components/doctor/Physician-history.vue')
+	   },
+	   {
+		  //医生诊疗.5.检查结果查看
+		  path:'/doctor/check_results',
+		  name:'check_results',
+		  component:()=> import('../components/doctor/Check_results.vue')
+	   },
+	   {
+		  //医生诊疗.6.检验结果查看
+		  path:'/doctor/inspection_results',
+		  name:'inspection_results',
+		  component:()=> import('../components/doctor/Inspection_results.vue')
+	   },
+	   {
+		  //医生诊疗.7.门诊确诊
+		  path:'/doctor/outpatient_diagnosis',
+		  name:'outpatient_diagnosis',
+		  component:()=> import('../components/doctor/Outpatient_diagnosis.vue')
+	   },
+	   {
+		  //医生诊疗.8.开立处方
+		  path:'/doctor/write_prescription',
+		  name:'write_prescription',
+		  component:()=> import('../components/doctor/Write_prescription.vue')
+	   },
+	   {
+		  //医生诊疗.9.处置申请
+		  path:'/doctor/disposal_request',
+		  name:'disposal_request',
+		  component:()=> import('../components/doctor/Disposal_request.vue')
+	   },
     ]
   },
   {
