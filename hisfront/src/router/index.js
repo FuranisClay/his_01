@@ -52,7 +52,29 @@ const routes = [
         path: '/root/schedule',
         name: 'schedule',
         component:()=>import('../components/root/Schedule.vue')
-      }
+      },
+	  
+	  //药房路由
+	  {
+	  	  path:'/drugstore/give',
+	  	  name:'give',
+	  	  component:()=>import('../components/drugstore/Give.vue')
+	  },
+	  {
+	  	  path:'/drugstore/out',
+	  	  name:'out',
+	  	  component:()=>import('../components/drugstore/Out.vue')
+	  },
+	  {
+	  	  path:'/drugstore/drugs',
+	  	  name:'drugs',
+	  	  component:()=>import('../components/drugstore/Drugs.vue')
+	  },
+	  {
+	  	  path:'/drugstore/history',
+	  	  name:'history',
+	  	  component:()=>import('../components/drugstore/History.vue')
+	  },
     ]
   },
   {

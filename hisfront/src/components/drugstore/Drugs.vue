@@ -1,5 +1,8 @@
 <template>
   <div class="drugs">
+	  <hr>
+	  <h4><i class="el-icon-edit-outline"></i>药房管理</h4>
+	  <hr>
 	<el-form>
 		<el-input v-model="drugsId" placeholder="请输入药品id" style="width: 20%;margin-right: 20px;"></el-input>
 		<el-input v-model="drugsName" placeholder="请输入药品名称" style="width: 20%;margin-right: 20px;"></el-input>
@@ -25,7 +28,7 @@
 	<!-- 分页 -->
 	<el-pagination
 	  background
-	  page-size="pageSize"
+	  :page-size="pageSize"
 	  layout="prev, pager, next"
 	  :total="drugslist.length"
 	  @current-change="dopaging"
@@ -37,7 +40,7 @@
 	  :visible.sync="dialogVisible"
 	  width="40%"
 	  :before-close="handleClose">
-	  <el-form label-width="200px">
+	  <el-form label-width="100px">
 		  <el-form-item label="药品id">
 			  <el-input :disabled="true" v-model="updateRow.id" id="updateInput"></el-input>
 		  </el-form-item>
@@ -47,8 +50,14 @@
 		  <el-form-item label="药品名称">
 		  			  <el-input v-model="updateRow.drugsName" id="updateInput"></el-input>
 		  </el-form-item>
+		  <el-form-item label="拼英助记码">
+		  			  <el-input v-model="updateRow.mnemonicCode" id="updateInput"></el-input>
+		  </el-form-item>
 		  <el-form-item label="药品规格">
 		  			  <el-input v-model="updateRow.drugsFormat" id="updateInput"></el-input>
+		  </el-form-item>
+		  <el-form-item label="包装规格">
+		  			  <el-input v-model="updateRow.drugsUnit" id="updateInput"></el-input>
 		  </el-form-item>
 		  <el-form-item label="生产厂商">
 		  			  <el-input v-model="updateRow.manufacturer" id="updateInput"></el-input>
@@ -56,6 +65,47 @@
 		  <el-form-item label="药品单价">
 		  			  <el-input v-model="updateRow.drugsPrice" id="updateInput"></el-input>
 		  </el-form-item>
+		  <el-form-item label="药品剂型">
+		  			  <el-select v-model="updateRow.drugsDosageId"  placeholder="请选择">
+		  			      <el-option
+		  			        v-for="item in options1"
+		  			        :key="item.id"
+		  			        :label="item.constantName"
+		  			        :value="item.id">
+		  			      </el-option>
+		  			    </el-select>
+		  </el-form-item>
+		  <el-form-item label="药品类型">
+		  			  <el-select v-model="updateRow.drugsTypeId" placeholder="请选择">
+		  			      <el-option
+		  			        v-for="item in options2"
+		  			        :key="item.value"
+		  			        :label="item.label"
+		  			        :value="item.value">
+		  			      </el-option>
+		  			    </el-select>
+		  </el-form-item>
+		  <el-form-item label="创建时间" id="creationDate">
+		  			 <el-date-picker
+		  			       v-model="updateRow.creationDate"
+		  			       type="datetime"
+		  			       placeholder="选择日期时间"
+		  						   value-format="yyyy-MM-dd HH:mm:ss">
+		  			     </el-date-picker>
+		  					<!-- <el-input v-model="insertRow.creationDate" id="updateInput" placeholder="输入时间年-月-日"
+		  						   value-format="yyyy-MM-dd HH:mm:ss" type="datetime"></el-input> -->
+		  </el-form-item>
+		  <el-form-item label="最后修改时间" id="lastCreationDate">
+		  			 <el-date-picker
+		  			       v-model="updateRow.lastUpdateDate"
+		  			       type="datetime"
+		  			       placeholder="选择日期时间"
+		  						   value-format="yyyy-MM-dd HH:mm:ss">
+		  			     </el-date-picker>
+		  					<!-- <el-input v-model="insertRow.creationDate" id="updateInput" placeholder="输入时间年-月-日"
+		  						   value-format="yyyy-MM-dd HH:mm:ss" type="datetime"></el-input> -->
+		  </el-form-item>
+		  
 		  <el-form-item>
 		  			  <el-button @click="submitUpdate">提交</el-button>
 					  <el-button @click="dialogVisible = false">取消</el-button>
@@ -68,7 +118,7 @@
 	  :visible.sync="dialogVisible1"
 	    width="40%"
 	    :before-close="handleClose">
-	    <el-form label-width="200px">
+	    <el-form label-width="100px">
 	  	  <el-form-item label="药品id">
 	  		  <el-input v-model="insertRow.id" id="updateInput"></el-input>
 	  	  </el-form-item>
@@ -78,24 +128,60 @@
 	  	  <el-form-item label="药品名称">
 	  	  			  <el-input v-model="insertRow.drugsName" id="updateInput"></el-input>
 	  	  </el-form-item>
+		  <el-form-item label="拼英助记码">
+		  			  <el-input v-model="insertRow.mnemonicCode" id="updateInput"></el-input>
+		  </el-form-item>
 	  	  <el-form-item label="药品规格">
 	  	  			  <el-input v-model="insertRow.drugsFormat" id="updateInput"></el-input>
 	  	  </el-form-item>
+		  <el-form-item label="包装规格">
+		  			  <el-input v-model="insertRow.drugsUnit" id="updateInput"></el-input>
+		  </el-form-item>
 	  	  <el-form-item label="生产厂商">
 	  	  			  <el-input v-model="insertRow.manufacturer" id="updateInput"></el-input>
 	  	  </el-form-item>
 	  	  <el-form-item label="药品单价">
 	  	  			  <el-input v-model="insertRow.drugsPrice" id="updateInput"></el-input>
 	  	  </el-form-item>
+		  <el-form-item label="药品剂型">
+		  			  <el-select v-model="insertRow.drugsDosageId" placeholder="请选择">
+		  			      <el-option
+		  			        v-for="item in options1"
+		  			        :key="item.id"
+		  			        :label="item.constantName"
+		  			        :value="item.id">
+		  			      </el-option>
+		  			    </el-select>
+		  </el-form-item>
+		  <el-form-item label="药品类型">
+		  			  <el-select v-model="insertRow.drugsTypeId" placeholder="请选择">
+		  			      <el-option
+		  			        v-for="item in options2"
+		  			        :key="item.value"
+		  			        :label="item.label"
+		  			        :value="item.value">
+		  			      </el-option>
+		  			    </el-select>
+		  </el-form-item>
 		  <el-form-item label="创建时间" id="creationDate">
-		  			 <!-- <el-date-picker
-		  			       v-model="dt"
+		  			 <el-date-picker
+		  			       v-model="insertRow.creationDate"
 		  			       type="datetime"
 		  			       placeholder="选择日期时间"
 						   value-format="yyyy-MM-dd HH:mm:ss">
-		  			     </el-date-picker> -->
-					<el-input v-model="insertRow.creationDate" id="updateInput" placeholder="输入时间年-月-日"
-						   value-format="yyyy-MM-dd HH:mm:ss" type="datetime"></el-input>
+		  			     </el-date-picker>
+					<!-- <el-input v-model="insertRow.creationDate" id="updateInput" placeholder="输入时间年-月-日"
+						   value-format="yyyy-MM-dd HH:mm:ss" type="datetime"></el-input> -->
+		  </el-form-item>
+		  <el-form-item label="最后修改时间" id="creationDate">
+		  			 <el-date-picker
+		  			       v-model="insertRow.lastUpdateDate"
+		  			       type="datetime"
+		  			       placeholder="选择日期时间"
+		  						   value-format="yyyy-MM-dd HH:mm:ss">
+		  			     </el-date-picker>
+		  					<!-- <el-input v-model="insertRow.creationDate" id="updateInput" placeholder="输入时间年-月-日"
+		  						   value-format="yyyy-MM-dd HH:mm:ss" type="datetime"></el-input> -->
 		  </el-form-item>
 	  	  <el-form-item>
 	  	  			  <el-button @click="submitInsert()">提交</el-button>
@@ -108,12 +194,19 @@
 <style>
 	.el-form{
 		text-align: left;
+		/* height: 50px; */
 		/* position: relative; */
+	}
+	.el-form-item{
+		height: 50px;
 	}
 	#search{
 		width: 60%;
 		/* position: absolute; */
 		/* margin-left: 100px; */
+	}
+	.el-input{
+		width: 100%;
 	}
 	.drugs{
 		text-align: left;
@@ -134,17 +227,20 @@
 				dialogVisible:false,
 				dialogVisible1:false,
 				updateRow:{},
-				insertRow:{
-					drugsId:'',
-					drugsName:'',
-					drugsCode:'',
-					drugsPrice:'',
-					drugsFormat:'',
-					manufacturer:'',
-					creationDate:''
-				},
+				insertRow:{},
 				pageSize:7,
-				currPage:1
+				currPage:1,
+				options2: [{
+				          value: '101',
+				          label: '西药'
+				        }, {
+				          value: '102',
+				          label: '中成药'
+				        }, {
+				          value: '103',
+				          label: '中草药'
+				        }],
+				options1:[]
 			}
 		},
 		methods:{
@@ -201,15 +297,16 @@
 				// let that = this
 				let insertRow=this.insertRow
 				// insertRow.creationDate=dt
-				console.log(typeof(insertRow.drugsId))
+				// console.log(insertRow)
+				console.log(typeof(insertRow.id))
 				console.log(typeof(insertRow.drugsCode))
 				console.log(typeof(insertRow.drugsName))
 				console.log(typeof(insertRow.creationDate))
 				console.log(typeof(insertRow.drugsPrice))
-				this.dialogVisible1=false
-				this.$axios.get("http://localhost:8080/drugs/insert?drugs="+insertRow).then(function(res){
+				this.$axios.get("http://localhost:8080/drugs/insert?drugs"+insertRow).then(function(res){
 					
 				})
+				this.dialogVisible1=false
 			},
 			//分页操作
 			dopaging(currPage){
@@ -226,6 +323,10 @@
 					// console.log(res)
 					that.drugslist=res.data
 					that.drugslist1=that.drugslist.slice(0,7)
+				})
+				that.$axios.get("http://localhost:8080/drugs/getConstantItem").then(function(res){
+					that.options1=res.data
+					// console.log(that.options1)
 				})
 			}
 	}
