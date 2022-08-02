@@ -33,7 +33,7 @@ public class DrugsController {
         return iDrugsService.deleteById(id);
     }
     @RequestMapping("/insertDrugs")
-    public int insertDrugs(Drugs drugs) throws ParseException {
+    public int insertDrugs(Drugs drugs){
         return iDrugsService.insertDrugs(drugs);
 //        return 0;
     }
@@ -41,12 +41,4 @@ public class DrugsController {
     public java.util.List<Constantitem> getConstantitemById(){
         return iDrugsService.getConstantitemById();
     };
-}
-class Drugs1{
-    int id;
-    String drugsCode;
-    String drugsName;
-    String drugsFormat;
-    String creationDate;
-    int drugsPrice;
 }

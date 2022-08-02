@@ -17,6 +17,15 @@ public class Drugs {
   private java.sql.Timestamp lastUpdateDate;
   private long delMark;
   private int amount;
+  private Constantitem constantitem;
+
+  public Constantitem getConstantitem() {
+    return constantitem;
+  }
+
+  public void setConstantitem(Constantitem constantitem) {
+    this.constantitem = constantitem;
+  }
 
   public int getAmount() {
     return amount;
