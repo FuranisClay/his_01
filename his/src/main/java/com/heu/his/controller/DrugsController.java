@@ -33,18 +33,8 @@ public class DrugsController {
         return iDrugsService.deleteById(id);
     }
     @RequestMapping("/insertDrugs")
-    public int insertDrugs(Drugs1 drugs) throws ParseException {
-        Drugs drugs1 = new Drugs();
-        drugs1.setId(drugs.id);
-        drugs1.setDrugsCode(drugs.drugsCode);
-        drugs1.setDrugsName(drugs.drugsName);
-        drugs1.setDrugsFormat(drugs.drugsFormat);
-        drugs1.setDrugsPrice(drugs.drugsPrice);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        long dt = sdf.parse(drugs.creationDate).getTime();
-        Timestamp timestamp = new Timestamp(dt);
-        drugs1.setCreationDate(timestamp);
-        return iDrugsService.insertDrugs(drugs1);
+    public int insertDrugs(Drugs drugs) throws ParseException {
+        return iDrugsService.insertDrugs(drugs);
 //        return 0;
     }
     @RequestMapping("/getConstantItem")

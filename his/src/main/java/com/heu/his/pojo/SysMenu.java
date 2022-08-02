@@ -11,7 +11,7 @@ public class SysMenu {
   private String url;
   private String visible;
   private String remark;
-  java.util.List<SysMenu> childMenu;
+  private List<SysMenu> childMenu;//子集权限
 
   public List<SysMenu> getChildMenu() {
     return childMenu;

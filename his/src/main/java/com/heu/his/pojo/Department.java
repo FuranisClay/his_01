@@ -10,6 +10,28 @@ public class Department {
   private long deptType;
   private long delMark;
 
+  @Override
+  public String toString() {
+    return "Department{" +
+            "id=" + id +
+            ", deptCode='" + deptCode + '\'' +
+            ", deptName='" + deptName + '\'' +
+            ", deptCategoryId=" + deptCategoryId +
+            ", deptType=" + deptType +
+            ", delMark=" + delMark +
+            ", constantitem=" + constantitem +
+            '}';
+  }
+
+  private Constantitem constantitem;
+
+  public Constantitem getConstantitem() {
+    return constantitem;
+  }
+
+  public void setConstantitem(Constantitem constantitem) {
+    this.constantitem = constantitem;
+  }
 
   public long getId() {
     return id;

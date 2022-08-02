@@ -2,6 +2,18 @@ package com.heu.his.pojo;
 
 
 public class Registlevel {
+  @Override
+  public String toString() {
+    return "Registlevel{" +
+            "id=" + id +
+            ", registCode='" + registCode + '\'' +
+            ", registName='" + registName + '\'' +
+            ", sequenceNo=" + sequenceNo +
+            ", registFee=" + registFee +
+            ", registQuota=" + registQuota +
+            ", delMark=" + delMark +
+            '}';
+  }
 
   private long id;
   private String registCode;

@@ -11,6 +11,24 @@ public class Scheduling {
   private long ruleId;
   private long delMark;
 
+  private Department department;
+  private User user;
+
+  public Department getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(Department department) {
+    this.department = department;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 
   public long getId() {
     return id;

@@ -13,7 +13,16 @@ public class User {
   private long deptId;
   private long registLeId;
   private long delMark;
+  //部门信息
+  private Department department;
 
+  public Department getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(Department department) {
+    this.department = department;
+  }
 
   public long getId() {
     return id;
@@ -104,4 +113,19 @@ public class User {
     this.delMark = delMark;
   }
 
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", userName='" + userName + '\'' +
+            ", password='" + password + '\'' +
+            ", realName='" + realName + '\'' +
+            ", useType=" + useType +
+            ", docTitleId=" + docTitleId +
+            ", isScheduling='" + isScheduling + '\'' +
+            ", deptId=" + deptId +
+            ", registLeId=" + registLeId +
+            ", delMark=" + delMark +
+            '}';
+  }
 }
