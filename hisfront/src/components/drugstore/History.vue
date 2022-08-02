@@ -48,11 +48,11 @@
 				let that = this
 				let realName=this.realName
 				let caseNumber=this.caseNumber
-				that.$axios.get("http://localhost:8080/register/selectRegister?realName="+realName+"&caseNumber="+caseNumber).then(function(res){
+				that.$axios.get("http://localhost:8080/registerCq/selectRegister?realName="+realName+"&caseNumber="+caseNumber).then(function(res){
 					that.register=res.data
 					// console.log(res.data[0].id)
 					let id = that.register[0].id
-					that.$axios.get("http://localhost:8080/register/selectCheckApply?id="+id).then(function(res){
+					that.$axios.get("http://localhost:8080/registerCq/selectCheckApply?id="+id).then(function(res){
 						that.checkApply=res.data
 						console.log(res.data)	
 					})

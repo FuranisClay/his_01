@@ -48,10 +48,10 @@
 		  			  <el-input v-model="updateRow.drugsCode" id="updateInput"></el-input>
 		  </el-form-item>
 		  <el-form-item label="药品名称">
-		  			  <el-input v-model="updateRow.drugsName" id="updateInput"></el-input>
+		  			  <el-input v-model="updateRow.drugsName" @input="addPinyin1" id="updateInput"></el-input>
 		  </el-form-item>
 		  <el-form-item label="拼英助记码">
-		  			  <el-input v-model="updateRow.mnemonicCode" id="updateInput"></el-input>
+		  			  <el-input v-model="updateRow.mnemonicCode"  id="updateInput"></el-input>
 		  </el-form-item>
 		  <el-form-item label="药品规格">
 		  			  <el-input v-model="updateRow.drugsFormat" id="updateInput"></el-input>
@@ -126,10 +126,10 @@
 	  	  			  <el-input v-model="insertRow.drugsCode" id="updateInput"></el-input>
 	  	  </el-form-item>
 	  	  <el-form-item label="药品名称">
-	  	  			  <el-input v-model="insertRow.drugsName" id="updateInput"></el-input>
+	  	  			  <el-input v-model="insertRow.drugsName" @input="addPinyin" id="updateInput"></el-input>
 	  	  </el-form-item>
 		  <el-form-item label="拼英助记码">
-		  			  <el-input v-model="insertRow.mnemonicCode" id="updateInput"></el-input>
+		  			  <el-input v-model="insertRow.mnemonicCode " id="updateInput"></el-input>
 		  </el-form-item>
 	  	  <el-form-item label="药品规格">
 	  	  			  <el-input v-model="insertRow.drugsFormat" id="updateInput"></el-input>
@@ -144,7 +144,7 @@
 	  	  			  <el-input v-model="insertRow.drugsPrice" id="updateInput"></el-input>
 	  	  </el-form-item>
 		  <el-form-item label="药品剂型">
-		  			  <el-select v-model="insertRow.constantName" placeholder="请选择">
+		  			  <el-select v-model="insertRow.drugsDosageId" placeholder="请选择">
 		  			      <el-option
 		  			        v-for="item in options1"
 		  			        :key="item.id"
@@ -216,6 +216,8 @@
 	}
 </style>
 <script>
+	import {pinyin} from '../../../src/chineseTurnPinyin.js'
+	
 	export default{
 		name:'Drugs',
 		data(){
@@ -252,10 +254,10 @@
 				// this.dopaging(this.currPage)
 				// this.updateRow=row
 				let that = this
-				this.$axios.get("http://localhost:8080/drugs/deleteById?id="+row.id).then(function(res){
+				this.$axios.get("http://localhost:8080/drugsCq/deleteById?id="+row.id).then(function(res){
 					let drugsName=that.drugsName
 					let drugsId=that.drugsId
-					that.$axios.get("http://localhost:8080/drugs/list?drugsName="+drugsName+"&id="+drugsId).then(function(res){
+					that.$axios.get("http://localhost:8080/drugsCq/list?drugsName="+drugsName+"&id="+drugsId).then(function(res){
 						that.drugslist=res.data
 						that.dopaging(that.currPage)
 					})
@@ -274,10 +276,17 @@
 				this.dialogVisible=true
 			},
 			submitUpdate(){
+				let that = this
 				let updateRow=this.updateRow
-				this.$axios.get("http://localhost:8080/drugs/insert?drugs="+updateRow).then(function(res){
-					// that.drugslist=res.data
+				console.log(updateRow.drugsDosageId)
+				let ue = this.$qs.stringify(updateRow)
+				this.$axios.get("http://localhost:8080/drugsCq/updateDrugs?"+ue).then(function(res){
+					that.$axios.get("http://localhost:8080/drugsCq/list?id=0").then(function(res){
+						// console.log(res)
+						that.drugslist=res.data
+					})
 				})
+				this.dialogVisible=false
 			},
 			
 			// 药品插入
@@ -294,30 +303,24 @@
 				let drugsName=this.drugsName
 				let drugsId=this.drugsId
 				let that = this
-				this.$axios.get("http://localhost:8080/drugs/list?drugsName="+drugsName+"&id="+drugsId).then(function(res){
+				this.$axios.get("http://localhost:8080/drugsCq/list?drugsName="+drugsName+"&id="+drugsId).then(function(res){
 					that.drugslist=res.data
 					that.drugslist1=that.drugslist.slice(0,7)
 				})
 			},
 			//新增药品
 			submitInsert(){
-				// let that = this
+				let that = this
 				let insertRow=this.insertRow
 				let ue = this.$qs.stringify(insertRow)
-				// insertRow.creationDate=dt
-				// console.log(insertRow)
-				// console.log(insertRow.id)
-				// console.log(typeof(insertRow.drugsCode))
-				// console.log(typeof(insertRow.drugsName))
-				// console.log(typeof(insertRow.creationDate))
-				// console.log(typeof(insertRow.drugsPrice))
-				this.$axios.get("http://localhost:8080/drugs/insertDrugs?"+ue).then(function(res){
-					
+				this.$axios.get("http://localhost:8080/drugsCq/insertDrugs?"+ue).then(function(res){
+					that.$axios.get("http://localhost:8080/drugsCq/list?id=0").then(function(res){
+						// console.log(res)
+						that.drugslist=res.data
+					})
 				})
-				that.$axios.get("http://localhost:8080/drugs/list?id=0").then(function(res){
-					// console.log(res)
-					that.drugslist=res.data
-				})
+				
+				// console.log(currPage)
 				this.dialogVisible1=false
 			},
 			//分页操作
@@ -327,16 +330,24 @@
 				let end=currPage*this.pageSize
 				this.drugslist1=this.drugslist.slice(start,end)
 				
+			},
+			addPinyin(){
+				this.insertRow.mnemonicCode= pinyin.getCamelChars(this.insertRow.drugsName);
+			},
+			addPinyin1(){
+				this.updateRow.mnemonicCode= pinyin.getCamelChars(this.updateRow.drugsName);
 			}
+			
+			
 			},
 			created() {
 				let that=this;
-				that.$axios.get("http://localhost:8080/drugs/list?id=0").then(function(res){
+				that.$axios.get("http://localhost:8080/drugsCq/list?id=0").then(function(res){
 					// console.log(res)
 					that.drugslist=res.data
 					that.drugslist1=that.drugslist.slice(0,7)
 				})
-				that.$axios.get("http://localhost:8080/drugs/getConstantItem").then(function(res){
+				that.$axios.get("http://localhost:8080/drugsCq/getConstantItem").then(function(res){
 					that.options1=res.data
 					// console.log(that.options1)
 				})

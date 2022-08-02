@@ -10,8 +10,8 @@
 					<el-form-item label="身份证:">
 						<el-input v-model="register.IDnumber" placeholder="身份证号码"></el-input>
 					</el-form-item>
-					<el-form-item label="发票号:">
-						<el-input v-model="register.CaseNumber" placeholder="发票号"></el-input>
+					<el-form-item label="病历号:">
+						<el-input v-model="register.CaseNumber" placeholder="病历号"></el-input>
 					</el-form-item>
 					<el-form-item style="float: right;">
 						<el-button type="primary" @click="onSubmit">查询</el-button>
@@ -19,6 +19,9 @@
 				</el-form>
 				<hr>
 				<el-descriptions class="margin-top" title="基本信息" :column="3" border>
+					<template slot="extra">
+						<el-button type="primary" @click="refundSubmit" style="float: right;">修改信息</el-button>
+					</template>
 					<el-descriptions-item>
 						<template slot="label">
 							<i class="el-icon-user"></i>
@@ -77,7 +80,10 @@
 
 				<el-descriptions class="margin-top" title="挂号信息录入" :column="3" border>
 					<template slot="extra">
-						发票号：{{$store.state.register.caseNumber}}
+						病历号：_{{$store.state.register.caseNumber}}_
+					</template>
+					<template slot="extra">
+						<el-button type="primary" @click="refundSubmit" style="float: right;">退号</el-button>
 					</template>
 					<el-descriptions-item>
 						<template slot="label">
@@ -98,28 +104,28 @@
 							<i class="el-icon-edit"></i>
 							科室
 						</template>
-						{{$store.state.register.deptId}}
+						{{$store.state.register.departments[0].deptName}}
 					</el-descriptions-item>
 					<el-descriptions-item>
 						<template slot="label">
 							<i class="el-icon-edit"></i>
 							号别
 						</template>
-						<!-- {{$store.state.register.registlevel.registName}} -->
+						{{$store.state.register.registlevel.registName}}
 					</el-descriptions-item>
 					<el-descriptions-item>
 						<template slot="label">
 							<i class="el-icon-edit"></i>
 							看诊医生
 						</template>
-						{{$store.state.register.userId}}
+						{{$store.state.register.user.realName}}
 					</el-descriptions-item>
 					<el-descriptions-item>
 						<template slot="label">
 							<i class="el-icon-edit"></i>
 							应收金额
 						</template>
-						{{register.money+777}}
+						{{register.money}}
 					</el-descriptions-item>
 				</el-descriptions>
 
@@ -164,7 +170,11 @@
 					SettleID: '',
 					money: ''
 				},
+				tableData:[]
 			}
+		},
+		created() {
+			this.getpatientcosts()
 		},
 		methods: {
 			onSubmit() {
@@ -174,12 +184,24 @@
 				this.$axios.get("http://localhost:8080/register/list?rn=" + rn).then(function(res) {
 					console.log(res.data[0]);
 					that.$store.commit('register', res.data[0])
+					that.register.rn = res.data[0].realName
+					that.register.IDnumber = res.data[0].idnumber
+					that.register.CaseNumber = res.data[0].caseNumber
+					that.register.gender = res.data[0].gender
+					that.register.BirthDate = res.data[0].birthDate
+					that.register.Age = res.data[0].age
+					that.register.AgeType = res.data[0].ageType
+					that.register.phoneNumber = res.data[0].phoneNumber
+					that.register.HomeA = res.data[0].homeAddress
 				})
 			},
 			chargeSubmit(){
 				
 			},
 			refundSubmit(){
+				
+			},
+			getpatientcosts(){
 				
 			}
 

@@ -50,14 +50,14 @@
 				let that = this
 				let realName=this.realName
 				let caseNumber=this.caseNumber
-				that.$axios.get("http://localhost:8080/register/selectRegister?realName="+realName+"&caseNumber="+caseNumber).then(function(res){
+				that.$axios.get("http://localhost:8080/registerCq/selectRegister?realName="+realName+"&caseNumber="+caseNumber).then(function(res){
 					that.register=res.data
 					// console.log(res.data[0].id)
 					for(let i=0;i<that.register.length;i++){
 						let id = that.register[0].id
-						that.$axios.get("http://localhost:8080/register/selectDrugs?id="+id).then(function(res){
+						that.$axios.get("http://localhost:8080/registerCq/selectDrugs?id="+id).then(function(res){
 							let list = res.data
-							that.$axios.get("http://localhost:8080/register/selectAmount?id="+id).then(function(res){
+							that.$axios.get("http://localhost:8080/registerCq/selectAmount?id="+id).then(function(res){
 								that.amount=res.data
 								for(let j=0;j<list.length;j++){
 									list[j].amount=that.amount[j]

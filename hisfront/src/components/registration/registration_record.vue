@@ -2,7 +2,7 @@
 	<div>
 		<el-container>
 			<el-aside width="180px"></el-aside>
-			<el-main>
+			<el-main style="text-align: left;">
 				<el-form :inline="true" :model="register" class="demo-form-inline" margin-left="0px;">
 					<el-form-item label="姓名:">
 						<el-input v-model="register.rn" placeholder="姓名"></el-input>
@@ -10,10 +10,10 @@
 					<el-form-item label="身份证:">
 						<el-input v-model="register.IDnumber" placeholder="身份证号码"></el-input>
 					</el-form-item>
-					<el-form-item label="发票号:">
-						<el-input v-model="register.CaseNumber" placeholder="发票号"></el-input>
+					<el-form-item label="病历号:">
+						<el-input v-model="register.CaseNumber" placeholder="病历号"></el-input>
 					</el-form-item>
-					<el-form-item>
+					<el-form-item style="float: right;">
 						<el-button type="primary" @click="onSubmit">查询</el-button>
 					</el-form-item>
 				</el-form>
@@ -77,7 +77,7 @@
 
 				<el-descriptions class="margin-top" title="挂号信息录入" :column="3" :size="size" border>
 					<template slot="extra">
-						发票号：{{$store.state.register.caseNumber}}
+						病历号：{{$store.state.register.caseNumber}}
 					</template>
 					<el-descriptions-item>
 						<template slot="label">
@@ -112,7 +112,7 @@
 							<i class="el-icon-edit"></i>
 							看诊医生
 						</template>
-						{{$store.state.register.userId}}
+						{{$store.state.register.user.realName}}
 					</el-descriptions-item>
 					<el-descriptions-item>
 						<template slot="label">
@@ -127,7 +127,7 @@
 					<hr>
 				</h3>
 				
-				<el-button type="primary" icon="el-icon-delete">退号</el-button>
+				<el-button type="primary" icon="el-icon-delete"  style="float: right;">退号</el-button>
 
 			</el-main>
 		</el-container>
@@ -153,6 +153,9 @@
 				this.$axios.get("http://localhost:8080/register/list?rn=" + rn).then(function(res) {
 					console.log(res.data[0]);
 					that.$store.commit('register', res.data[0])
+					that.register.rn = res.data[0].realName
+					that.register.IDnumber = res.data[0].idnumber
+					that.register.CaseNumber = res.data[0].caseNumber
 				})
 			},
 
