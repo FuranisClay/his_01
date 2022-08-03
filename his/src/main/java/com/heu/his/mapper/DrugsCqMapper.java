@@ -34,6 +34,6 @@ public interface DrugsCqMapper {
     @Update("update drugs set DrugsCode =#{drugsCode},DrugsName=#{drugsName},DrugsFormat=#{drugsFormat},DrugsUnit=#{drugsUnit}" +
             ",Manufacturer=#{manufacturer},DrugsDosageID=#{drugsDosageId},DrugsTypeID=#{drugsTypeId},DrugsPrice=#{drugsPrice},MnemonicCode=#{mnemonicCode}," +
             "CreationDate=#{creationDate},LastUpdateDate=#{lastUpdateDate}" +
-            "where id=#{id}")
+            "where ID=#{id}")
     boolean updateById(Drugs drugs);
 }

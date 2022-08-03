@@ -29,6 +29,10 @@ public class DrugsCqController {
     }
     @RequestMapping("/insertDrugs")
     public int insertDrugs(Drugs drugs){
+        java.util.List<Drugs> list = iDrugsCqService.getDrugsList("", (int) drugs.getId());
+        if(list!=null){
+            iDrugsCqService.deleteById((int) drugs.getId());
+        }
         return iDrugsCqService.insertDrugs(drugs);
 //        return 0;
     }
@@ -38,6 +42,7 @@ public class DrugsCqController {
     };
     @RequestMapping("updateDrugs")
     public boolean updateDrugsById(Drugs drugs){
+//        drugs.setCreationDate();
         return iDrugsCqService.updateById(drugs);
     }
 }

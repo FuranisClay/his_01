@@ -26,7 +26,6 @@ public interface RegisterCqMapper {
 
     @Results({
             @Result(property = "registId",column = "registId",id = true),
-            @Result(property = "freditems",column = "itemID"),
             @Result(property = "fmeditems",column = "itemID",many = @Many(select = "com.heu.his.mapper.RegisterCqMapper.getFmeditemById"))
     })
     @Select("select * from checkapply where RegistID=#{id}")
