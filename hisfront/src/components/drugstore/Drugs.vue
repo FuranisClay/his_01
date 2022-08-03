@@ -233,13 +233,13 @@
 				pageSize:7,
 				currPage:1,
 				options2: [{
-				          value: '101',
+				          value: 101,
 				          label: '西药'
 				        }, {
-				          value: '102',
+				          value: 102,
 				          label: '中成药'
 				        }, {
-				          value: '103',
+				          value: 103,
 				          label: '中草药'
 				        }],
 				options1:[]
