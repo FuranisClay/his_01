@@ -28,7 +28,7 @@ public interface DrugsCqMapper {
             "</script>")
     int updateDelmark(int[] arr);
 //    @Update("update drugs   ")
-    @Select("select * from constantitem where id > 110")
+    @Select("select * from constantitem where id >= 110")
     java.util.List<Constantitem> getConstantitemById();
 
     @Update("update drugs set DrugsCode =#{drugsCode},DrugsName=#{drugsName},DrugsFormat=#{drugsFormat},DrugsUnit=#{drugsUnit}" +
