@@ -10,8 +10,13 @@
 	</el-form>
 	<hr>
 	<el-button @click="insert()">新增</el-button>
+	<el-button @click="deleteDrugs()">批量删除</el-button>
 	<hr>
-	<el-table :data="drugslist1" class="drugsTable">
+	<el-table :data="drugslist1" class="drugsTable" @selection-change="hsc">
+		<el-table-column
+		      type="selection"
+		      width="55">
+		    </el-table-column>
 		<el-table-column prop="id" label="药品id"></el-table-column>
 		<el-table-column prop="drugsCode" label="药品编码"></el-table-column>
 		<el-table-column prop="drugsName" label="药品名称"></el-table-column>
@@ -50,7 +55,7 @@
 		  <el-form-item label="药品名称">
 		  			  <el-input v-model="updateRow.drugsName" @input="addPinyin1" id="updateInput"></el-input>
 		  </el-form-item>
-		  <el-form-item label="拼英助记码">
+		  <el-form-item label="拼音助记码">
 		  			  <el-input v-model="updateRow.mnemonicCode"  id="updateInput"></el-input>
 		  </el-form-item>
 		  <el-form-item label="药品规格">
@@ -128,7 +133,7 @@
 	  	  <el-form-item label="药品名称">
 	  	  			  <el-input v-model="insertRow.drugsName" @input="addPinyin" id="updateInput"></el-input>
 	  	  </el-form-item>
-		  <el-form-item label="拼英助记码">
+		  <el-form-item label="拼音助记码">
 		  			  <el-input v-model="insertRow.mnemonicCode " id="updateInput"></el-input>
 		  </el-form-item>
 	  	  <el-form-item label="药品规格">
@@ -141,7 +146,7 @@
 	  	  			  <el-input v-model="insertRow.manufacturer" id="updateInput"></el-input>
 	  	  </el-form-item>
 	  	  <el-form-item label="药品单价">
-	  	  			  <el-input v-model="insertRow.drugsPrice" id="updateInput"></el-input>
+	  	  			  <el-input v-model="insertRow.drugsPrice"  id="updateInput"></el-input>
 	  	  </el-form-item>
 		  <el-form-item label="药品剂型">
 		  			  <el-select v-model="insertRow.drugsDosageId" placeholder="请选择">
@@ -224,6 +229,7 @@
 			return{
 				drugslist:[],
 				drugslist1:[],
+				deletelist:[],
 				drugsId:0,
 				drugsName:'',
 				dialogVisible:false,
@@ -272,15 +278,19 @@
 			},
 			//修改
 			update(row){
+				// console.log(row)
+				row.creationDate=this.enderTime(row.creationDate)
+				row.lastUpdateDate=this.enderTime(row.lastUpdateDate)
 				this.updateRow=row
 				this.dialogVisible=true
 			},
 			submitUpdate(){
 				let that = this
 				let updateRow=this.updateRow
-				console.log(updateRow.drugsDosageId)
+				// console.log(updateRow)
+				// console.log(updateRow.drugsDosageId)
 				let ue = this.$qs.stringify(updateRow)
-				this.$axios.get("http://localhost:8080/drugsCq/updateDrugs?"+ue).then(function(res){
+				this.$axios.get("http://localhost:8080/drugsCq/insertDrugs?"+ue).then(function(res){
 					that.$axios.get("http://localhost:8080/drugsCq/list?id=0").then(function(res){
 						// console.log(res)
 						that.drugslist=res.data
@@ -288,7 +298,10 @@
 				})
 				this.dialogVisible=false
 			},
-			
+			enderTime(date) {
+			  var dateee = new Date(date).toJSON();
+			  return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '') 
+			},
 			// 药品插入
 			insert(){
 				let insertRow=this.insertRow
@@ -312,10 +325,10 @@
 			submitInsert(){
 				let that = this
 				let insertRow=this.insertRow
+				console.log(insertRow)
 				let ue = this.$qs.stringify(insertRow)
 				this.$axios.get("http://localhost:8080/drugsCq/insertDrugs?"+ue).then(function(res){
 					that.$axios.get("http://localhost:8080/drugsCq/list?id=0").then(function(res){
-						// console.log(res)
 						that.drugslist=res.data
 					})
 				})
@@ -336,6 +349,18 @@
 			},
 			addPinyin1(){
 				this.updateRow.mnemonicCode= pinyin.getCamelChars(this.updateRow.drugsName);
+			},
+			onInput(key, event){
+			   this.form[key] = event.match(/^\d*(\.?\d{0,5})/g)[0]
+			},
+			// 批量操作
+			hsc(arr){
+				this.deletelist=arr
+			},
+			deleteDrugs(){
+				for(let i=0;i<this.deletelist.length;i++){
+					this.delRow(this.deletelist[i])
+				}
 			}
 			
 			
