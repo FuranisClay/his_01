@@ -5,11 +5,11 @@ server:
 
 spring:
   datasource:
-    name: test
+    name: his
     username: root
     url: jdbc:mysql://localhost:3306/his?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: 500243cq
+    password: 2019201131
 
 mybatis:
   type-aliases-package: com.heu.his.pojo
