@@ -9,7 +9,7 @@ spring:
     username: root
     url: jdbc:mysql://localhost:3306/his?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: ch0000,.
+    password: 500243cq
 
 mybatis:
   type-aliases-package: com.heu.his.pojo
