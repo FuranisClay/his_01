@@ -3,8 +3,11 @@
         <el-container>
             <el-header>
                 <el-row>
-                    <el-col :span="2">{{$store.state.emp.realName}},欢迎登录</el-col>
-                    <el-col :span="22">个人信息/退出登录</el-col>
+                    <el-col span="2">{{$store.state.emp.realName}},欢迎登录</el-col>
+                    <el-col span="21">
+						  <i class="el-icon-setting" style="margin-right: 15px"></i>
+						  <router-link to="/login">退出登录</router-link> 
+                    </el-col>
                 </el-row>
             </el-header>
             <el-container>
@@ -31,7 +34,6 @@
                     <el-main>
                         <router-view></router-view>
                     </el-main>
-                    <el-footer>Footer</el-footer>
                 </el-container>
             </el-container>
         </el-container>

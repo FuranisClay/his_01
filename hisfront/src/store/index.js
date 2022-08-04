@@ -8,7 +8,12 @@ export default new Vuex.Store({
         num: 1000,
         emp: {},
 		user:{},
-		register:{}
+		register:{
+			departments:'0',
+			registlevel:'0',
+			user:'0',
+			settlecategory:'0'
+		}
     },
     getters: {},
     mutations: {

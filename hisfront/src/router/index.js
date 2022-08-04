@@ -152,23 +152,23 @@ const routes = [
 	   },
 	   
 	   {
-	   			// 窗口挂号
-	   			path: '/registration/onsite',
-	   			name: 'onsite',
-	   			component: () => import('../components/registration/onsite_registratiion.vue')
-	   		},
-	   		{
-	   			// 窗口退号
-	   			path: '/registration/recored',
-	   			name: 'record',
-	   			component: () => import('../components/registration/registration_record.vue')
-	   		},
-	   		{
-	   			// 费用记录查看
-	   			path: '/registration/manage',
-	   			name: 'manage',
-	   			component: () => import('../components/registration/expense_manage.vue')
-	   		},
+			// 窗口挂号
+			path: '/registration/onsite',
+			name: 'onsite',
+			component: () => import('../components/registration/onsite_registratiion.vue')
+		},
+		{
+			// 窗口退号
+			path: '/registration/recored',
+			name: 'record',
+			component: () => import('../components/registration/registration_record.vue')
+		},
+		{
+			// 费用记录查看
+			path: '/registration/manage',
+			name: 'manage',
+			component: () => import('../components/registration/expense_manage.vue')
+		},
 			
 		{
 			// 收费

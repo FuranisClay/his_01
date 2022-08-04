@@ -20,57 +20,24 @@
 		
 		<div class="el-divider el-divider--horizontal"></div>
 		
-		<div class="el-row" style="margin-left: -10px; margin-right: -10px; ">
-		    <div class="el-col el-col-6" style="padding-left:10px; padding-right:10px;">
-				<div class="el-input">
-					<input type="text" autocomplete="off" placeholder="请输入患者病历号" class="el-input__inner">
-				</div>
-		    </div>
-			<div class="el-col el-col-6" style="padding-left:10px; padding-right:10px;">
-				<div class="el-input">
-					<input type="text" autocomplete="off" placeholder="请输入患者姓名" class="el-input__inner">
-				</div>
-			</div>
-			<div class="el-col el-col-2" style="padding-left:10px; padding-right:10px;">
-				<button type="button" class="el-button el-button--default">
-					<span>搜索</span>
-				</button>
-			</div>
-			<div class="el-col el-col-10" style="padding-left:10px;padding-right:10px;"></div>
-		</div>
+		
 		
 		<div class="el-divider el-divider--horizontal"></div>
 		
 		<div class="el-table el-table--fit el-table--scrollable-x el-table--enable-row-hover"style="width:80%;">
 			<div class="hidden-columns"></div>
-			<div class="el-table__header-wrapper">
-				<table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width:1000px">
-					<colgroup>
-						<col name="el-table_1_column_1" width="80">
-						<col name="el-table_1_column_2" width="180">
-						<col name="el-table_1_column_3" width="370">
-						<col name="el-table_1_column_4" width="370">
-						<col name="gutter" width="0">
-					</colgroup>
-					<thead class="has-gutter">
-						<tr class>
-							<th colspan="1" rowspan="1" class="el-table_1_column_1  is-leaf el-table__cell">
-								<div class="cell">编号</div>
-							</th>
-							<th colspan="1" rowspan="1" class="el-table_1_column_2  is-leaf el-table__cell">
-								<div class="cell">患者姓名</div>
-							</th>
-							<th colspan="1" rowspan="1" class="el-table_1_column_3  is-leaf el-table__cell">
-								<div class="cell">患者病历号</div>
-							</th>
-							<th colspan="1" rowspan="1" class="el-table_1_column_4  is-leaf el-table__cell">
-								<div class="cell">操作</div>
-							</th>
-							<th class="el-table__cell gutter" style="width: 0px;display: none;"></th>
-						</tr>
-					</thead>
-				</table>
-			</div>
+			<el-form>
+				<el-input v-model="caseNumber" placeholder="请输入病历号"></el-input>
+				<el-input v-model="realName" placeholder="请输入患者姓名"></el-input>
+				<el-button @click="submit" id="search" style="width: 15%;margin-right: 20px;">搜索</el-button>
+				<el-table :data="register" class="register">
+					<el-table-column prop="id" label="患者id"></el-table-column>
+					<el-table-column prop="caseNumber" label="病历号"></el-table-column>
+					<el-table-column prop="realName" label="姓名"></el-table-column>
+					<el-table-column prop="gender" label="性别"></el-table-column>
+					<el-table-column prop="age" label="患者年龄"></el-table-column>
+				</el-table>
+			</el-form>
 			
 			<div class="el-table__body-wrapper is-scrolling-left">
 				<table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width:1000px">
@@ -111,6 +78,31 @@
 </template>
 
 <script>
+	export default{
+		name:'register',
+		data(){
+			return{
+				
+				register:[],
+				caseNumber:'',
+				realName:''
+			}
+		},
+		methods:{
+			fun(){
+				
+			},
+			submit(){
+				let that = this
+				let realName=this.realName
+				let caseNumber=this.caseNumber
+				that.$axios.get("http://localhost:8080/registerCq/selectRegister?realName="+realName+"&caseNumber="+caseNumber).then(function(res){
+					that.register=res.data
+					 console.log(res.data)					
+				})
+				}
+		},
+	}
 </script>
 
 <style>

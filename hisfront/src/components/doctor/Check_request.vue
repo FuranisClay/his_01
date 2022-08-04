@@ -1,26 +1,20 @@
 <template>
     <div>
-		<div style="text-align: left;"> 患者信息： 
-		    <span class="el-tag el-tag--light">姓名：</span>
-		    <span class="el-tag el-tag--light">病历号：</span>
-		    <span class="el-tag el-tag--light">年龄：</span>
-		    <span class="el-tag el-tag--light">性别：</span>
-		</div>
 		
-		<div class="el-divider el-divider--horizontal"></div>
+		
 		
 		<div style="font-size: 20px; text-align: left;">
 			<i class="el-icon-document-checked">检查申请</i>
 		</div>
 		
-		<div class="el-divider el-divider--horizontal"></div>
 		
-		<div style="display: flex;">
-			<button disabled="disabled" type="button" class="el-button el-button--primary is-disabled">
-				<i class="el-icon-price-tag"></i>
-				<span>项目金额：0元</span>
-			</button>
-		</div>
+		<hr>
+		<el-form>
+			<el-input v-model="registId" placeholder="请输入挂号序列号"></el-input>
+			<el-button @click="submit" id="search" style="width: 15%;margin-right: 20px;">搜索</el-button>			
+		</el-form>
+		<hr>
+		
 		<div class="el-table el-table--fit el-table--scrollable-x el-table--enable-row-hover" style="width: 80%;">
 			<div class="hidden-columns">
 				<div></div>
@@ -31,77 +25,22 @@
 				<div></div>
 				<div></div>
 			</div>
-			<div class="el-table__header-wrapper">
-				<table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 795px;">
-					<colgroup>
-						<col name="el-table_3_column_11" width="55">
-						<col name="el-table_3_column_12" width="180">
-						<col name="el-table_3_column_13" width="80">
-						<col name="el-table_3_column_14" width="100">
-						<col name="el-table_3_column_15" width="100">
-						<col name="el-table_3_column_16" width="100">
-						<col name="el-table_3_column_17" width="180">
-						<col name="gutter" width="0">
-					</colgroup>
-					<thead class="has-gutter">
-						<tr class>
-							<th colspan="1" rowspan="1" class="el-table_3_column_11   el-table-column--selection  is-leaf el-table__cell">
-								<div class="cell">
-									<label class="el-checkbox is-disabled">
-										<span class="el-checkbox__input is-disabled">
-											<span class="el-checkbox__inner"></span>
-											<input type="checkbox" aria-hidden="false" disabled="disabled" class="el-checkbox__original" value>
-										</span>
-									</label>
-								</div>
-							</th>
-							<th colspan="1" rowspan="1" class="el-table_3_column_12     is-leaf el-table__cell">
-								<div class="cell">检查编码</div>
-							</th>
-							<th colspan="1" rowspan="1" class="el-table_3_column_13     is-leaf el-table__cell">
-								<div class="cell">检查名称</div>
-							</th>
-							<th colspan="1" rowspan="1" class="el-table_3_column_14     is-leaf el-table__cell">
-								<div class="cell">检查规格</div>
-							</th>
-							<th colspan="1" rowspan="1" class="el-table_3_column_15     is-leaf el-table__cell">
-								<div class="cell">单价</div>
-							</th>
-							<th colspan="1" rowspan="1" class="el-table_3_column_16     is-leaf el-table__cell">
-								<div class="cell">费用分类</div>
-							</th>
-							<th colspan="1" rowspan="1" class="el-table_3_column_17     is-leaf el-table__cell">
-								<div class="cell">
-									<button type="button" class="el-button el-button--text">
-										<span>删除</span>
-									</button>
-									<button type="button" class="el-button el-button--text">
-										<span>增加</span>
-									</button>
-								</div>
-							</th>
-							<th class="el-table__cell gutter" style="width: 0px; display: none;"></th>
-						</tr>
-					</thead>
-				</table>
-			</div>
-			<div class="el-table__body-wrapper is-scrolling-left">
-				<table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 795px;">
-					<colgroup>
-						<col name="el-table_3_column_11" width="55">
-						<col name="el-table_3_column_12" width="180">
-						<col name="el-table_3_column_13" width="80">
-						<col name="el-table_3_column_14" width="100">
-						<col name="el-table_3_column_15" width="100">
-						<col name="el-table_3_column_16" width="100">
-						<col name="el-table_3_column_17" width="180">
-					</colgroup>
-					<tbody></tbody>
-				</table>
-				<div class="el-table__empty-block" style="height: 100%; width: 795px;">
-					<span class="el-table__empty-text">暂无数据</span>
-				</div>
-			</div>
+			
+			</el-form>
+			<hr>
+			<el-form>
+				<el-table :data="checkapply" class="checkapply">
+					<el-table-column prop="registId" label="挂号序列"></el-table-column>
+					<el-table-column prop="name" label="检查项目名称"></el-table-column>
+					<el-table-column prop="objective" label="目的要求"></el-table-column>
+					<el-table-column prop="position" label="检查部位"></el-table-column>
+					<el-table-column prop="isUrgent" label="是否加急"></el-table-column>
+					<el-table-column prop="num" label="数量"></el-table-column>
+					<el-table-column prop="creationTime" label="开立时间"></el-table-column>
+					<el-table-column prop="state" label="状态"></el-table-column>
+				</el-table>
+			</el-form>
+			
 			<div class="el-table__column-resize-proxy" style="display: none;"></div>
 		</div>
 		<div class="el-descriptions" style="width: 80%; margin-top: 20px;">
@@ -276,6 +215,29 @@
 </template>
 
 <script>
+	export default{
+		name:'checkapply',
+		data(){
+			return{
+				checkapply:[],
+				registId:'',
+	
+			}
+		},
+		methods:{
+			fun(){
+				
+			},
+			submit(){
+				let that = this
+				let registId=this.registId
+				that.$axios.get("http://localhost:8080/checkapply/list?rid="+registId).then(function(res){					 
+					that.checkapply=res.data			
+					console.log(res.data)					
+				})
+				}
+		},
+	}
 </script>
 
 <style>

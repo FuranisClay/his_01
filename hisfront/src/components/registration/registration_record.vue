@@ -1,17 +1,16 @@
 <template>
 	<div>
 		<el-container>
-			<el-aside width="180px"></el-aside>
 			<el-main style="text-align: left;">
 				<el-form :inline="true" :model="register" class="demo-form-inline" margin-left="0px;">
 					<el-form-item label="姓名:">
-						<el-input v-model="register.rn" placeholder="姓名"></el-input>
+						<el-input v-model="register.realName" placeholder="姓名"></el-input>
 					</el-form-item>
 					<el-form-item label="身份证:">
-						<el-input v-model="register.IDnumber" placeholder="身份证号码"></el-input>
+						<el-input v-model="register.iDnumber" placeholder="身份证号码"></el-input>
 					</el-form-item>
 					<el-form-item label="病历号:">
-						<el-input v-model="register.CaseNumber" placeholder="病历号"></el-input>
+						<el-input v-model="register.caseNumber" placeholder="病历号"></el-input>
 					</el-form-item>
 					<el-form-item style="float: right;">
 						<el-button type="primary" @click="onSubmit">查询</el-button>
@@ -105,14 +104,14 @@
 							<i class="el-icon-edit"></i>
 							号别
 						</template>
-						{{$store.state.register.registlevel.registName}}
+						{{register.relid}}
 					</el-descriptions-item>
 					<el-descriptions-item>
 						<template slot="label">
 							<i class="el-icon-edit"></i>
 							看诊医生
 						</template>
-						{{$store.state.register.user.realName}}
+						{{register.doctor}}
 					</el-descriptions-item>
 					<el-descriptions-item>
 						<template slot="label">
@@ -127,7 +126,7 @@
 					<hr>
 				</h3>
 				
-				<el-button type="primary" icon="el-icon-delete"  style="float: right;">退号</el-button>
+				<el-button type="primary" @click="amendSubmit" icon="el-icon-delete"  style="float: right;">退号</el-button>
 
 			</el-main>
 		</el-container>
@@ -139,26 +138,41 @@
 		data() {
 			return {
 				register: {
-					CaseNumber: '',
-					rn: '',
-					IDnumber: '',
+					caseNumber: 0,
+					realName: '',
+					iDnumber: 0,
+					doctor:'',
+					relid:'',
+					deptName:''
 				},
 			}
 		},
 		methods: {
 			onSubmit() {
-				let rn = this.register.rn
+				let rn = this.register.realName
+				let uid = this.register.iDnumber
+				let cn = this.register.caseNumber
 				let that = this
 				console.log(rn);
-				this.$axios.get("http://localhost:8080/register/list?rn=" + rn).then(function(res) {
+				this.$axios.get("http://localhost:8080/registerch/list?rn="+rn+"&cn="+cn+"&uid="+uid).then(function(res) {
 					console.log(res.data[0]);
 					that.$store.commit('register', res.data[0])
-					that.register.rn = res.data[0].realName
-					that.register.IDnumber = res.data[0].idnumber
-					that.register.CaseNumber = res.data[0].caseNumber
+					that.register.realName = res.data[0].realName
+					that.register.iDnumber = res.data[0].idnumber
+					that.register.caseNumber = res.data[0].caseNumber
+					that.register.doctor = res.data[0].user.realName
+					that.register.relid = res.data[0].registlevel.registName
+					that.register.deptName=res.data[0].departments[0].deptName
 				})
 			},
-
+			amendSubmit(){
+				console.log(this.register);
+				let cn = this.$store.state.register.caseNumber
+				console.log(cn);
+				this.$axios.get("http://localhost:8080/registerch/delrigist?cn="+cn).then(function(res){
+					console.log(res);
+				})
+			},
 		}
 	}
 </script>
