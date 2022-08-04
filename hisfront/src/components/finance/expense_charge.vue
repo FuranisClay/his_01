@@ -30,7 +30,7 @@
 					<label id="label02">患者信息确认</label>
 				</el-row>
 				
-				<el-form :inline="true" :model="patientInfo" class="demo-form-inline">
+				<el-form :inline="true"  >
 				  <i class="el-icon-user"></i>
 				  <el-form-item  label="患者名" >
 				    <el-input v-model="patientInfo.name" :disabled="true"></el-input>
@@ -39,6 +39,8 @@
 				  <el-form-item  label="身份证号" >
 				    <el-input v-model="patientInfo.id" :disabled="true"></el-input>
 				  </el-form-item>
+				</el-form>
+				<el-form :inline="true">
 				  <i class="el-icon-date"></i>
 				  <el-form-item  label="年龄" >
 				    <el-input v-model="patientInfo.age" :disabled="true"></el-input>
@@ -47,10 +49,13 @@
 				  <el-form-item  label="性别" >
 				    <el-input v-model="patientInfo.sex" :disabled="true"></el-input>
 				  </el-form-item>
+				  <el-form-item>
+					  <el-button @click="queryCost()" type="primary">确认</el-button>
+				  </el-form-item>
 				</el-form>
 				<el-row>
-					<el-button type="primary" :disabled="true" class="el-icon-price-tag">项目金额： {{price}}元</el-button>
-					<el-button type="primary" @click="charge()" class="el-icon-price-tag">收费结算</el-button>
+					<el-button type="primary" :disabled="true" class="el-icon-price-tag">项目金额： {{totalPrice}}元</el-button>
+					<el-button type="primary" @click="open()" class="el-icon-price-tag">收费结算</el-button>
 				</el-row>
 				<el-table
 				    :data="tableData"
@@ -67,7 +72,7 @@
 				      width="100">
 				    </el-table-column>
 				    <el-table-column
-				      prop="type"
+				      prop="itemType"
 				      label="类型"
 					  width="100">
 				    </el-table-column>
@@ -77,16 +82,17 @@
 					  width="100">
 					</el-table-column>
 					<el-table-column
-					  prop="quantity"
+					  prop="amount"
 					  label="数量"
 					  width="200">
 					</el-table-column>
 					<el-table-column
-					  prop="date"
+					  prop="createtime"
 					  label="开立时间"
 					  width="200">
 					</el-table-column>
 				  </el-table>
+				  
 			</el-main>
 		</el-container>
 	</div>
@@ -100,34 +106,100 @@
 					name: '',
 				},
 				patientInfo:{
-					name: '大壮',
-					id: '1111111111111111',
-					age: '28',
-					sex: '男'
+					name: '',
+					id: '',
+					age: '',
+					sex: '',
+					registerid: '',
 				},
-				price: '0',    //如何计算？
-				tableData: [{
-					name: '1',
-					price: '2',
-					type: '3',
-					format: '4',
-					quantity: '5',
-					date: '6',
-					
-				}],
-				
-
-				
+				price: '0',   
+				tableData: [],
 			}
 		},
 		
+		computed:{
+		            totalPrice(){
+						// if(this.tableData==null){
+						// 	return 0;
+						// }
+						return this.sum();
+		            }
+		        },
+		
 		methods: {
 			query(){
-				
+				//this.patientInfo=[];
+				let id = this.infoQuery.id;
+				let name=this.infoQuery.name;
+				let that=this;
+				// console.log(id);
+				// console.log(name);
+				if(id!=''&&name!=''){
+					var str="caseNumber="+id+"&"+"realname="+name;
+				}else if(id!=''){
+					var str="caseNumber="+id;
+				}else if(name!=''){
+					var str="realname="+name;
+				}
+				// if(id!=''){
+				// 	var str="caseNumber="+id;
+				// }
+				// console.log(str);
+				that.$axios.get("http://localhost:8080/charge/selectByCaseNumberAndName?"+str).then(function(res){
+					//console.log(res.data);
+					that.patientInfo.name=res.data[0].realName;
+					that.patientInfo.age=res.data[0].age;
+					that.patientInfo.sex=res.data[0].gender;
+					console.log(res.data[0].gender);
+					that.patientInfo.id=res.data[0].idnumber;
+					that.patientInfo.registerid=res.data[0].registerId;
+				});
 			},
-			charge() {
-				
-			}
+			queryCost(){
+				let registerid=this.patientInfo.registerid;
+				let that=this;
+				that.$axios.get("http://localhost:8080/charge/selectByRegisterid?registerid="+registerid).then(function(res){
+					that.tableData=res.data;
+					for(var i in that.tableData){
+						//console.log(that.tableData[i].itemType);
+						if(that.tableData[i].itemType==1){
+							that.tableData[i].itemType="非药品";
+							console.log(that.tableData[i].itemType);
+						}
+						else{
+							that.tableData[i].itemType="药品";
+						}
+					}
+				});
+			},
+			sum(){
+				let sum=0;
+				for(var i in this.tableData){
+					//console.log(this.tableData[i]);
+					sum+=parseFloat(this.tableData[i].price)*parseInt(this.tableData[i].amount);
+					//sum+=it.price*it.amount;
+				}
+				return sum;
+			},
+			open() {
+					
+					var str="本次收费金额为"+this.sum()+"元";
+			        this.$confirm(str, '收费窗口', {
+			          confirmButtonText: '确定',
+			          cancelButtonText: '取消',
+			          type: 'warning'
+			        }).then(() => {
+			          this.$message({
+			            type: 'success',
+			            message: '缴费成功!'
+			          });
+			        }).catch(() => {
+			          this.$message({
+			            type: 'info',
+			            message: '取消收费'
+			          });          
+			        });
+			      }
 		}
 	}
 </script>
