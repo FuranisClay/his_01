@@ -9,16 +9,6 @@ public class Constantitem {
   private String constantName;
   private long delMark;
 
-  @Override
-  public String toString() {
-    return "Constantitem{" +
-            "id=" + id +
-            ", constantTypeId=" + constantTypeId +
-            ", constantCode='" + constantCode + '\'' +
-            ", constantName='" + constantName + '\'' +
-            ", delMark=" + delMark +
-            '}';
-  }
 
   public long getId() {
     return id;
