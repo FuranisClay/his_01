@@ -42,7 +42,7 @@
         <template>
             <el-table
                     ref="multipleTable"
-                    :data="deptlist"
+                    :data="deptlist.slice((currentPage - 1) * pageSize,currentPage * pageSize)"
                     :row-style="{height: 90 + 'px'}"
                     tooltip-effect="dark"
                     height="520"
@@ -77,6 +77,9 @@
                         label="科室类型"
                         width="130px"
                         align="center">
+                    <template slot-scope="scope">
+                        <span style="">{{ formatDeptType(scope.row.deptType) }}</span>
+                    </template>
                 </el-table-column>
                 <el-table-column
                         label="编辑">
@@ -88,15 +91,19 @@
             </el-table>
         </template>
         <template>
-            <div class="block">
-                <el-pagination
-                        :page-sizes="[5, 10, 20, 50]"
-                        :page-size="pageSize"
-                        layout="total, sizes, prev, pager, next, jumper"
-                        :total="total">
-                </el-pagination>
-            </div>
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[3, 5, 10, 15]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="deptlist.length">
+            </el-pagination>
         </template>
+
+
+
 
 
 
@@ -110,7 +117,7 @@
                     <el-input v-model="changeRow.deptCode" disabled="true" style="width: 75%;"></el-input>
                 </el-form-item>
                 <el-form-item label="科室名称" :label-width="formLabelWidth">
-                    <el-input v-model="changeRow.deptName" @input="turnPinyin" style="width: 75%;"></el-input>
+                    <el-input v-model="changeRow.deptName" @input="changePinyin" style="width: 75%;"></el-input>
                 </el-form-item>
 
                 <el-form-item label="科室分类" :label-width="formLabelWidth">
@@ -188,10 +195,14 @@
 
 <script>
     import {pinyin} from '../../../src/chineseTurnPinyin.js'
+    import {makeDeptType} from '../../../src/TypeFormat'
 
     export default {
         data() {
             return {
+                currentPage: 1,
+                pageSize: 3,
+                tableDataEnd:[],
                 changeDialogVisible: false,
                 formLabelWidth: '20%',
                 addDialogVisible: false,
@@ -205,6 +216,24 @@
             }
         },
         methods: {
+            formatDeptType(dept) {
+                return makeDeptType(dept)
+            },
+            handleSizeChange(val) {
+                this.pageSize = val
+                this.handleCurrentChange(this.currentPage)
+            },
+            handleCurrentChange(val) {
+                this.currentPage = val
+                this.currentChangePage()
+            },
+            currentChangePage() {
+                let start = (this.currentPage - 1) * this.pageSize
+                let end = this.currentPage * this.pageSize
+                this.tableDataEnd = []
+                this.tableDataEnd = this.deptlist.slice(start, end)
+                // deptlist.slice((currentPage - 1) * pageSize,currentPage * pageSize)
+            },
             changeDialog(row) {
                 this.changeDialogVisible = true
                 console.log(row)
@@ -225,10 +254,10 @@
                 this.changeDialogVisible = false
                 // console.log(this.updateRow.deptId)
                 // console.log(this.updateRow.realName)
-                // delete this.updateRow.department    //删除多余的属性，不用往后台传递
+                delete this.changeRow.constantitem    //删除多余的属性，不用往后台传递
                 //修改保存到数据库中，以json对象为单位进行传参
                 let ue = this.$qs.stringify(this.changeRow)
-                this.$axios.get("http://localhost:8080/dept/update?"+ue).then(function (res) {
+                this.$axios.get("http://localhost:8080/deptzgy/update?"+ue).then(function (res) {
                     console.log(res)
                 })
             },
@@ -237,13 +266,16 @@
                 // delete this.updateRow.constantitem    //删除多余的属性，不用往后台传递
                 console.log(this.addRow)
                 let ue = this.$qs.stringify(this.addRow)
-                this.$axios.get("http://localhost:8080/dept/add?"+ue).then(function (res) {
+                this.$axios.get("http://localhost:8080/deptzgy/add?"+ue).then(function (res) {
                     console.log(res)
                 })
             },
             addDialog() {
                 this.addDialogVisible = true
                 this.addRow.id = this.maxid + 1
+            },
+            changePinyin() {
+                this.changeRow.deptCode = pinyin.getCamelChars(this.changeRow.deptName).toUpperCase();
             },
             addPinyin() {
                 this.addRow.deptCode = pinyin.getCamelChars(this.addRow.deptName).toUpperCase();
@@ -273,14 +305,14 @@
             },
             deleteDialogTrue(){
                 let that = this
-                this.$axios.get("http://localhost:8080/dept/delete?id="+that.deleteRow.id).then(function (res) {
+                this.$axios.get("http://localhost:8080/deptzgy/delete?id="+that.deleteRow.id).then(function (res) {
                     console.log(res)
                     console.log(that.deleteRow.id)
                 })
             },
             queryDept() {
                 let that = this
-                this.$axios.get("http://localhost:8080/dept/list?string=" + this.queryDeptString).then(function (res) {
+                this.$axios.get("http://localhost:8080/deptzgy/list?string=" + this.queryDeptString).then(function (res) {
                     that.deptlist = res.data
                 })
                 console.log(this.queryDeptString)
@@ -289,15 +321,15 @@
         name: "Department",
         created() {
             let that = this
-            this.$axios.get("http://localhost:8080/dept/list").then(function (res) {
+            this.$axios.get("http://localhost:8080/deptzgy/list").then(function (res) {
                 that.deptlist = res.data
                 console.log(res.data)
             })
-            this.$axios.get("http://localhost:8080/dept/maxid").then(function (res) {
+            this.$axios.get("http://localhost:8080/deptzgy/maxid").then(function (res) {
                 that.maxid = res.data
                 console.log(res.data)
             })
-            this.$axios.get("http://localhost:8080/constantitem/categorylist").then(function (res) {
+            this.$axios.get("http://localhost:8080/constantitemzgy/categorylist").then(function (res) {
                 that.deptCategoryList = res.data
                 console.log(res.data)
             })

@@ -42,7 +42,7 @@
         <template>
             <el-table
                     ref="multipleTable"
-                    :data="medlist"
+                    :data="medlist.slice((currentPage - 1) * pageSize,currentPage * pageSize)"
                     :row-style="{height: 90 + 'px'}"
                     tooltip-effect="dark"
                     height="520"
@@ -113,6 +113,9 @@
                         label="项目类型"
                         width="130px"
                         align="center">
+                    <template slot-scope="scope">
+                        <span style="">{{ formatRecordType(scope.row.recordType) }}</span>
+                    </template>
                 </el-table-column>
                 <el-table-column
                         label="编辑">
@@ -125,8 +128,7 @@
         </template>
 
 
-
-        <!--        修改对话框-->
+        <!--修改对话框-->
         <el-dialog title="非药品收费项目信息修改" :visible.sync="changeDialogVisible" width="25%">
             <el-form>
                 <el-form-item label="ID" :label-width="formLabelWidth">
@@ -166,6 +168,13 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="项目类型" :label-width="formLabelWidth">
+                    <el-select v-model="changeRow.recordType" placeholder="请选择项目类型">
+                        <el-option label="检查" value="1"></el-option>
+                        <el-option label="检验" value="2"></el-option>
+                        <el-option label="处置" value="3"></el-option>
+                    </el-select>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="changeDialogVisible = false">取 消</el-button>
@@ -174,22 +183,28 @@
         </el-dialog>
 
 
-        <!--        新增科室对话框-->
-        <el-dialog title="新增科室信息" :visible.sync="addDialogVisible" width="25%">
+        <!--新增非药品收费项目信息-->
+        <el-dialog title="新增非药品收费项目信息" :visible.sync="addDialogVisible" width="25%">
             <el-form>
-                <el-form-item label="科室ID" :label-width="formLabelWidth">
+                <el-form-item label="ID" :label-width="formLabelWidth">
                     <el-input v-model="addRow.id" disabled="true" style="width: 75%;"></el-input>
                 </el-form-item>
-                <el-form-item label="科室编号" :label-width="formLabelWidth">
-                    <el-input v-model="addRow.deptCode" disabled="true" style="width: 75%;"></el-input>
+                <el-form-item label="项目编码" :label-width="formLabelWidth">
+                    <el-input v-model="addRow.itemCode" style="width: 75%;"></el-input>
                 </el-form-item>
-                <el-form-item label="科室名称" :label-width="formLabelWidth">
-                    <el-input v-model="addRow.deptName" @input="addPinyin" style="width: 75%;"></el-input>
+                <el-form-item label="拼音助记码" :label-width="formLabelWidth">
+                    <el-input v-model="addRow.mnemonicCode" disabled="true" style="width: 75%;"></el-input>
                 </el-form-item>
-                <!--                <el-form-item label="科室分类" :label-width="formLabelWidth">-->
-                <!--                    <el-input v-model="addRow.deptCategoryId" style="width: 75%;"></el-input>-->
-                <!--                </el-form-item>-->
-                <el-form-item label="科室分类" :label-width="formLabelWidth">
+                <el-form-item label="项目名称" :label-width="formLabelWidth">
+                    <el-input v-model="addRow.itemName" @input="addPinyin" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="规格" :label-width="formLabelWidth">
+                    <el-input v-model="addRow.format" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="单价" :label-width="formLabelWidth">
+                    <el-input v-model="addRow.price" style="width: 75%;"></el-input>
+                </el-form-item>
+                <el-form-item label="所属费用科目名称" :label-width="formLabelWidth">
                     <el-select v-model="addRow.expClassId">
                         <el-option
                                 v-for="item in expenseclassList"
@@ -198,16 +213,20 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <!--                <el-form-item label="科室类型" :label-width="formLabelWidth">-->
-                <!--                    <el-input v-model="addRow.deptType" style="width: 75%;"></el-input>-->
-                <!--                </el-form-item>-->
-                <el-form-item label="科室类型" :label-width="formLabelWidth">
-                    <el-select v-model="addRow.deptType" placeholder="请选择科室类型">
-                        <el-option label="临床" value="1"></el-option>
-                        <el-option label="医技" value="2"></el-option>
-                        <el-option label="财务" value="3"></el-option>
-                        <el-option label="行政" value="4"></el-option>
-                        <el-option label="其他" value="5"></el-option>
+                <el-form-item label="执行科室名称" :label-width="formLabelWidth">
+                    <el-select v-model="addRow.deptId">
+                        <el-option
+                                v-for="item in deptlist"
+                                :label="item.deptName"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="项目类型" :label-width="formLabelWidth">
+                    <el-select v-model="addRow.recordType" placeholder="请选择项目类型">
+                        <el-option label="检查" value="1"></el-option>
+                        <el-option label="检验" value="2"></el-option>
+                        <el-option label="处置" value="3"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -219,46 +238,70 @@
 
 
         <template>
-            <div class="block">
-                <el-pagination
-                        :page-sizes="[5, 10, 20, 50]"
-                        :page-size="pageSize"
-                        layout="total, sizes, prev, pager, next, jumper"
-                        :total="total">
-                </el-pagination>
-            </div>
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[3, 5, 10, 15]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="medlist.length">
+            </el-pagination>
         </template>
     </div>
 </template>
 
 <script>
     import {pinyin} from '../../../src/chineseTurnPinyin.js'
+    import {makeRecordType} from '../../../src/TypeFormat'
+
     export default {
         data() {
             return {
+                currentPage: 1,
+                pageSize: 3,
+                tableDataEnd: [],
                 formLabelWidth: '20%',
                 maxid: 0,
                 medlist: [],
-                queryDrugString:"",
+                queryDrugString: "",
                 changeDialogVisible: false,
                 addDialogVisible: false,
                 changeRow: {},
-                deleteRow:{},
-                addRow:{},
+                deleteRow: {},
+                addRow: {},
                 deptlist: [],
-                expenseclassList:[]
+                expenseclassList: []
             }
         },
-        methods:{
+        methods: {
+            formatRecordType(record) {
+                return makeRecordType(record)
+            },
+            handleSizeChange(val) {
+                this.pageSize = val
+                this.handleCurrentChange(this.currentPage)
+            },
+            handleCurrentChange(val) {
+                this.currentPage = val
+                this.currentChangePage()
+            },
+            currentChangePage() {
+                let start = (this.currentPage - 1) * this.pageSize
+                let end = this.currentPage * this.pageSize
+                this.tableDataEnd = []
+                this.tableDataEnd = this.medlist.slice(start, end)
+                // deptlist.slice((currentPage - 1) * pageSize,currentPage * pageSize)
+            },
             changeTurnPinyin() {
                 // console.log(pinyin.getCamelChars(this.changeRow.registName).toLowerCase())
                 this.changeRow.mnemonicCode = pinyin.getCamelChars(this.changeRow.itemName).toUpperCase();
             },
-            submitAdd(){
+            submitAdd() {
                 this.addDialogVisible = false
                 console.log(this.addRow)
                 let ue = this.$qs.stringify(this.addRow)
-                this.$axios.get("http://localhost:8080/register/add?"+ue).then(function (res) {
+                this.$axios.get("http://localhost:8080/fmeditemzgy/add?" + ue).then(function (res) {
                     console.log(res)
                 })
             },
@@ -267,15 +310,15 @@
                 this.changeDialogVisible = false
                 delete this.changeRow.department    //删除多余的属性，不用往后台传递
                 delete this.changeRow.expenseclass
-                this.changeRow.lastUpdateDate=
-                console.log(this.changeRow)
+                this.changeRow.lastUpdateDate =
+                    console.log(this.changeRow)
                 //修改保存到数据库中，以json对象为单位进行传参
                 let ue = this.$qs.stringify(this.changeRow)
-                this.$axios.get("http://localhost:8080/fmeditem/update?"+ue).then(function (res) {
+                this.$axios.get("http://localhost:8080/fmeditemzgy/update?" + ue).then(function (res) {
                     console.log(res)
                 })
             },
-            addDialog(){
+            addDialog() {
                 this.addDialogVisible = true
                 this.addRow.id = this.maxid + 1
             },
@@ -284,14 +327,14 @@
                 console.log(row)
                 this.changeRow = row
             },
-            deleteDialog(row){
+            deleteDialog(row) {
                 this.deleteRow = row
                 console.log(this.deleteRow)
                 this.open()
             },
-            querydrug(){
+            querydrug() {
                 let that = this
-                this.$axios.get("http://localhost:8080/fmeditem/list?string=" + this.queryDrugString).then(function (res) {
+                this.$axios.get("http://localhost:8080/fmeditemzgy/list?string=" + this.queryDrugString).then(function (res) {
                     that.medlist = res.data
                 })
                 console.log(this.queryDrugString)
@@ -314,32 +357,35 @@
                     });
                 });
             },
-            deleteDialogTrue(){
+            deleteDialogTrue() {
                 let that = this
-                this.$axios.get("http://localhost:8080/fmeditem/delete?id="+that.deleteRow.id).then(function (res) {
+                this.$axios.get("http://localhost:8080/fmeditemzgy/delete?id=" + that.deleteRow.id).then(function (res) {
                     console.log(res)
                     console.log(that.deleteRow.id)
                 })
             },
+            addPinyin() {
+                this.addRow.mnemonicCode = pinyin.getCamelChars(this.addRow.itemName).toUpperCase();
+            }
         },
         name: "Drugpay",
         created() {
             let that = this
-            this.$axios.get("http://localhost:8080/fmeditem/list").then(function (res) {
+            this.$axios.get("http://localhost:8080/fmeditemzgy/list").then(function (res) {
                 that.medlist = res.data
                 console.log("listsdfsafasfasfasfsadfasfdasfadsfsadfa")
                 console.log(res.data)
             })
-            this.$axios.get("http://localhost:8080/fmeditem/maxid").then(function (res) {
+            this.$axios.get("http://localhost:8080/fmeditemzgy/maxid").then(function (res) {
                 that.maxid = res.data
                 // console.log(res.data)
             })
-            this.$axios.get("http://localhost:8080/expenseclass/expenseclasslist").then(function (res) {
+            this.$axios.get("http://localhost:8080/expenseclasszgy/expenseclasslist").then(function (res) {
                 that.expenseclassList = res.data
                 // console.log("123")
                 // console.log(res.data)
             })
-            this.$axios.get("http://localhost:8080/dept/list").then(function (res) {
+            this.$axios.get("http://localhost:8080/deptzgy/list").then(function (res) {
                 that.deptlist = res.data
                 // console.log("部门")
                 // console.log(res.data)

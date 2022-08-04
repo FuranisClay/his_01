@@ -5,12 +5,11 @@
             <el-form :inline="true" :model="form" class="demo-form-inline">
                 <el-form-item label="科室选择：">
                     <el-select v-model="form.deptName" placeholder="请选择科室类型">
-                        <el-option label="--请选择--" value=""></el-option>
+                        <el-option label="--请选择--"></el-option>
                         <el-option
-                                v-for="item in deptNames"
-                                :key="item.id"
+                                v-for="item in deptlist"
                                 :label="item.deptName"
-                                :value="item.deptName"
+                                :value="item.id"
                         >
                         </el-option>
                     </el-select>
@@ -18,34 +17,36 @@
                 <el-form-item label="挂号级别：">
                     <el-select v-model="form.level" placeholder="请选择挂号级别">
                         <el-option label="--请选择--" value=""></el-option>
-                        <el-option label="普通号" value="putonghao"></el-option>
-                        <el-option label="专家号" value="zhuanjiahao"></el-option>
+                        <el-option
+                                v-for="item in registlist"
+                                :label="item.registName"
+                                :value="item.id"
+                        ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" icon="el-icon-search" @click="onSubmit">查询</el-button>
+                    <el-button type="primary" icon="el-icon-search" @click="">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" plain icon="el-icon-delete" @click="onSubmit">清空</el-button>
+                    <el-button type="primary" plain icon="el-icon-delete" @click="">清空</el-button>
                 </el-form-item>
             </el-form>
             <el-form>
-
                 <el-table
-                        :data="tableData"
+                        :data="userlist"
                         border
                         style="width: 100%">
-                    <el-table-column
-                            type="selection"
-                            header-align="center"
-                            align="center"
-                            width="50">
-                    </el-table-column>
+                    <!--                    <el-table-column-->
+                    <!--                            type="selection"-->
+                    <!--                            header-align="center"-->
+                    <!--                            align="center"-->
+                    <!--                            width="50">-->
+                    <!--                    </el-table-column>-->
                     <el-table-column
                             label="医生姓名"
                             width="100">
                         <template slot-scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.name }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.realName }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -53,7 +54,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked1"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox change="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -62,7 +64,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked2"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -71,7 +74,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked3"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -80,7 +84,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked4"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -89,7 +94,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked5"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -98,7 +104,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked6"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -107,7 +114,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked7"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -116,7 +124,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked8"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -125,7 +134,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked9"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -134,7 +144,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked10"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -143,7 +154,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked11"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -152,16 +164,35 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-                                <el-checkbox v-model="checked12"></el-checkbox>
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            label="星期日 上午"
+                            width="100">
+                        <template slot-scope="scope">
+                            <div style="margin-left: 30px">
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            label="星期日 下午"
+                            width="100">
+                        <template slot-scope="scope">
+                            <div style="margin-left: 30px">
+<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
                 </el-table>
                 <div style="margin: 20px 480px;">
                     <el-form-item label="排班规则名称:" label-width="120px">
-                        <!--<el-col :span="8">-->
                         <el-input v-model="form.name" size="medium"></el-input>
-                        <!--</el-col>-->
                     </el-form-item>
                 </div>
                 <div>
@@ -170,10 +201,8 @@
                         <el-button type="primary" plain>取消</el-button>
                     </el-form-item>
                 </div>
-
             </el-form>
         </div>
-
     </div>
 </template>
 
@@ -184,81 +213,41 @@
         components: {ElForm},
         data() {
             return {
-                checked1: false,
-                checked2: false,
-                checked3: false,
-                checked4: false,
-                checked5: false,
-                checked6: false,
-                checked7: false,
-                checked8: false,
-                checked9: false,
-                checked10: false,
-                checked11: false,
-                checked12: false,
+                deptlist: [],
+                registlist: [],
+                userlist: [],
+                checkedlist: [],
                 form: {
                     deptName: '',
-                    level:''
+                    level: ''
                 },
-                deptNames:[],
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }]
+                deptNames: []
             }
-        },
-        //dom未生成之前触发
-        created() {
-            this.getData()
-            this.selDepartName()
         },
         methods: {
-            // 获取数据列表
-            getData() {
-                // this.dataListLoading = true
-                // let url = `http://localhost:88/api/baseinformation/rule/list/${this.currPage}`
-                // this.$ajax.post(url, this.form).then((res) => {
-                //   this.pageInfo = res.data
-                //   console.log(this.pageInfo)
-                // }).finally(() => {
-                //   this.loading = false
-                // })
-            },
-            //取所有的大类
-            selDepartName(){
-                let url = `http://localhost:88/api/baseinformation/departname/list`
-                this.$ajax.get(url).then((res)=>{
-                    this.deptNames = res.data
-                    // console.log("deptNames"+this.deptNames)
-                })
+            selDepartName() {
+
             },
             onSubmit() {
-                console.log('submit!');
-            },
-            handleEdit(index, row) {
-                console.log(index, row);
-            },
-            handleDelete(index, row) {
-                console.log(index, row);
+                console.log(this.scope.row);
             }
         },
-
+        created() {
+            let that = this
+            this.$axios.get("http://localhost:8080/deptzgy/list").then(function (res) {
+                that.deptlist = res.data
+                // console.log("部门")
+                // console.log(res.data)
+            })
+            this.$axios.get("http://localhost:8080/registerzgy/list").then(function (res) {
+                that.registlist = res.data
+                console.log("挂号等级")
+                console.log(res.data)
+            })
+            this.$axios.get("http://localhost:8080/userzgy/list").then(function (res) {
+                that.userlist = res.data
+                console.log(res.data)
+            })
+        }
     }
 </script>

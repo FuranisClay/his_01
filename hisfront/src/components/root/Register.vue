@@ -184,7 +184,7 @@
         methods: {
             queryRegist() {
                 let that = this
-                this.$axios.get("http://localhost:8080/register/list?string=" + this.queryRegistString).then(function (res) {
+                this.$axios.get("http://localhost:8080/registerzgy/list?string=" + this.queryRegistString).then(function (res) {
                     that.registlist = res.data
                 })
                 console.log(this.queryRegistString)
@@ -196,7 +196,7 @@
                 // delete this.updateRow.department    //删除多余的属性，不用往后台传递
                 //修改保存到数据库中，以json对象为单位进行传参
                 let ue = this.$qs.stringify(this.changeRow)
-                this.$axios.get("http://localhost:8080/register/update?"+ue).then(function (res) {
+                this.$axios.get("http://localhost:8080/registerzgy/update?"+ue).then(function (res) {
                     console.log(res)
                 })
             },
@@ -208,7 +208,7 @@
                 this.addDialogVisible = false
                 console.log(this.addRow)
                 let ue = this.$qs.stringify(this.addRow)
-                this.$axios.get("http://localhost:8080/register/add?"+ue).then(function (res) {
+                this.$axios.get("http://localhost:8080/registerzgy/add?"+ue).then(function (res) {
                     console.log(res)
                 })
             },
@@ -231,7 +231,7 @@
             },
             deleteDialogTrue(){
                 let that = this
-                  this.$axios.get("http://localhost:8080/register/delete?id="+that.deleteRow.id).then(function (res) {
+                  this.$axios.get("http://localhost:8080/registerzgy/delete?id="+that.deleteRow.id).then(function (res) {
                       console.log(res)
                       console.log(that.deleteRow.id)
                   })
@@ -258,11 +258,11 @@
         name: "Register",
         created() {
             let that = this
-            this.$axios.get("http://localhost:8080/register/list").then(function (res) {
+            this.$axios.get("http://localhost:8080/registerzgy/list").then(function (res) {
                 that.registlist = res.data
                 console.log(res.data)
             })
-            this.$axios.get("http://localhost:8080/register/maxid").then(function (res) {
+            this.$axios.get("http://localhost:8080/registerzgy/maxid").then(function (res) {
                 that.maxid = res.data
                 console.log(res.data)
             })
