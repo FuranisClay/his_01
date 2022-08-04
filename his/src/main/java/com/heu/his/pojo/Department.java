@@ -9,14 +9,17 @@ public class Department {
   private long deptCategoryId;
   private long deptType;
   private long delMark;
-  private Constantitem constantitem;
 
-  public Constantitem getConstantitem() {
-    return constantitem;
-  }
-
-  public void setConstantitem(Constantitem constantitem) {
-    this.constantitem = constantitem;
+  @Override
+  public String toString() {
+    return "Department{" +
+            "id=" + id +
+            ", deptCode='" + deptCode + '\'' +
+            ", deptName='" + deptName + '\'' +
+            ", deptCategoryId=" + deptCategoryId +
+            ", deptType=" + deptType +
+            ", delMark=" + delMark +
+            '}';
   }
 
   public long getId() {
@@ -72,16 +75,4 @@ public class Department {
     this.delMark = delMark;
   }
 
-  @Override
-  public String toString() {
-    return "Department{" +
-            "id=" + id +
-            ", deptCode='" + deptCode + '\'' +
-            ", deptName='" + deptName + '\'' +
-            ", deptCategoryId=" + deptCategoryId +
-            ", deptType=" + deptType +
-            ", delMark=" + delMark +
-            ", constantitem=" + constantitem +
-            '}';
-  }
 }

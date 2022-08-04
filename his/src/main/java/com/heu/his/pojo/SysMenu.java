@@ -12,7 +12,7 @@ public class SysMenu {
   private String visible;
   private String remark;
 
-  private List<SysMenu> childMenu;
+  private java.util.List<SysMenu> childMenu;//子集权限
 
   public List<SysMenu> getChildMenu() {
     return childMenu;
@@ -20,6 +20,18 @@ public class SysMenu {
 
   public void setChildMenu(List<SysMenu> childMenu) {
     this.childMenu = childMenu;
+  }
+
+  @Override
+  public String toString() {
+    return "SysMenu{" +
+            "menuId=" + menuId +
+            ", menuName='" + menuName + '\'' +
+            ", parentId=" + parentId +
+            ", url='" + url + '\'' +
+            ", visible='" + visible + '\'' +
+            ", remark='" + remark + '\'' +
+            '}';
   }
 
   public long getMenuId() {

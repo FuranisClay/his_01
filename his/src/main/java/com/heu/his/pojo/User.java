@@ -1,10 +1,6 @@
 package com.heu.his.pojo;
 
 
-import com.heu.his.pojo.Constantitem;
-import com.heu.his.pojo.Department;
-import com.heu.his.pojo.Registlevel;
-
 public class User {
 
   private long id;
@@ -17,37 +13,32 @@ public class User {
   private long deptId;
   private long registLeId;
   private long delMark;
+  private long roleId;
 
-  //挂号级别
-  private Registlevel registlevel;
-  //医生职称
-  private Constantitem constantitem;
-  //部门信息
-  private Department department;
-
-  public Registlevel getRegistlevel() {
-    return registlevel;
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", userName='" + userName + '\'' +
+            ", password='" + password + '\'' +
+            ", realName='" + realName + '\'' +
+            ", useType=" + useType +
+            ", docTitleId=" + docTitleId +
+            ", isScheduling='" + isScheduling + '\'' +
+            ", deptId=" + deptId +
+            ", registLeId=" + registLeId +
+            ", delMark=" + delMark +
+            '}';
   }
 
-  public void setRegistlevel(Registlevel registlevel) {
-    this.registlevel = registlevel;
+  public long getRoleId() {
+    return roleId;
   }
 
-  public Constantitem getConstantitem() {
-    return constantitem;
+  public void setRoleId(long roleId) {
+    this.roleId = roleId;
   }
 
-  public void setConstantitem(Constantitem constantitem) {
-    this.constantitem = constantitem;
-  }
-
-  public Department getDepartment() {
-    return department;
-  }
-
-  public void setDepartment(Department department) {
-    this.department = department;
-  }
 
   public long getId() {
     return id;

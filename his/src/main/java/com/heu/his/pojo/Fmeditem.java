@@ -1,6 +1,5 @@
 package com.heu.his.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Fmeditem {
 
@@ -12,31 +11,11 @@ public class Fmeditem {
   private long expClassId;
   private long deptId;
   private String mnemonicCode;
-  @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
   private java.sql.Timestamp creationDate;
-  @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
   private java.sql.Timestamp lastUpdateDate;
   private long recordType;
   private long delMark;
 
-  private Expenseclass expenseclass;
-  private Department department;
-
-  public Expenseclass getExpenseclass() {
-    return expenseclass;
-  }
-
-  public void setExpenseclass(Expenseclass expenseclass) {
-    this.expenseclass = expenseclass;
-  }
-
-  public Department getDepartment() {
-    return department;
-  }
-
-  public void setDepartment(Department department) {
-    this.department = department;
-  }
 
   public long getId() {
     return id;
@@ -145,23 +124,4 @@ public class Fmeditem {
     this.delMark = delMark;
   }
 
-  @Override
-  public String toString() {
-    return "Fmeditem{" +
-            "id=" + id +
-            ", itemCode='" + itemCode + '\'' +
-            ", itemName='" + itemName + '\'' +
-            ", format='" + format + '\'' +
-            ", price=" + price +
-            ", expClassId=" + expClassId +
-            ", deptId=" + deptId +
-            ", mnemonicCode='" + mnemonicCode + '\'' +
-            ", creationDate=" + creationDate +
-            ", lastUpdateDate=" + lastUpdateDate +
-            ", recordType=" + recordType +
-            ", delMark=" + delMark +
-            ", expenseclass=" + expenseclass +
-            ", department=" + department +
-            '}';
-  }
 }

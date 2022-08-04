@@ -1,23 +1,22 @@
+
+# 应用服务 WEB 访问端口
 server:
   port: 8080
 
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://localhost:3306/his?serveTimezone=UTC
     username: root
-    password: 2019201131
+    url: jdbc:mysql://localhost:3306/his?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-#  jackson:
-#    date-format: yyyy-MM-dd HH:mm:ss
-#    time-zone: UTC
+    password: ch0000,.
 
 mybatis:
   type-aliases-package: com.heu.his.pojo
   configuration:
     map-underscore-to-camel-case: true
+#    识别下划线
 
 logging:
   level:
     com.heu.his.mapper: trace
-
