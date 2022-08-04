@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://localhost:3306/his?serveTimezone=UTC
+    username: root
+    password: 2019201131
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: UTC
+
+mybatis:
+  type-aliases-package: com.heu.his.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.heu.his.mapper: trace
+
