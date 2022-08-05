@@ -57,11 +57,11 @@
 </script>
 
 <style>
-	.el-form{
+	.give .el-form{
 		text-align: left;
 		/* position: relative; */
 	}
-	.el-input{
+	.give .el-input{
 		width: 20%;
 		margin-right: 20px;
 	}

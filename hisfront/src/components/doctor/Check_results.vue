@@ -192,12 +192,12 @@
   </div>
 </template>
 <style>
-	.el-form{
+	.drugs .el-form{
 		text-align: left;
 		/* height: 50px; */
 		/* position: relative; */
 	}
-	.el-form-item{
+	.drugs .el-form-item{
 		height: 50px;
 	}
 	#search{
@@ -205,7 +205,7 @@
 		/* position: absolute; */
 		/* margin-left: 100px; */
 	}
-	.el-input{
+	.drugs .el-input{
 		width: 100%;
 	}
 	.drugs{
