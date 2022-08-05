@@ -3,8 +3,10 @@
 		
 		
 		
-		<div style="font-size: 20px; text-align: left;">
-			<i class="el-icon-document-checked">检查申请</i>
+		<div style="font-size:20px;text-align:left">
+			<i class="el-icon-document-checked">
+				检查申请
+			</i>
 		</div>
 		
 		
@@ -16,18 +18,10 @@
 		<hr>
 		
 		<div class="el-table el-table--fit el-table--scrollable-x el-table--enable-row-hover" style="width: 80%;">
-			<div class="hidden-columns">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-			</div>
+			
 			
 			</el-form>
-			<hr>
+			
 			<el-form>
 				<el-table :data="checkapply" class="checkapply">
 					<el-table-column prop="registId" label="挂号序列"></el-table-column>

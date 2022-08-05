@@ -18,7 +18,7 @@
 			</i>
 		</div>
 		
-		<div class="el-divider el-divider--horizontal"></div>
+		
 		
 		
 		
@@ -50,14 +50,12 @@
 					<tbody>
 					</tbody>
 				</table>
-				<div class="el-table_empty-block" style="height: 100%; width: 1000px; ">
-					<span class="el-table__empty-text">暂无数据</span>
-				</div>
-				<div class="el-table__column-resize-proxy" style="display: none; " ></div>
+				
+				
 			</div>
 		</div>
 		
-		<div class="el-divider el-divider--horizontal"></div>
+		
 		
 		<div class="el-pagination" >
 			<button type="button" disabled="disabled" class="btn-prev">

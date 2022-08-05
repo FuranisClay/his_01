@@ -1,7 +1,13 @@
 <template>
 	<div class="give">
-		<hr>
-		<h4><i class="el-icon-edit-outline"></i>病历首页</h4>
+		
+		
+		<div style="font-size:20px;text-align:left">
+			<i class="el-icon-document-checked">
+				看诊记录
+			</i>
+		</div>
+		<h2></h2>
 		<hr>
 		<el-form>
 			<el-input v-model="caseNumber" placeholder="请输入病历号"></el-input>

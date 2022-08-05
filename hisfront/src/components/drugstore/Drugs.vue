@@ -197,12 +197,12 @@
   </div>
 </template>
 <style>
-	.el-form{
+	.drugs .el-form{
 		text-align: left;
 		/* height: 50px; */
 		/* position: relative; */
 	}
-	.el-form-item{
+	.drugs .el-form-item{
 		height: 50px;
 	}
 	#search{

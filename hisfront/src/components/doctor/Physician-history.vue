@@ -14,7 +14,7 @@
 		
 		<div style="font-size:20px;text-align:left">
 			<i class="el-icon-document-checked">
-				患者叫号
+				看诊记录
 			</i>
 		</div>
 		<h1></h1>

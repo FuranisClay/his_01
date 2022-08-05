@@ -73,11 +73,11 @@
 </script>
 
 <style>
-	.el-form{
+	.out .el-form{
 		text-align: left;
 		/* position: relative; */
 	}
-	.el-input{
+	.out .el-input{
 		width: 20%;
 		margin-right: 20px;
 	}

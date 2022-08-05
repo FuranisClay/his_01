@@ -64,11 +64,11 @@
 </script>
 
 <style>
-	.el-form{
+	.history .el-form{
 		text-align: left;
 		/* position: relative; */
 	}
-	.el-input{
+	.history  .el-input{
 		width: 20%;
 		margin-right: 20px;
 	}
