@@ -2,13 +2,15 @@
     <div>
         <el-container>
             <el-header>
+				<hr>
                 <el-row>
-                    <el-col span="2">{{$store.state.emp.realName}},欢迎登录</el-col>
-                    <el-col span="21">
-						  <i class="el-icon-setting" style="margin-right: 15px"></i>
-						  <router-link to="/login">退出登录</router-link> 
+                    <el-col span="5" style="float: left;">{{$store.state.emp.realName}},欢迎登录</el-col>
+                    <el-col span="5" style="float: right;">
+                    	  <i class="el-icon-setting" style="margin-right: 15px"></i>
+                    	  <router-link to="/login" style="text-decoration: none;color: black">退出登录</router-link> 
                     </el-col>
                 </el-row>
+				<hr>
             </el-header>
             <el-container>
                 <el-aside width="200px">
@@ -62,10 +64,10 @@
 
 <style scoped>
     .el-header{
-        background-color: red;
+        background-color: ;
     }
     .el-container .el-aside{
-        background-color: pink;
+        background-color: ;
     }
     .el-container .el-container .el-container .el-main{
         height: 750px;

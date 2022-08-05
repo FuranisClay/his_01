@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-container>
-			<el-aside width="180px"></el-aside>
+			<!-- <el-aside width="180px"></el-aside> -->
 
 			<el-main style="text-align: left;">
 				<el-row>

@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-top: 50px;background-color:#E2FFB7;">
+    <div style="margin-top: 50px;background-color:;">
         <el-form
                 :inline="true"
                 :model="formInline"
