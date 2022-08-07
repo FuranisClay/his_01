@@ -40,7 +40,7 @@ class HisApplicationTests {
 
 //        departmentMapper.getdeptname();
 
-//        userMapper.getdeptusername(1);
+       userchMapper.getdeptusername(1);
 
 //        registerchMapper.getRegisterListAndRL("李白",0,0);
 //        patientcostsMapper.getPatientcostsList(35);

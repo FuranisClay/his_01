@@ -18,27 +18,27 @@ public class DepartmentzgyService implements IDepartmentzgyService {
     @Autowired
     DepartmentzgyMapper departmentzgyMapper;
 
-    @Override
+
     public int deleteDepartmentById(int id) {
         return departmentzgyMapper.deleteDepartmentById(id);
     }
 
-    @Override
+
     public int updateDepartmentById(Department department) {
         return departmentzgyMapper.updateDepartmentById(department);
     }
 
-    @Override
+
     public int insertDepartment(Department department) {
         return departmentzgyMapper.insertDepartment(department);
     }
 
-    @Override
+
     public int getDepartmentMaxID() {
         return departmentzgyMapper.getDepartmentMaxID();
     }
 
-    @Override
+
     public List<Department> getDepartmentList(String string) {
         return departmentzgyMapper.getDepartmentList(string);
     }

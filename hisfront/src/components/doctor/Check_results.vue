@@ -55,7 +55,7 @@
 		  <el-form-item label="挂号序号">
 		  			  <el-input v-model="updateRow.registId" id="updateInput"></el-input>
 		  </el-form-item>
-		  <el-form-item label="项目名称">
+		  <el-form-item label="检查项目名称">
 		  			  <el-input v-model="updateRow.name" @input="addPinyin1" id="updateInput"></el-input>
 		  </el-form-item>
 
