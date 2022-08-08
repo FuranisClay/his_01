@@ -12,7 +12,8 @@ export default new Vuex.Store({
 			departments:'0',
 			registlevel:'0',
 			user:'0',
-			settlecategory:'0'
+			settlecategory:'0',
+			sex:'男'
 		}
     },
     getters: {},

@@ -3,9 +3,6 @@
 		<el-container>
 			<el-main style="text-align: left;">
 				<el-form :inline="true" :model="register" class="demo-form-inline">
-					<el-form-item label="姓名:">
-						<el-input v-model="register.realName" placeholder="姓名"></el-input>
-					</el-form-item>
 					<el-form-item label="身份证:">
 						<el-input v-model="register.iDnumber" placeholder="身份证号码"></el-input>
 					</el-form-item>
@@ -13,7 +10,7 @@
 						<el-input v-model="register.caseNumber" placeholder="病历号"></el-input>
 					</el-form-item>
 					<el-form-item style="float: right;">
-						<el-button type="primary" @click="onSubmit">查询</el-button>
+						<el-button type="primary" @click="onSubmit" @change="on_change">查询</el-button>
 					</el-form-item>
 				</el-form>
 				<hr>
@@ -40,7 +37,7 @@
 							<i class="el-icon-guide"></i>
 							性别
 						</template>
-						<el-select v-model="register.gender" placeholder="请选择您的性别" style="width: 100%;">
+						<el-select v-model="register.gender" @click="getgender_options" @change="gender_change" placeholder="请选择您的性别" style="width: 100%;">
 							<el-option v-for="item in gender_options" :key="item.value" :label="item.label"
 								:value="item.value">
 							</el-option>
@@ -128,7 +125,7 @@
 							<i class="el-icon-edit"></i>
 							科室
 						</template>
-						<el-select v-model="register.deptId" @change="deptID_chaange" filterable placeholder="请选择您的科室" style="width: 100%;">
+						<el-select v-model="register.deptId" @change="deptID_change" filterable placeholder="请选择您的科室" style="width: 100%;">
 							<el-option v-for="item in DeptID_options" :key="item.value" :label="item.label"
 								:value="item.value">
 							</el-option>
@@ -215,13 +212,7 @@
 					registerId:'', 
 					visitState:'1'
 				},
-				gender_options: [{
-					value: '男',
-					label: '男'
-				}, {
-					value: '女',
-					label: '女'
-				}],
+				gender_options: [],
 				AgeType_options: [{
 					value: '岁',
 					label: '岁'
@@ -239,10 +230,7 @@
 				SettleID_options: [],
 				DeptID_options:[],
 				RegistLeID_options:[],
-				UserID_options:[{
-					value: '1',
-					label: '扁鹊'
-				},],
+				UserID_options:[],
 			}
 		},
 		created() {
@@ -250,7 +238,9 @@
 			this.getNowTime(),
 			this.getDeptID_options(),
 			this.getRegistLeID_options(),
-			this.getmoney()
+			// this.getmoney(),
+			this.getgender_options()
+			// this.getUserID_options()
 		},
 		methods: {
 			// 查询患者基本信息显示
@@ -266,63 +256,63 @@
 					that.register.realName = res.data[0].realName
 					that.register.iDnumber = res.data[0].idnumber
 					that.register.caseNumber = res.data[0].caseNumber
-					that.register.gender = res.data[0].gender
+					that.register.gender = res.data[0].sex.id
 					that.register.birthDate = res.data[0].birthDate
 					that.register.age = res.data[0].age
 					that.register.ageType = res.data[0].ageType
 					that.register.phoneNumber = res.data[0].phoneNumber
 					that.register.homeAddress = res.data[0].homeAddress
-					that.register.registerId = that.$store.state.emp.id
 					console.log(that.register.registerId);
 				})
+				this.$notify({
+				          title: '成功',
+				          message: '患者信息导入成功',
+				          type: 'success'
+				        });
 			},
 			NowTime_change(){
-				console.log(this.register.registTime);
-				var dtime = this.register.registTime;//得到时刻 
-				console.log(dtime);
-				if(dtime<12){
-					console.log(dtime);
-					this.register.Noon = "上午"
-					this.$set(this.register,"Noon","上午")
-				}
-				else{
-					console.log(dtime);
-					this.register.Noon = "下午"
-					this.$set(this.register,"Noon","下午")
-				}
+				// console.log(this.register.registTime);
+				// var dtime = this.register.registTime.getHours();//得到时刻 
+				// console.log(dtime);
+				// if(dtime<12){
+				// 	console.log(dtime);
+				// 	this.register.Noon = "上午"
+				// 	this.$set(this.register,"Noon","上午")
+				// }
+				// else{
+				// 	console.log(dtime);
+				// 	this.register.Noon = "下午"
+				// 	this.$set(this.register,"Noon","下午")
+				// }
+			},
+			gender_change(){
+				console.log(this.register.gender)
 			},
 			// 部门选择
-			deptID_chaange(){
-				console.log(this.register.deptId)
+			deptID_change(){
+				console.log(this.register.deptId);
+				console.log(this.register.registLeId);
+				// this.register.visitDate = this.enderTime(this.register.visitDate)
+				console.log(this.register.visitDate);
+				this.getUserID_options()
 			},
+			
 			// 挂号等级选择
 			registLeID_change(){
+			// 	this.getmoney()
+			// },
+			// // 挂号费显示
+			// getmoney(){
+				console.log(12341245);
+				
+				var id = this.register.registLeId
+				console.log(id);
 				var that = this;
-				var i;
-				this.$axios.get("http://localhost:8080/registlevelch/list").then(function(res){
+				this.$axios.get("http://localhost:8080/registlevelch/fee?id="+id).then(function(res){
 					console.log(res.data);
-					for(i in res.data){
-						if(res.data[i].id == that.register.registLeId){
-							console.log(that.register.registLeId);
-							console.log(res.data[i].id);
-							that.register.money = res.data[i].registFee
-							console.log(that.register.money);
-							break
-						}
-						
-					}
+					that.register.money = res.data
 				})
-			},
-			// 挂号费显示
-			getmoney(){
-				// console.log(12341245);
-				if(this.register.settleId!=''){
-					var that = this;
-					this.$axios.get("http://localhost:8080/registlevelch/list").then(function(res){
-						console.log(res.data);
-						that.register.money = res.data[this.register.settleId].registFee
-					})
-				}
+				
 			},
 			// 清空按钮
 			clearSubmit(){
@@ -340,8 +330,15 @@
 				this.register.userId='',
 				this.register.settleId='',
 				this.register.money=''
+				this.$notify({
+				          title: '成功',
+				          message: '患者信息清空成功',
+				          type: 'success'
+				        });
 			},
 			registerSubmit(){
+				this.register.registerId = this.$store.state.emp.id
+				this.register.registTime = this.enderTime(this.register.registTime)
 				console.log(this.register);
 				// delete this.register.doctor
 				// delete this.register.registlevel
@@ -352,31 +349,55 @@
 				this.$axios.get("http://localhost:8080/registerch/regadd?"+reg).then(function(res){
 					console.log(res);
 				})
+				this.$notify({
+				          title: '成功',
+				          message: '挂号成功',
+				          type: 'success'
+				        });
 			},
 			getNowTime() {
 				var now = new Date();
 				var year = now.getFullYear(); //得到年份
 				var month = now.getMonth(); //得到月份
 				var date = now.getDate(); //得到日期
-				var dtime = now.getHours();//得到时刻 
+				let dtime = now.getHours();//得到时刻 
 				console.log(dtime);
-				month = month + 1;
-				month = month.toString().padStart(2, "0");
-				date = date.toString().padStart(2, "0");
-				if(0<dtime<12){
+				if(dtime>12){
 					console.log(dtime);
-					this.register.Noon = "上午"
-					this.$set(this.register,"Noon","上午")
+					this.register.Noon = "下午";
+					this.$set(this.register,"Noon","下午");
 				}
 				else{
 					console.log(dtime);
-					this.register.Noon = "下午"
-					this.$set(this.register,"Noon","下午")
+					this.register.Noon = "上午";
+					this.$set(this.register,"Noon","上午");
 				}
+				month = month + 1;
+				month = month.toString().padStart(2, "0");
+				date = date.toString().padStart(2, "0");
 				var defaultDate = `${year}-${month}-${date}`;
 				var defaultTime = `${now}`;
 				this.$set(this.register, "visitDate", defaultDate);
 				this.$set(this.register, "registTime", defaultTime);
+			},
+			enderTime(date) {
+			  var dateee = new Date(date).toJSON();
+			  return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '') 
+			},
+			getgender_options(){
+				var i;
+				var that = this;
+				this.$axios.get("http://localhost:8080/sexch/list").then(function(res){
+					console.log(res.data)
+					for(i in res.data){
+						// console.log(res.data[i])
+						that.gender_options.push({
+							value:res.data[i].id,
+							label:res.data[i].sex})
+					}
+					console.log(that.register.gender);
+					
+				})
 			},
 			getSettleID_options(){
 				var i;
@@ -389,7 +410,7 @@
 							value:res.data[i].id,
 							label:res.data[i].settleName})
 					}
-					console.log(that.register.settleId);
+					console.log(this.SettleID_options);
 					
 				})
 			},
@@ -423,7 +444,31 @@
 				})
 			},
 			getUserID_options(){
-				
+				console.log(this.register.deptId);
+				console.log(this.register.registLeId);
+				// this.register.visitDate = this.enderTime(this.register.visitDate)
+				console.log(this.register.visitDate);
+				var i;
+				var did = this.register.deptId
+				var vdate = this.register.visitDate
+				var noon = this.register.Noon
+				var that = this;
+				this.$axios.get("http://localhost:8080/schedulingch/list?deptId="+did+"&vdate="+vdate+"&noon="+noon).then(function(res){
+					console.log(res.data)
+					for(i in res.data){
+						console.log(res.data[i].userId)
+						var Did = res.data[i].userId
+						that.$axios.get("http://localhost:8080/User/list?Did="+Did).then(function(re){
+							console.log(re.data)
+							that.UserID_options.push({
+								value:re.data[0].id,
+								label:re.data[0].realName})
+							console.log(that.UserID_options);
+						})
+					}
+					
+					
+				})
 			}
 		}
 	}
