@@ -48,7 +48,7 @@ public class RegisterchController {
     }
 
     @RequestMapping("/updatereg")
-    public boolean updatereg(Register register){
+    public int updatereg(Register register){
         System.out.println(register);
         return registerchService.updatereg(register);
     }

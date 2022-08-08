@@ -11,15 +11,15 @@ import java.util.List;
 @Service
 public class UserService implements IUserService{
 
-    @Autowired
+
     UserMapper userMapper;
 
-    @Override
+
     public User validate(String rn, String pwd) {
         return userMapper.validate(rn, pwd);
     }
 	
-	@Override
+
     public List<User> getUserList(String name, Integer id) {
         return userMapper.getUserList(name,id);
     }

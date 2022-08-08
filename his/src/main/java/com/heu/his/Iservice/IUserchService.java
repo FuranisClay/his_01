@@ -9,4 +9,5 @@ import com.heu.his.pojo.User;
 public interface IUserchService {
 
     User validate(String rn,String pwd);
+    java.util.List<User> getdeptusername(int Did);
 }

@@ -1,6 +1,8 @@
 package com.heu.his.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.List;
 
 public class Register {
@@ -8,25 +10,38 @@ public class Register {
   private long id;
   private String caseNumber;
   private String realName;
-  private String gender;
+  private long gender;
   private String iDnumber;
-  private String birthDate;
+  @JsonFormat(pattern = "yyyy-MM-dd")
+  private java.sql.Date birthDate;
   private long age;
   private String ageType;
   private String homeAddress;
-  private String visitDate;
+  @JsonFormat(pattern = "yyyy-MM-dd")
+  private java.sql.Date visitDate;
   private String noon;
   private long deptId;
   private long userId;
   private long registLeId;
   private long settleId;
   private String isBook;
-  private String registTime;
+  @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+  private java.sql.Timestamp registTime;
   private long registerId;
   private long visitState;
   private long phoneNumber;
 
+  //查询患者的性别
+  private Sex sex;
+  
+  public Sex getSex() {
+    return sex;
+  }
 
+  public void setSex(Sex sex) {
+    this.sex = sex;
+  }
+  
   //  改患者的挂号编号的信息
   private Registlevel registlevel;
 
@@ -117,15 +132,6 @@ public class Register {
   }
 
 
-  public long getPhoneNumber() {
-    return phoneNumber;
-  }
-
-  public void setPhoneNumber(long phoneNumber) {
-    this.phoneNumber = phoneNumber;
-  }
-
-
   public long getId() {
     return id;
   }
@@ -133,6 +139,7 @@ public class Register {
   public void setId(long id) {
     this.id = id;
   }
+
 
   public String getCaseNumber() {
     return caseNumber;
@@ -152,11 +159,11 @@ public class Register {
   }
 
 
-  public String getGender() {
+  public long getGender() {
     return gender;
   }
 
-  public void setGender(String gender) {
+  public void setGender(long gender) {
     this.gender = gender;
   }
 
@@ -170,11 +177,11 @@ public class Register {
   }
 
 
-  public String getBirthDate() {
+  public java.sql.Date getBirthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(String birthDate) {
+  public void setBirthDate(java.sql.Date birthDate) {
     this.birthDate = birthDate;
   }
 
@@ -206,11 +213,11 @@ public class Register {
   }
 
 
-  public String getVisitDate() {
+  public java.sql.Date getVisitDate() {
     return visitDate;
   }
 
-  public void setVisitDate(String visitDate) {
+  public void setVisitDate(java.sql.Date visitDate) {
     this.visitDate = visitDate;
   }
 
@@ -269,11 +276,11 @@ public class Register {
   }
 
 
-  public String getRegistTime() {
+  public java.sql.Timestamp getRegistTime() {
     return registTime;
   }
 
-  public void setRegistTime(String registTime) {
+  public void setRegistTime(java.sql.Timestamp registTime) {
     this.registTime = registTime;
   }
 
@@ -293,6 +300,15 @@ public class Register {
 
   public void setVisitState(long visitState) {
     this.visitState = visitState;
+  }
+
+
+  public long getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(long phoneNumber) {
+    this.phoneNumber = phoneNumber;
   }
 
 }

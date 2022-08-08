@@ -31,7 +31,7 @@ public interface UserchMapper {
     @Select("select * from user where ID=#{DID}")
     User getUsername(int DID);
 
-    @Select("select * from user where DeptID=#{Did}")
+    @Select("select ID,RealName from user where ID=#{Did}")
     java.util.List<User> getdeptusername(int Did);
 
 }

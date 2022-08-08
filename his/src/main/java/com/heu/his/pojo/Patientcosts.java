@@ -1,5 +1,7 @@
 package com.heu.his.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Patientcosts {
 
   private long id;
@@ -11,6 +13,7 @@ public class Patientcosts {
   private double price;
   private double amount;
   private long deptId;
+  @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
   private java.sql.Timestamp createtime;
   private long createOperId;
   private java.sql.Timestamp payTime;

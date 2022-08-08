@@ -4,8 +4,8 @@ package com.heu.his.controller;
  * time:2022/8/3
  */
 
-import com.heu.his.Iservice.IRegistlevelchService;
-import com.heu.his.pojo.Registlevel;
+import com.heu.his.Iservice.IPatientcostschService;
+import com.heu.his.pojo.Patientcosts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @ResponseBody
 @CrossOrigin
 @RestController
-@RequestMapping("/registlevelch")
-public class RegistlevelchController {
+@RequestMapping("/pationcostsch")
+public class PationcostschController {
 
     @Autowired
-    IRegistlevelchService registlevelchService;
-
+    IPatientcostschService patientcostschService;
+    
     @RequestMapping("/list")
-    public java.util.List<Registlevel> list(){return registlevelchService.getRegistlevelname();}
-
-    @RequestMapping("/fee")
-    public int fee(int id){return registlevelchService.getreqistlevelmoney(id);}
+    public java.util.List<Patientcosts> list(int RID){return patientcostschService.getPatientcostsList(RID);}
 }

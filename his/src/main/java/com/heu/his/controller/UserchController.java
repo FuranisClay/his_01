@@ -27,4 +27,7 @@ public class UserchController {
 //        System.out.println(pw+"------");
         return userchService.validate(rn,pw);
     }
+    
+    @RequestMapping("/list")
+    public java.util.List<User> list(int Did){return userchService.getdeptusername(Did);}
 }

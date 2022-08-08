@@ -13,5 +13,5 @@ public interface IRegisterchService {
     Register getRegistcostList(@Param(value = "rn") String rn);
     int addRegist(Register register);
     int delregist(int cn);
-    boolean updatereg(Register register);
+    int updatereg(Register register);
 }

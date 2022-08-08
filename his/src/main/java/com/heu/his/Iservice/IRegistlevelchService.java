@@ -8,4 +8,5 @@ import com.heu.his.pojo.Registlevel;
 
 public interface IRegistlevelchService {
     java.util.List<Registlevel> getRegistlevelname();
+    int getreqistlevelmoney(int id);
 }

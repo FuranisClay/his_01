@@ -21,4 +21,8 @@ public class RegistlevelchService implements IRegistlevelchService {
     public List<Registlevel> getRegistlevelname() {
         return registlevelMapper.getRegistlevelname();
     }
+
+    public int getreqistlevelmoney(int id) {
+        return registlevelMapper.getreqistlevelmoney(id);
+    }
 }

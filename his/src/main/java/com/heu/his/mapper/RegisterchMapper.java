@@ -33,10 +33,14 @@ public interface RegisterchMapper {
     int addRegist(Register register);
 
 
-    @Update("update register set RealName=#{realName},CaseNumber=#{caseNumber}" +
-            ",Gender=#{gender},BirthDate=#{birthDate},Age=#{age},AgeType=#{ageType}" +
-            "phoneNumber=#{phoneNumber} where IDnumber=#{iDnumber}")
-    boolean updatereg(Register register);
+    /**
+     * 患者信息修改
+     * @param register：修改信息
+     * @return
+     */
+    @Update("update register set RealName=#{realName},Gender=#{gender},PhoneNumber=#{phoneNumber},HomeAddress=#{homeAddress},SettleID=#{settleId} " +
+            "where CaseNumber=#{caseNumber};")
+    int updatereg(Register register);
 
     /**
      * author:Hulake
@@ -66,6 +70,7 @@ public interface RegisterchMapper {
                     one = @One(select = "com.heu.his.mapper.RegistlevelchMapper.getRegistlevelByIdOne")),
             @Result(property = "user", column = "UserID",
                     one = @One(select = "com.heu.his.mapper.UserchMapper.getUsername")),
+            @Result(property = "sex",column = "Gender",one = @One(select = "com.heu.his.mapper.SexchMapper.getsexname")),
             @Result(property = "departments",column = "DeptID", one = @One(select = "com.heu.his.mapper.DepartmentchMapper.getdeptname")),
             @Result(property = "settlecategory",column = "SettleID",one = @One(select = "com.heu.his.mapper.SettlecategoryChMapper.getsettlecategoryid"))
     })

@@ -10,6 +10,9 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface RegistlevelchMapper {
 
+    @Select("select RegistFee from registlevel where ID=#{id}")
+    int getreqistlevelmoney(int id);
+
     /**
      * author:Hulake
      * 查询挂号的患者

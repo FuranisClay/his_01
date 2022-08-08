@@ -26,7 +26,7 @@ public class RegisterchService implements IRegisterchService {
         return registerMapper.delregist(cn);
     }
 
-    public boolean updatereg(Register register) {
+    public int updatereg(Register register) {
         return registerMapper.updatereg(register);
     }
 

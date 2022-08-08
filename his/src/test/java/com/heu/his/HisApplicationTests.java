@@ -29,8 +29,20 @@ class HisApplicationTests {
     @Autowired
     SettlecategoryChMapper settlecategoryChMapper;
 
+    @Autowired
+    SexchMapper sexchMapper;
+
+    @Autowired
+    SchedulingchMapper schedulingchMapper;
+    
     @Test
     void contextLoads() {
+
+//        schedulingchMapper.getusernamelist(1,"2022-08-07","上午");
+
+//        registlevelchMapper.getRegistlevelname();
+
+//        sexchMapper.getsexname(72);
 
 //        registerchMapper.updatereg();
 
@@ -38,11 +50,11 @@ class HisApplicationTests {
 
 //        registlevelMapper.getRegistlevelname();
 
-//        departmentMapper.getdeptname();
+//        departmentchMapper.getdeptname();
 
-       userchMapper.getdeptusername(1);
+//        userMapper.getdeptusername(1);
 
-//        registerchMapper.getRegisterListAndRL("李白",0,0);
+        registerchMapper.getRegisterListAndRL("",600600,0);
 //        patientcostsMapper.getPatientcostsList(35);
 
 //        registerMapper.getRegistcostList("马路");
