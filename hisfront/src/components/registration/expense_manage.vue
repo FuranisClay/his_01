@@ -3,162 +3,157 @@
 		<el-container>
 			<el-main>
 				<div style="text-align: left;">
-				
-				<el-form :inline="true" :model="register" class="demo-form-inline">
-					<el-form-item label="身份证:">
-						<el-input v-model="register.iDnumber" placeholder="身份证号码"></el-input>
-					</el-form-item>
-					<el-form-item label="病历号:">
-						<el-input v-model="register.caseNumber" placeholder="病历号"></el-input>
-					</el-form-item>
-					<el-form-item style="float: right;">
-						<el-button type="primary" @click="clearSubmit">清空</el-button>
-					</el-form-item>
-					<el-form-item style="float: right;">
-						<el-button type="primary" @click="onSubmit">查询</el-button>
-					</el-form-item>
-				</el-form>
-				<hr>
-				<el-descriptions class="margin-top" title="基本信息" :column="3" border>
-					<template slot="extra">
-						<el-button type="primary" @click="changeDialogVisible = true" icon="el-icon-edit"
-							style="float: right;">修改信息</el-button>
-					</template>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-user"></i>
-							姓名
-						</template>
-						{{register.realName}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-user-solid"></i>
-							身份证
-						</template>
-						{{register.iDnumber}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-guide"></i>
-							性别
-						</template>
-						{{register.gender}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-date"></i>
-							出生日期
-						</template>
-						{{register.birthDate}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-user-solid"></i>
-							年龄
-						</template>
-						{{register.age}}
-						{{register.ageType}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-mobile-phone"></i>
-							联系电话
-						</template>
-						{{register.phoneNumber}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-location-outline"></i>
-							联系地址
-						</template>
-						{{register.homeAddress}}
-					</el-descriptions-item>
-				</el-descriptions>
 
-				<h5>
+					<el-form :inline="true" :model="register" class="demo-form-inline">
+						<el-form-item label="身份证:">
+							<el-input v-model="register.iDnumber" placeholder="身份证号码"></el-input>
+						</el-form-item>
+						<el-form-item label="病历号:">
+							<el-input v-model="register.caseNumber" placeholder="病历号"></el-input>
+						</el-form-item>
+						<el-form-item style="float: right;">
+							<el-button type="primary" @click="clearSubmit">清空</el-button>
+						</el-form-item>
+						<el-form-item style="float: right;">
+							<el-button type="primary" @click="onSubmit">查询</el-button>
+						</el-form-item>
+					</el-form>
 					<hr>
-				</h5>
+					<el-descriptions class="margin-top" title="基本信息" :column="3" border>
+						<template slot="extra">
+							<el-button type="primary" @click="changeDialogVisible = true" icon="el-icon-edit"
+								style="float: right;">修改信息</el-button>
+						</template>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-user"></i>
+								姓名
+							</template>
+							{{register.realName}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-user-solid"></i>
+								身份证
+							</template>
+							{{register.iDnumber}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-guide"></i>
+								性别
+							</template>
+							{{register.gender}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-date"></i>
+								出生日期
+							</template>
+							{{register.birthDate}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-user-solid"></i>
+								年龄
+							</template>
+							{{register.age}}
+							{{register.ageType}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-mobile-phone"></i>
+								联系电话
+							</template>
+							{{register.phoneNumber}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-location-outline"></i>
+								联系地址
+							</template>
+							{{register.homeAddress}}
+						</el-descriptions-item>
+					</el-descriptions>
 
-				<el-descriptions class="margin-top" title="挂号信息录入" :column="3" border>
-					<template slot="extra">
-						病历号：{{register.caseNumber}}
-					</template>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-date"></i>
-							看诊日期
+					<h5>
+						<hr>
+					</h5>
+
+					<el-descriptions class="margin-top" title="挂号信息录入" :column="3" border>
+						<template slot="extra">
+							病历号：{{register.caseNumber}}
 						</template>
-						{{register.visitDate}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-timer"></i>
-							挂号时间
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-date"></i>
+								看诊日期
+							</template>
+							{{register.visitDate}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-timer"></i>
+								挂号时间
+							</template>
+							{{register.registTime}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-edit"></i>
+								缴费方式
+							</template>
+							{{register.settleId}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-edit"></i>
+								科室
+							</template>
+							{{register.deptId}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-edit"></i>
+								号别
+							</template>
+							{{register.registLeId}}
+						</el-descriptions-item>
+						<el-descriptions-item>
+							<template slot="label">
+								<i class="el-icon-edit"></i>
+								看诊医生
+							</template>
+							{{register.userId}}
+						</el-descriptions-item>
+						<template slot="extra">
+							<el-button type="primary" @click="recordSubmit">退号</el-button>
 						</template>
-						{{register.registTime}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-edit"></i>
-							缴费方式
-						</template>
-						{{register.settleId}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-edit"></i>
-							科室
-						</template>
-						{{register.deptId}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-edit"></i>
-							号别
-						</template>
-						{{register.registLeId}}
-					</el-descriptions-item>
-					<el-descriptions-item>
-						<template slot="label">
-							<i class="el-icon-edit"></i>
-							看诊医生
-						</template>
-						{{register.userId}}
-					</el-descriptions-item>
-					<template slot="extra">
-						<el-button type="primary" @click="recordSubmit">退号</el-button>
-					</template>
-				</el-descriptions>
-	
-				
+					</el-descriptions>
+
+
 					<hr>
-				<h4>
-					项目详情
-					<el-button type="primary" @click="chargeSubmit" style="float: right;">缴费</el-button>
-					<el-button type="primary" @click="refundSubmit" style="float: right;">退费</el-button>
-				</h4>
+					<h4>
+						项目详情
+						<el-button type="primary" @click="chargeSubmit" style="float: right;">缴费</el-button>
+						<el-button type="primary" @click="refundSubmit" style="float: right;">退费</el-button>
+					</h4>
 				</div>
-				
-					<el-table :data="subNews" style="width: 60%">
-						<el-table-column prop="name" label="项目名称" width="180">
-						</el-table-column>
-						<el-table-column prop="price" label="单价" width="180">
-						</el-table-column>
-						<el-table-column prop="amount" label="数量" width="180">
-						</el-table-column>
-						<el-table-column prop="createtime" label="开立时间" width="180">
-						</el-table-column>
-					</el-table>
-					<el-pagination
-					  background
-					  :page-size="pageSize"
-					  layout="prev, pager, next"
-					  :total="news.length"
-					  @current-change="dopaging"
-					  >
-					</el-pagination>
-				
+
+				<el-table :data="subNews" style="width: 60%">
+					<el-table-column prop="name" label="项目名称" width="180">
+					</el-table-column>
+					<el-table-column prop="price" label="单价" width="180">
+					</el-table-column>
+					<el-table-column prop="amount" label="数量" width="180">
+					</el-table-column>
+					<el-table-column prop="createtime" label="开立时间" width="180">
+					</el-table-column>
+				</el-table>
+				<el-pagination background :page-size="pageSize" layout="prev, pager, next" :total="news.length"
+					@current-change="dopaging">
+				</el-pagination>
+
 
 				<el-dialog title="患者信息修改" :visible.sync="changeDialogVisible" width="25%">
 					<el-form>
@@ -231,12 +226,12 @@
 					registerId: '',
 					visitState: '1'
 				},
-				news:[],
-				subNews:[],
+				news: [],
+				subNews: [],
 				SettleID_options: [],
 				gender_options: [],
-				currPage:1,
-				pageSize:3
+				currPage: 1,
+				pageSize: 3
 			}
 		},
 		created() {
@@ -277,22 +272,22 @@
 						console.log(that.register.id);
 						that.getregitems()
 					})
-					
+
 			},
-			dopaging(currPage){
-				this.currPage=currPage   //将当前选择的页码存储到vue的全局变量里
+			dopaging(currPage) {
+				this.currPage = currPage //将当前选择的页码存储到vue的全局变量里
 				//根据当前页进行分页
 				//currpage      pageSize     start   end
 				// 1               2          0       2        0,1
 				// 2               2          2       4        2,3
 				//3  ...
-				let start=(currPage-1)*this.pageSize 
-				let end=currPage*this.pageSize
-				
-				this.subNews=this.news.slice(start,end)
-				
+				let start = (currPage - 1) * this.pageSize
+				let end = currPage * this.pageSize
+
+				this.subNews = this.news.slice(start, end)
+
 			},
-			getregitems(){
+			getregitems() {
 				var i
 				var id = this.register.id
 				let that = this
@@ -303,7 +298,7 @@
 						that.news = res.data
 						that.dopaging(1)
 					})
-				
+
 			},
 			getgender_options() {
 				var i;
@@ -355,7 +350,7 @@
 					this.register.money = '',
 					this.register.registTime = '',
 					this.register.visitDate = ''
-					this.tableData = []
+				this.tableData = []
 			},
 			updateregSubmit() {
 				console.log(this.register);
@@ -378,10 +373,6 @@
 			recordSubmit() {
 				this.$router.push('/registration/recored')
 			},
-			getpatientcosts() {
-
-			},
-
 		}
 	}
 </script>
@@ -390,6 +381,7 @@
 	.right-btn {
 		float: right;
 	}
+
 	.el-table {
 		margin: 0px auto;
 	}
