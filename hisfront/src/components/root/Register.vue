@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-top: 50px;background-color:;">
+    <div style="margin-top: 50px;background-color:#E2FFB7;">
         <el-form
                 :inline="true"
                 :model="formInline"
@@ -42,7 +42,7 @@
         <template>
             <el-table
                     ref="multipleTable"
-                    :data="registlist"
+                    :data="registlist.slice((currentPage - 1) * pageSize,currentPage * pageSize)"
                     :row-style="{height: 90 + 'px'}"
                     tooltip-effect="dark"
                     height="520"
@@ -94,14 +94,15 @@
             </el-table>
         </template>
         <template>
-            <div class="block">
-                <el-pagination
-                        :page-sizes="[5, 10, 20, 50]"
-                        :page-size="pageSize"
-                        layout="total, sizes, prev, pager, next, jumper"
-                        :total="total">
-                </el-pagination>
-            </div>
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[3, 5, 10, 15]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="registlist.length">
+            </el-pagination>
         </template>
 
 
@@ -133,7 +134,7 @@
             </div>
         </el-dialog>
 
-<!--        添加挂号级别对话框-->
+        <!--        添加挂号级别对话框-->
         <el-dialog title="新增挂号级别信息" :visible.sync="addDialogVisible" width="25%">
             <el-form>
                 <el-form-item label="ID" :label-width="formLabelWidth">
@@ -170,14 +171,17 @@
     export default {
         data() {
             return {
+                currentPage: 1,
+                pageSize: 3,
+                tableDataEnd: [],
                 formLabelWidth: '20%',
                 registlist: [],
                 maxid: 0,
                 changeDialogVisible: false,
                 addDialogVisible: false,
                 changeRow: {},
-                deleteRow:{},
-                addRow:{},
+                deleteRow: {},
+                addRow: {},
                 queryRegistString: ""
             }
         },
@@ -196,23 +200,25 @@
                 // delete this.updateRow.department    //删除多余的属性，不用往后台传递
                 //修改保存到数据库中，以json对象为单位进行传参
                 let ue = this.$qs.stringify(this.changeRow)
-                this.$axios.get("http://localhost:8080/registerzgy/update?"+ue).then(function (res) {
+                this.$axios.get("http://localhost:8080/registerzgy/update?" + ue).then(function (res) {
                     console.log(res)
                 })
+                this.reload()
             },
-            addDialog(){
+            addDialog() {
                 this.addDialogVisible = true
                 this.addRow.id = this.maxid + 1
             },
-            submitAdd(){
+            submitAdd() {
                 this.addDialogVisible = false
                 console.log(this.addRow)
                 let ue = this.$qs.stringify(this.addRow)
-                this.$axios.get("http://localhost:8080/registerzgy/add?"+ue).then(function (res) {
+                this.$axios.get("http://localhost:8080/registerzgy/add?" + ue).then(function (res) {
                     console.log(res)
                 })
+                this.reload()
             },
-            addPinyin(){
+            addPinyin() {
                 this.addRow.registCode = pinyin.getCamelChars(this.addRow.registName).toLowerCase();
             },
             turnPinyin() {
@@ -224,17 +230,18 @@
                 console.log(row)
                 this.changeRow = row
             },
-            deleteDialog(row){
+            deleteDialog(row) {
                 this.deleteRow = row
                 console.log(this.deleteRow)
                 this.open()
             },
-            deleteDialogTrue(){
+            deleteDialogTrue() {
                 let that = this
-                  this.$axios.get("http://localhost:8080/registerzgy/delete?id="+that.deleteRow.id).then(function (res) {
-                      console.log(res)
-                      console.log(that.deleteRow.id)
-                  })
+                this.$axios.get("http://localhost:8080/registerzgy/delete?id=" + that.deleteRow.id).then(function (res) {
+                    console.log(res)
+                    console.log(that.deleteRow.id)
+                })
+                this.reload()
             },
             open() {
                 this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -253,6 +260,21 @@
                         message: '已取消删除'
                     });
                 });
+            },
+            handleSizeChange(val) {
+                this.pageSize = val
+                this.handleCurrentChange(this.currentPage)
+            },
+            handleCurrentChange(val) {
+                this.currentPage = val
+                this.currentChangePage()
+            },
+            currentChangePage() {
+                let start = (this.currentPage - 1) * this.pageSize
+                let end = this.currentPage * this.pageSize
+                this.tableDataEnd = []
+                this.tableDataEnd = this.deptlist.slice(start, end)
+                // deptlist.slice((currentPage - 1) * pageSize,currentPage * pageSize)
             }
         },
         name: "Register",

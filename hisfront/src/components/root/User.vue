@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-top: 50px;background-color:;">
+    <div style="margin-top: 50px;background-color:#E2FFB7;">
         <el-form
                 :inline="true"
                 :model="formInline"
@@ -268,6 +268,7 @@
     import {makeYNType} from '../../../src/TypeFormat'
 
     export default {
+        inject:['reload'],
         data() {
             return {
                 addDialogVisible: false,
@@ -297,6 +298,7 @@
                 this.$axios.get("http://localhost:8080/userzgy/add?"+ue).then(function (res) {
                     console.log(res)
                 })
+                this.reload()
             },
             addDialog() {
                 this.addDialogVisible = true
@@ -338,6 +340,7 @@
                     console.log(res)
                     console.log(that.deleteRow.id)
                 })
+                this.reload()
             },
             submitSave() {
                 this.changeDialogVisible = false
@@ -351,6 +354,7 @@
                 this.$axios.get("http://localhost:8080/userzgy/update?"+ue).then(function (res) {
                     console.log(res)
                 })
+                this.reload()
             },
             changeDialog(row) {
                 this.changeDialogVisible = true

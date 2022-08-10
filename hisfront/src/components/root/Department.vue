@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-top: 50px;background-color:;">
+    <div style="margin-top: 50px;background-color:#E2FFB7;">
         <el-form
                 :inline="true"
                 :model="formInline"
@@ -260,6 +260,7 @@
                 this.$axios.get("http://localhost:8080/deptzgy/update?"+ue).then(function (res) {
                     console.log(res)
                 })
+                this.reload()
             },
             submitAdd(){
                 this.addDialogVisible = false
@@ -269,6 +270,7 @@
                 this.$axios.get("http://localhost:8080/deptzgy/add?"+ue).then(function (res) {
                     console.log(res)
                 })
+                this.reload()
             },
             addDialog() {
                 this.addDialogVisible = true
@@ -309,6 +311,7 @@
                     console.log(res)
                     console.log(that.deleteRow.id)
                 })
+                this.reload()
             },
             queryDept() {
                 let that = this

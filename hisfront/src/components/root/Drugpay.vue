@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-top: 50px;background-color:;">
+    <div style="margin-top: 50px;background-color:#E2FFB7;">
         <el-form
                 :inline="true"
                 :model="formInline"
@@ -304,6 +304,7 @@
                 this.$axios.get("http://localhost:8080/fmeditemzgy/add?" + ue).then(function (res) {
                     console.log(res)
                 })
+                this.reload()
             },
             submitSave() {
                 console.log(this.changeRow)
@@ -317,6 +318,7 @@
                 this.$axios.get("http://localhost:8080/fmeditemzgy/update?" + ue).then(function (res) {
                     console.log(res)
                 })
+                this.reload()
             },
             addDialog() {
                 this.addDialogVisible = true
@@ -363,6 +365,7 @@
                     console.log(res)
                     console.log(that.deleteRow.id)
                 })
+                this.reload()
             },
             addPinyin() {
                 this.addRow.mnemonicCode = pinyin.getCamelChars(this.addRow.itemName).toUpperCase();

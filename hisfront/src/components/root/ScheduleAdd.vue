@@ -2,9 +2,9 @@
     <div>
         <div style="text-align: center"><h3>新增排班规则</h3></div>
         <div style="text-align: center;  margin-top: 30px">
-            <el-form :inline="true" :model="form" class="demo-form-inline">
+            <el-form :inline="true" class="demo-form-inline">
                 <el-form-item label="科室选择：">
-                    <el-select v-model="form.deptName" placeholder="请选择科室类型">
+                    <el-select v-model="selectdept" placeholder="请选择科室类型">
                         <el-option label="--请选择--"></el-option>
                         <el-option
                                 v-for="item in deptlist"
@@ -15,7 +15,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="挂号级别：">
-                    <el-select v-model="form.level" placeholder="请选择挂号级别">
+                    <el-select v-model="selectregistlevel" placeholder="请选择挂号级别">
                         <el-option label="--请选择--" value=""></el-option>
                         <el-option
                                 v-for="item in registlist"
@@ -25,10 +25,10 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" icon="el-icon-search" @click="">查询</el-button>
+                    <el-button type="primary" icon="el-icon-search" @click="queryUserList">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" plain icon="el-icon-delete" @click="">清空</el-button>
+                    <el-button type="primary" plain icon="el-icon-delete" @click="emptyForm">清空</el-button>
                 </el-form-item>
             </el-form>
             <el-form>
@@ -54,8 +54,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox change="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox change="onSubmit" v-model="scope.row.rule[0]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -64,8 +64,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[1]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -74,8 +74,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[2]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -84,8 +84,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[3]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -94,8 +94,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[4]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -104,8 +104,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[5]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -114,8 +114,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[6]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -124,8 +124,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[7]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -134,8 +134,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[8]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -144,8 +144,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[9]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -154,8 +154,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[10]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -164,8 +164,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[11]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -174,8 +174,8 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[12]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
@@ -184,21 +184,20 @@
                             width="100">
                         <template slot-scope="scope">
                             <div style="margin-left: 30px">
-<!--                                <el-checkbox @click="onSubmit" v-model=""></el-checkbox>-->
-                                <el-checkbox @click="onSubmit"></el-checkbox>
+                                <el-checkbox @click="onSubmit" v-model="scope.row.rule[13]"></el-checkbox>
                             </div>
                         </template>
                     </el-table-column>
                 </el-table>
                 <div style="margin: 20px 480px;">
                     <el-form-item label="排班规则名称:" label-width="120px">
-                        <el-input v-model="form.name" size="medium"></el-input>
+                        <el-input v-model="rulename" size="medium"></el-input>
                     </el-form-item>
                 </div>
                 <div>
                     <el-form-item>
                         <el-button type="warning" @click="onSubmit">保存</el-button>
-                        <el-button type="primary" plain>取消</el-button>
+                        <el-button type="primary" plain @click="addScheduleFalse">取消</el-button>
                     </el-form-item>
                 </div>
             </el-form>
@@ -208,29 +207,64 @@
 
 <script>
     import ElForm from "element-ui/packages/form/src/form";
+    import Schedule from "./Schedule";
 
     export default {
-        components: {ElForm},
         data() {
             return {
+                rulename: "",
+                selectdept: 0,
+                selectregistlevel: 0,
                 deptlist: [],
                 registlist: [],
                 userlist: [],
                 checkedlist: [],
-                form: {
-                    deptName: '',
-                    level: ''
-                },
                 deptNames: []
             }
         },
         methods: {
-            selDepartName() {
-
+            queryUserList() {
+                console.log("selectdept:" + this.selectdept)
+                console.log("selectregistlevel:" + this.selectregistlevel)
+                let that = this
+                this.$axios.get("http://localhost:8080/userzgy/userlist?deptno=" + that.selectdept + "&registlevel=" + that.selectregistlevel).then(function (res) {
+                    that.userlist = res.data
+                    console.log(res.data)
+                })
+            },
+            emptyForm() {
+                let that = this
+                this.$axios.get("http://localhost:8080/userzgy/list").then(function (res) {
+                    that.userlist = res.data
+                    console.log(res.data)
+                })
+            },
+            addScheduleFalse() {
+                console.log("点击取消")
+                Schedule.methods.addScheduleFalse()
             },
             onSubmit() {
-                console.log(this.scope.row);
-            }
+                let that = this
+                for (let i = 0; i < this.userlist.length; i++) {
+                    console.log(i)
+                    console.log(this.userlist[i])
+                    this.$axios.get("http://localhost:8080/rulezgy/addrule?name=" + that.rulename + "&deptid=" + that.userlist[i].deptId + "&userid=" + that.userlist[i].id + "&rule=" + that.userlist[i].rule+"&num="+i).then(function (res) {
+                        console.log(res.data)
+                    })
+                }
+                // this.$axios.get("http://localhost:8080/rulezgy/addrule?name="+that.rulename+"&list="+that.userlist).then(function (res) {
+                //     console.log(res.data)
+                // })
+                console.log("lalalalalal")
+                console.log(typeof that.userlist)
+                console.log(this.rulename)
+                console.log(this.userlist)
+
+                Schedule.methods.addScheduleFalse()
+            },
+            // addScheduleFalse(){
+            //     console.log("scheduleadd里的方法")
+            // }
         },
         created() {
             let that = this
@@ -246,8 +280,13 @@
             })
             this.$axios.get("http://localhost:8080/userzgy/list").then(function (res) {
                 that.userlist = res.data
+                console.log("用户列表啊啊啊啊啊啊")
                 console.log(res.data)
             })
+        },
+        components: {
+            Schedule,
+            ElForm
         }
     }
 </script>
