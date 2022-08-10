@@ -21,6 +21,18 @@ public class UserzgyController {
     @Autowired
     IUserzgyService userService;
 
+    @RequestMapping("/userlist")
+    public List<User> getUserlistByDeptnoAndRegisterlevel(int deptno,int registlevel){
+        System.out.println(deptno);
+        System.out.println(registlevel);
+        return userService.getUserlistByDeptnoAndRegisterlevel(deptno,registlevel);
+    }
+
+    @RequestMapping("/listbydeptno")
+    public List<User> getUserlistByDeptno(int deptno){
+        return userService.getUserListByDeptno(deptno);
+    }
+
     @RequestMapping("/add")
     public int addDept(User user){
         System.out.println(user.toString());
