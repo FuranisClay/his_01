@@ -182,6 +182,17 @@ const routes = [
 			name: 'refund',
 			component: () => import('../components/finance/expense_refund.vue')
 		},
+		
+		{
+			path:'/setdrugs/setdrug',
+			name:'setdrug',
+			component:()=>import('../components/setdrugs/setdrug.vue')
+		},
+		{
+			path:'/setdrugs/setsolve',
+			name:'setsolve',
+			component:()=>import('../components/setdrugs/setsolve.vue')
+		}
 
     ]
   },

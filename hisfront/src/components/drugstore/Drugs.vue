@@ -261,6 +261,7 @@
 				// this.updateRow=row
 				let that = this
 				this.$axios.get("http://localhost:8080/drugsCq/deleteById?id="+row.id).then(function(res){
+					console.log(res)
 					let drugsName=that.drugsName
 					let drugsId=that.drugsId
 					that.$axios.get("http://localhost:8080/drugsCq/list?drugsName="+drugsName+"&id="+drugsId).then(function(res){
@@ -292,7 +293,7 @@
 				let ue = this.$qs.stringify(updateRow)
 				this.$axios.get("http://localhost:8080/drugsCq/insertDrugs?"+ue).then(function(res){
 					that.$axios.get("http://localhost:8080/drugsCq/list?id=0").then(function(res){
-						// console.log(res)
+						console.log(res)
 						that.drugslist=res.data
 					})
 				})
@@ -368,7 +369,7 @@
 			created() {
 				let that=this;
 				that.$axios.get("http://localhost:8080/drugsCq/list?id=0").then(function(res){
-					// console.log(res)
+					console.log(res)
 					that.drugslist=res.data
 					that.drugslist1=that.drugslist.slice(0,7)
 				})
