@@ -9,7 +9,26 @@ public class Rule {
   private long userId;
   private String week;
   private long delMark;
+  //部门
+  private Department department;
+  //用户
+  private User user;
 
+  public Department getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(Department department) {
+    this.department = department;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 
   public long getId() {
     return id;
@@ -64,4 +83,17 @@ public class Rule {
     this.delMark = delMark;
   }
 
+  @Override
+  public String toString() {
+    return "Rule{" +
+            "id=" + id +
+            ", ruleName='" + ruleName + '\'' +
+            ", deptId=" + deptId +
+            ", userId=" + userId +
+            ", week='" + week + '\'' +
+            ", delMark=" + delMark +
+            ", department=" + department +
+            ", user=" + user +
+            '}';
+  }
 }

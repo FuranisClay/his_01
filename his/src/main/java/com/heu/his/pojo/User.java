@@ -24,6 +24,16 @@ public class User {
   private Constantitem constantitem;
   //部门信息
   private Department department;
+  //排班规则
+  private boolean[] rule = new boolean[]{false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+
+  public boolean[] getRule() {
+    return rule;
+  }
+
+  public void setRule(boolean[] rule) {
+    this.rule = rule;
+  }
 
   public Registlevel getRegistlevel() {
     return registlevel;
@@ -138,4 +148,22 @@ public class User {
     this.delMark = delMark;
   }
 
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", userName='" + userName + '\'' +
+            ", password='" + password + '\'' +
+            ", realName='" + realName + '\'' +
+            ", useType=" + useType +
+            ", docTitleId=" + docTitleId +
+            ", isScheduling='" + isScheduling + '\'' +
+            ", deptId=" + deptId +
+            ", registLeId=" + registLeId +
+            ", delMark=" + delMark +
+            ", registlevel=" + registlevel +
+            ", constantitem=" + constantitem +
+            ", department=" + department +
+            '}';
+  }
 }
