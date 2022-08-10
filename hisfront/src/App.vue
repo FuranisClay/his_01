@@ -3,13 +3,35 @@
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-	  <router-link to="/login">登陆</router-link>
-	  
-	
+      <router-link to="/login">登录</router-link>
     </nav>
-	<router-view/>
+    <router-view v-if="isRouterAlive"/>
   </div>
 </template>
+
+<script>
+  export default {
+    name:'App',
+    provide(){
+      return{
+        reload:this.reload
+      }
+    },
+    data(){
+      return{
+        isRouterAlive:true
+      }
+    },
+    methods:{
+      reload(){
+        this.isRouterAlive=false
+        this.$nextTick(function () {
+          this.isRouterAlive=true
+        })
+      }
+    }
+  }
+</script>
 
 <style lang="scss">
 #app {
@@ -32,10 +54,4 @@ nav {
     }
   }
 }
-</style>
-<style>
-	.rightside{
-		text-align:left;
-		margin-left: 0.625rem;
-	}
 </style>
