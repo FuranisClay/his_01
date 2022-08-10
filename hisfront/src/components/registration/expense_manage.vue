@@ -176,7 +176,7 @@
 					</el-form>
 					<div slot="footer" class="dialog-footer">
 						<el-button @click="changeDialogVisible = false">取 消</el-button>
-						<el-button type="primary" @click="updateregSubmit" @change="update_change">确 定</el-button>
+						<el-button type="primary" @click="updateregSubmit">确 定</el-button>
 					</div>
 				</el-dialog>
 
@@ -261,13 +261,6 @@
 						that.getregitems()
 					})
 
-			},
-			update_change(){
-				this.$notify({
-					title: '成功',
-					message: '患者信息修改成功',
-					type: 'success'
-				});
 			},
 			dopaging(currPage) {
 				this.currPage = currPage //将当前选择的页码存储到vue的全局变量里
@@ -359,11 +352,23 @@
 				if(this.register.gender ==='女'){
 					this.register.gender = 72
 				}
+				if(this.register.settleId==='自费'){
+					this.register.settleId = 1
+				}
+				if(this.register.settleId ==='市医保'){
+					this.register.settleId = 2
+				}
 				let reg = this.$qs.stringify(this.register)
 
 				this.$axios.get("http://localhost:8080/registerch/updatereg?" + reg).then(function(res) {
 					console.log(res);
 				})
+				this.onSubmit()
+				this.$notify({
+					title: '成功',
+					message: '患者信息修改成功',
+					type: 'success'
+				});
 			},
 			chargeSubmit() {
 				this.$router.push('/finance/charge')

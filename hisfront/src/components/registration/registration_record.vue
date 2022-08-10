@@ -200,6 +200,11 @@
 				this.$axios.get("http://localhost:8080/registerch/delrigist?cn="+cn).then(function(res){
 					console.log(res);
 				})
+				this.$notify({
+					title: '成功',
+					message: '患者退号成功',
+					type: 'success'
+				});
 			},
 		}
 	}

@@ -300,7 +300,7 @@
 			},
 			user_change(){
 				// console.log(this.UserID_options.length+'<<<<<<<<<<<<<<<<<!!!!!');
-				this.UserID_options.splice(0,this.UserID_options.length);
+				// this.UserID_options.splice(0,this.UserID_options.length);
 				// console.log(this.UserID_options);
 			},
 			gender_change() {
@@ -472,6 +472,7 @@
 				})
 			},
 			getUserID_options() {
+				this.UserID_options.splice(0,this.UserID_options.length);
 				console.log(this.register.deptId);
 				console.log(this.register.registLeId);
 				// this.register.visitDate = this.enderTime(this.register.visitDate)
