@@ -31,6 +31,8 @@ public class Register {
   private long visitState;
   private long phoneNumber;
 
+  public String genderName;
+
   //查询患者的性别
   private Sex sex;
   
