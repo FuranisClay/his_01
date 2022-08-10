@@ -39,6 +39,16 @@ public class UserzgyService implements IUserzgyService {
     }
 
     @Override
+    public List<User> getUserlistByDeptnoAndRegisterlevel(int deptno, int registlevel) {
+        return userzgyMapper.getUserlistByDeptnoAndRegisterlevel(deptno,registlevel);
+    }
+
+    @Override
+    public List<User> getUserListByDeptno(int deptno) {
+        return userzgyMapper.getUserListByDeptno(deptno);
+    }
+
+    @Override
     public List<User> getUserList(String name) {
         return userzgyMapper.getUserList(name);
     }
