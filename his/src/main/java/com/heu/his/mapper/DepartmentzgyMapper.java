@@ -29,7 +29,7 @@ public interface DepartmentzgyMapper {
             "</script>")
     List<Department> getDepartmentList(String string);
 
-    @Select("select ID from department where DelMark =1 order by ID desc limit 1")
+    @Select("select ID from department order by ID desc limit 1")
     int getDepartmentMaxID();
 
     @Insert("insert into department (ID,DeptCode,DeptName,DeptCategoryID,DeptType,DelMark) " +

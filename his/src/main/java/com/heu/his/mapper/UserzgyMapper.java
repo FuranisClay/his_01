@@ -37,6 +37,21 @@ public interface UserzgyMapper {
             @Result(property = "registlevel", column = "RegistLeID", one = @One(select = "com.heu.his.mapper.RegistlevelzgyMapper.getRegistlevelById"))
     })
     @Select("<script>select * from user where 1=1 and DelMark = 1 " +
+            "<if test=\"deptno>0\">and DeptID = #{deptno} </if>" +
+            "<if test=\"registlevel>0\">and RegistLeID = #{registlevel} </if>" +
+            "</script>")
+    List<User> getUserlistByDeptnoAndRegisterlevel(int deptno,int registlevel);
+
+    @Results({
+            @Result(property = "id", column = "ID", id = true),
+            @Result(property = "deptId", column = "DeptID"),
+            @Result(property = "department", column = "DeptID", one = @One(select = "com.heu.his.mapper.DepartmentzgyMapper.getDepartmentById")),
+            @Result(property = "docTitleId", column = "DocTitleID"),
+            @Result(property = "constantitem", column = "DocTitleID", one = @One(select = "com.heu.his.mapper.ConstantItemzgyMapper.getConstantItemByID")),
+            @Result(property = "registLeId", column = "RegistLeID"),
+            @Result(property = "registlevel", column = "RegistLeID", one = @One(select = "com.heu.his.mapper.RegistlevelzgyMapper.getRegistlevelById"))
+    })
+    @Select("<script>select * from user where 1=1 and DelMark = 1 " +
             "<if test=\"name!=null and name != ''\">and RealName like concat('%',#{name},'%')</if>" +
             "</script>")
     List<User> getUserList(String name);
@@ -63,7 +78,7 @@ public interface UserzgyMapper {
             "</script>")
     int deletesById(int[] arr);
 
-    @Select("select ID from user where DelMark =1 order by ID desc limit 1")
+    @Select("select ID from user order by ID desc limit 1")
     int getUserMaxID();
 
     @Insert("insert into user (ID,UserName,Password,RealName,UseType," +
