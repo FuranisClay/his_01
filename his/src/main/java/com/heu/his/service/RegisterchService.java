@@ -30,7 +30,7 @@ public class RegisterchService implements IRegisterchService {
         return registerMapper.updatereg(register);
     }
 
-    public List<Register> getRegisterListAndRL(String rn, int cn, int uid) {
+    public List<Register> getRegisterListAndRL(String rn, int cn, String uid) {
         return registerMapper.getRegisterListAndRL(rn,cn,uid);
     }
 

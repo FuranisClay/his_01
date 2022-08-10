@@ -80,7 +80,7 @@ public interface RegisterchMapper {
             "<if test=\"uid!=null and uid!=0\">and IDnumber=#{uid}</if>" +
             "</script>")
     java.util.List<Register> getRegisterListAndRL(
-            @Param(value = "rn") String rn, @Param(value = "cn") int cn,@Param(value = "uid") int uid);
+            @Param(value = "rn") String rn, @Param(value = "cn") int cn,@Param(value = "uid") String uid);
 
     /**
      * 一对多  根据挂号编号查询改编号下的多有患者

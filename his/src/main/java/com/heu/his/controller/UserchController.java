@@ -29,5 +29,5 @@ public class UserchController {
     }
     
     @RequestMapping("/list")
-    public java.util.List<User> list(int Did){return userchService.getdeptusername(Did);}
+    public java.util.List<User> list(int Did,int rid){return userchService.getdeptusername(Did,rid);}
 }

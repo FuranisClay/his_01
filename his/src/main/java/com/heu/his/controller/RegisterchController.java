@@ -30,7 +30,7 @@ public class RegisterchController {
      * @return
      */
     @RequestMapping("/list")
-    public java.util.List<Register> list(String rn,int cn,int uid){
+    public java.util.List<Register> list(String rn,int cn,String uid){
         return registerchService.getRegisterListAndRL(rn,cn,uid);
     }
 

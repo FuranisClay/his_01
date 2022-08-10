@@ -54,7 +54,7 @@ class HisApplicationTests {
 
 //        userMapper.getdeptusername(1);
 
-        registerchMapper.getRegisterListAndRL("",600600,0);
+//        registerchMapper.getRegisterListAndRL("",600600,'0');
 //        patientcostsMapper.getPatientcostsList(35);
 
 //        registerMapper.getRegistcostList("马路");

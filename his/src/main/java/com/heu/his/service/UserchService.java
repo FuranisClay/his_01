@@ -19,6 +19,6 @@ public class UserchService implements IUserchService {
     public User validate(String rn, String pwd) {
         return userMapper.validate(rn, pwd);
     }
-    public java.util.List<User> getdeptusername(int Did){return userMapper.getdeptusername(Did);}
+    public java.util.List<User> getdeptusername(int Did, int rid){return userMapper.getdeptusername(Did,rid);}
 }
 

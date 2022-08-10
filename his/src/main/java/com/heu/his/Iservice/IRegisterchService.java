@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface IRegisterchService {
 
-    java.util.List<Register> getRegisterListAndRL(String rn,int cn,int uid);
+    java.util.List<Register> getRegisterListAndRL(String rn,int cn,String uid);
     Register getRegistcostList(@Param(value = "rn") String rn);
     int addRegist(Register register);
     int delregist(int cn);

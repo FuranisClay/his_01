@@ -31,7 +31,10 @@ public interface UserchMapper {
     @Select("select * from user where ID=#{DID}")
     User getUsername(int DID);
 
-    @Select("select ID,RealName from user where ID=#{Did}")
-    java.util.List<User> getdeptusername(int Did);
+    @Select("<script>select ID,RealName from user where 1=1" +
+            "<if test=\"Did!=null and Did!=''\">and ID=#{Did}</if>" +
+            "<if test=\"rid!=null and rid!=''\">and RegistLeID=#{rid}</if>" +
+            "</script>")
+    java.util.List<User> getdeptusername(@Param(value = "Did")int Did, @Param(value = "rid")int rid);
 
 }
