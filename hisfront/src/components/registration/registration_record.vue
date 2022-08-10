@@ -195,7 +195,7 @@
 			},
 			amendSubmit(){
 				console.log(this.register);
-				let cn = this.$store.state.register.caseNumber
+				let cn = this.register.caseNumber
 				console.log(cn);
 				this.$axios.get("http://localhost:8080/registerch/delrigist?cn="+cn).then(function(res){
 					console.log(res);

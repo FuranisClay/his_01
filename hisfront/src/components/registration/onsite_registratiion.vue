@@ -27,6 +27,13 @@
 					</el-descriptions-item>
 					<el-descriptions-item>
 						<template slot="label">
+							<i class="el-icon-user"></i>
+							病历号
+						</template>
+						<el-input type="text" v-model="register.caseNumber" placeholder="请输入您的病历号"></el-input>
+					</el-descriptions-item>
+					<el-descriptions-item>
+						<template slot="label">
 							<i class="el-icon-user-solid"></i>
 							身份证
 						</template>
@@ -154,7 +161,7 @@
 							<i class="el-icon-edit"></i>
 							看诊医生
 						</template>
-						<el-select v-model="register.userId" filterable placeholder="请选择您的看诊医生" style="width: 100%;">
+						<el-select v-model="register.userId" @change="user_change" filterable placeholder="请选择您的看诊医生" style="width: 100%;">
 							<el-option v-for="item in UserID_options" :key="item.value" :label="item.label"
 								:value="item.value">
 							</el-option>
@@ -291,6 +298,11 @@
 					type: 'success'
 				});
 			},
+			user_change(){
+				// console.log(this.UserID_options.length+'<<<<<<<<<<<<<<<<<!!!!!');
+				this.UserID_options.splice(0,this.UserID_options.length);
+				// console.log(this.UserID_options);
+			},
 			gender_change() {
 				console.log(this.register.gender)
 			},
@@ -310,7 +322,7 @@
 				// // 挂号费显示
 				// getmoney(){
 				console.log(12341245);
-
+				this.register.userId = ''
 				var id = this.register.registLeId
 				console.log(id);
 				var that = this;
@@ -318,7 +330,7 @@
 					console.log(res.data);
 					that.register.money = res.data
 				})
-
+				this.getUserID_options()
 			},
 			// 清空按钮
 			clearSubmit() {
@@ -343,6 +355,12 @@
 				});
 			},
 			registerSubmit() {
+				if(this.register.gender==='男'){
+					this.register.gender = 71
+				}
+				if(this.register.gender ==='女'){
+					this.register.gender = 72
+				}
 				this.register.registerId = this.$store.state.emp.id
 				this.register.registTime = this.enderTime(this.register.registTime)
 				console.log(this.register);
@@ -387,7 +405,7 @@
 			},
 			enderTime(date) {
 				var dateee = new Date(date).toJSON();
-				return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/,
+				return new Date(+new Date(dateee)).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/,
 					'')
 			},
 			getgender_options() {
@@ -462,6 +480,8 @@
 				var did = this.register.deptId
 				var vdate = this.register.visitDate
 				var noon = this.register.Noon
+				var rid = this.register.registLeId
+				console.log(rid+'<<<<<<<<<<<<<<<');
 				var that = this;
 				this.$axios.get("http://localhost:8080/schedulingch/list?deptId=" + did + "&vdate=" + vdate + "&noon=" +
 					noon).then(function(res) {
@@ -469,11 +489,11 @@
 					for (i in res.data) {
 						console.log(res.data[i].userId)
 						var Did = res.data[i].userId
-						that.$axios.get("http://localhost:8080/User/list?Did=" + Did).then(function(re) {
-							console.log(re.data)
+						that.$axios.get("http://localhost:8080/User/list?Did=" + Did+"&rid="+rid).then(function(res) {
+							console.log(res.data)
 							that.UserID_options.push({
-								value: re.data[0].id,
-								label: re.data[0].realName
+								value: res.data[0].id,
+								label: res.data[0].realName
 							})
 							console.log(that.UserID_options);
 						})
@@ -579,9 +599,12 @@
 					var date = val.substring(6, 8);
 					var date2 = new Date(year + "-" + month + "-" + date);
 					if (date2 && date2.getMonth() == (parseInt(month) - 1)) {
-						date2 = this.enderTime(date2)
-						console.log(date2);
-						this.register.birthDate = date2
+						var year1 = date2.getFullYear(); //得到年份
+						var month1 = date2.getMonth(); //得到月份
+						var date1 = date2.getDate(); //得到日期
+						var date3 = `${year1}-${month1}-${date1}`;
+						console.log(date3);
+						this.register.birthDate = date3
 						console.log(this.register.birthDate);
 						return true;
 					}

@@ -126,9 +126,6 @@
 							</template>
 							{{register.userId}}
 						</el-descriptions-item>
-						<template slot="extra">
-							<el-button type="primary" @click="recordSubmit">退号</el-button>
-						</template>
 					</el-descriptions>
 
 
@@ -140,7 +137,7 @@
 					</h4>
 				</div>
 
-				<el-table :data="subNews" style="width: 60%">
+				<el-table :data="subNews" style="width: 80%">
 					<el-table-column prop="name" label="项目名称" width="180">
 					</el-table-column>
 					<el-table-column prop="price" label="单价" width="180">
@@ -163,14 +160,6 @@
 						<el-form-item label="姓名" :label-width="formLabelWidth">
 							<el-input v-model="register.realName" style="width: 75%;"></el-input>
 						</el-form-item>
-						<el-form-item label="性别" :label-width="formLabelWidth">
-							<el-select v-model="register.gender" @click="getgender_options" @change="gender_change"
-								placeholder="请选择您的性别" style="width: 100%;">
-								<el-option v-for="item in gender_options" :key="item.value" :label="item.label"
-									:value="item.value">
-								</el-option>
-							</el-select>
-						</el-form-item>
 						<el-form-item label="联系电话" :label-width="formLabelWidth">
 							<el-input v-model="register.phoneNumber" style="width: 75%;"></el-input>
 						</el-form-item>
@@ -187,7 +176,7 @@
 					</el-form>
 					<div slot="footer" class="dialog-footer">
 						<el-button @click="changeDialogVisible = false">取 消</el-button>
-						<el-button type="primary" @click="updateregSubmit">确 定</el-button>
+						<el-button type="primary" @click="updateregSubmit" @change="update_change">确 定</el-button>
 					</div>
 				</el-dialog>
 
@@ -235,10 +224,9 @@
 			}
 		},
 		created() {
-			this.getpatientcosts(),
-				this.clearSubmit(),
-				this.getSettleID_options(),
-				this.getgender_options()
+			this.clearSubmit(),
+			this.getSettleID_options(),
+			this.getgender_options()
 		},
 		methods: {
 			onSubmit() {
@@ -273,6 +261,13 @@
 						that.getregitems()
 					})
 
+			},
+			update_change(){
+				this.$notify({
+					title: '成功',
+					message: '患者信息修改成功',
+					type: 'success'
+				});
 			},
 			dopaging(currPage) {
 				this.currPage = currPage //将当前选择的页码存储到vue的全局变量里
@@ -312,7 +307,7 @@
 							label: res.data[i].sex
 						})
 					}
-					console.log(that.register.gender);
+					console.log(that.gender_options);
 
 				})
 			},
@@ -322,13 +317,13 @@
 				this.$axios.get("http://localhost:8080/settlrcategorych/list").then(function(res) {
 					console.log(res.data)
 					for (i in res.data) {
-						// console.log(res.data[i])
+						console.log(res.data[i])
 						that.SettleID_options.push({
 							value: res.data[i].id,
 							label: res.data[i].settleName
 						})
 					}
-					console.log(this.SettleID_options);
+					console.log(that.SettleID_options);
 
 				})
 			},
@@ -358,6 +353,12 @@
 				delete this.register.registLeId
 				delete this.register.registerId
 				delete this.register.userId
+				if(this.register.gender==='男'){
+					this.register.gender = 71
+				}
+				if(this.register.gender ==='女'){
+					this.register.gender = 72
+				}
 				let reg = this.$qs.stringify(this.register)
 
 				this.$axios.get("http://localhost:8080/registerch/updatereg?" + reg).then(function(res) {
