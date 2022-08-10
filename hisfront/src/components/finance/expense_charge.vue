@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-container>
-			<!-- <el-aside width="180px"></el-aside> -->
+			<el-aside width="180px"></el-aside>
 
 			<el-main style="text-align: left;">
 				<el-row>
@@ -50,7 +50,7 @@
 				    <el-input v-model="patientInfo.sex" :disabled="true"></el-input>
 				  </el-form-item>
 				  <el-form-item>
-					  <el-button @click="queryCost()" type="primary">确认</el-button>
+					  <el-button @click="queryCost();queryLev()" type="primary">确认</el-button>
 				  </el-form-item>
 				</el-form>
 				<el-row>
@@ -58,7 +58,7 @@
 					<el-button type="primary" @click="open()" class="el-icon-price-tag">收费结算</el-button>
 				</el-row>
 				<el-table
-				    :data="tableData"
+				    :data="newTableDate"
 				    border
 				    style="width: 100%">
 				    <el-table-column
@@ -84,7 +84,8 @@
 					<el-table-column
 					  prop="amount"
 					  label="数量"
-					  width="200">
+					  width="200"
+					  >
 					</el-table-column>
 					<el-table-column
 					  prop="createtime"
@@ -111,9 +112,30 @@
 					age: '',
 					sex: '',
 					registerid: '',
+					registerLeID: '',
 				},
+				registerLevel: [],
+				registerFee: 0,
 				price: '0',   
 				tableData: [],
+				newTableDate: [{
+					amount:'',
+					backId:'',
+					createOperId:'',
+					createtime:'',
+					deptId:'',
+					feeType:'',
+					id:'',
+					invoiceId:'',
+					itemId:'',
+					itemType:'',
+					name:'',
+					payTime:'',
+					price:'',
+					registId:'',
+					registerId:'',
+				}],
+				
 			}
 		},
 		
@@ -150,9 +172,10 @@
 					that.patientInfo.name=res.data[0].realName;
 					that.patientInfo.age=res.data[0].age;
 					that.patientInfo.sex=res.data[0].gender;
-					console.log(res.data[0].gender);
+					//console.log(res.data[0].gender);
 					that.patientInfo.id=res.data[0].idnumber;
 					that.patientInfo.registerid=res.data[0].registerId;
+					that.patientInfo.registerLeID=res.data[0].registLeId;
 				});
 			},
 			queryCost(){
@@ -164,12 +187,67 @@
 						//console.log(that.tableData[i].itemType);
 						if(that.tableData[i].itemType==1){
 							that.tableData[i].itemType="非药品";
-							console.log(that.tableData[i].itemType);
+							//console.log(that.tableData[i].itemType);
 						}
 						else{
 							that.tableData[i].itemType="药品";
 						}
 					}
+					
+					//将tableData的数据amount处理后放入newtable
+					var oldTable=that.tableData;
+					var newTable=that.newTableDate; 
+					//var count=0;
+					for(var i in oldTable){
+						var name=oldTable[i].name;
+						var amount=oldTable[i].amount;
+						//搜索newTable是否有相同名称的数据项
+						var j=0;
+						var flag=false;//无相同名称数据项
+						for( j in newTable){
+							if(name===newTable[j].name){
+								flag=true;//有相同姓名项
+								newTable[j].amount+=amount;
+								//停止搜索
+								break;
+							}
+						}
+						//如果无相同名称项，向newTable数组添加
+						if(flag==false){
+							//这里是将newTable指向oldTable原来的地址,导致oldTable 的数据将不可用
+							//newTable[count]=oldTable[i];
+							// newTable.length+=1;
+							// newTable[count].amount=oldTable[i].amount;
+							// newTable[count].backId=oldTable[i].backId;
+							// newTable[count].createOperId=oldTable[i].createOperId;
+							// newTable[count].createtime=oldTable[i].createtime;
+							// newTable[count].deptId=oldTable[i].deptId;
+							// newTable[count].feeType=oldTable[i].feeType;
+							// newTable[count].id=oldTable[i].id;
+							// newTable[count].invoiceId=oldTable[i].invoiceId;
+							// newTable[count].itemType=oldTable[i].itemType;
+							// newTable[count].name=oldTable[i].name;
+							// newTable[count].payTime=oldTable[i].payTime;
+							// newTable[count].price=oldTable[i].price;
+							// newTable[count].registId=oldTable[i].registId;
+							// newTable[count].registerId=oldTable[i].registerId;
+							let target=Object.assign({},oldTable[i] );
+							//console.log(target);
+							newTable.push(target);
+						}
+					}
+					for(var n in newTable){
+						if(newTable[n].amount==0){
+							delete newTable[n];
+						}
+					}
+				});
+			},
+			queryLev(){
+				//获取registerLevel表
+				let that=this;
+				that.$axios.get("http://localhost:8080/register/list").then(function(res){
+					that.registerLevel=res.data;
 				});
 			},
 			sum(){
@@ -179,11 +257,18 @@
 					sum+=parseFloat(this.tableData[i].price)*parseInt(this.tableData[i].amount);
 					//sum+=it.price*it.amount;
 				}
+				let id=this.patientInfo.registerLeID;
+				for( var it in this.registerLevel){
+					if(id==this.registerLevel[it].id){
+						this.registerFee=this.registerLevel[it].registFee;
+						sum+=this.registerFee;
+						break;
+					}
+				}
 				return sum;
 			},
 			open() {
-					
-					var str="本次收费金额为"+this.sum()+"元";
+					var str="本次收费金额为"+this.sum()+"元"+"(其中包含挂号费"+this.registerFee+"元)";
 			        this.$confirm(str, '收费窗口', {
 			          confirmButtonText: '确定',
 			          cancelButtonText: '取消',
