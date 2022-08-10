@@ -2,6 +2,7 @@ package com.heu.his.Iservice;
 
 import com.heu.his.pojo.Scheduling;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,5 +12,9 @@ import java.util.List;
 public interface ISchedulingzgyService {
 
     List<Scheduling> getSchedulingList(String startTime,String endTime);
+
+    int getSchedulingMaxID();
+
+    int insertScheduling(int id, Date scheddate, int deptid, int userid, String noon, int ruleid);
 
 }

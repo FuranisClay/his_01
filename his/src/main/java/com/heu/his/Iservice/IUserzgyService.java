@@ -22,6 +22,10 @@ public interface IUserzgyService {
 
     int insertUser(User user);
 
+    List<User> getUserListByDeptno(int deptno);
+
+    List<User> getUserlistByDeptnoAndRegisterlevel(int deptno,int registlevel);
+
 //    List<User> getUserListAndDept();
 
 }
