@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface PatientCostsSylMapper {
 
-    @Select("select * from patientcosts where registerid=#{registerid}")
-    java.util.List<Patientcosts> selectByRegisterID(String registerid);
+    @Select("select * from patientcosts where registid=#{registid}")
+    java.util.List<Patientcosts> selectById(String id);
 }
