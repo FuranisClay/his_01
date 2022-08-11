@@ -63,10 +63,15 @@ public interface RegisterCqMapper {
     java.util.List<Prescription> selectByRID(int id);
     @Select("select ConstantName from constantitem where id=#{id}")
     String selectGenderName(int id);
-    @Insert("insert into patientcosts(RegistID,InvoiceID,ItemID,Name,Price,Amount,DeptID,Createtime,CreateOperId,PayTime,RegisterID,FeeType)" +
+    @Insert("insert into patientcosts(RegistID,InvoiceID,ItemID,ItemType,Name,Price,Amount,DeptID,Createtime,CreateOperId,PayTime,RegisterID,FeeType)" +
             " values(#{registId},#{invoiceId},#{itemId},#{itemType},#{name},#{price},#{amount},#{deptId}" +
             ",#{createtime},#{createOperId},#{payTime},#{registerId},#{feeType})")
     int insertPatientCost(Patientcosts patientcosts);
+    @Insert("insert into checkapply(MedicalID,RegistID,ItemID,Name,CreationTime,CheckOperID,ResultOperID,RecordType) values(" +
+            "#{medicalId},#{registId},#{itemId},#{name},#{creationTime},#{checkOperId},#{resultOperId},#{recordType})")
+    int insertCheckApply(Checkapply checkapply);
+    @Select("select * from medicalrecord where RegistID=#{id}")
+    java.util.List<Medicalrecord> selectM(int id);
 
 
 }

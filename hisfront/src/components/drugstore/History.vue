@@ -118,7 +118,7 @@
 							}
 						
 							for(let i=0;i<that.drugslist.length;i++){
-								//console.log(that.drugslist[i]+">>>>")
+								console.log(that.drugslist)
 								that.$set(that.drugslist[i],"re",that.drugslist.re)
 							    //that.drugslist[i].re=that.drugslist.re
 							    // that.drugslist[i].resultTime=that.drugslist.resultTime

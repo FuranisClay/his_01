@@ -65,4 +65,11 @@ public class RegisterCqService implements IRegisterCqService {
     public int insertPatientCost(Patientcosts patientcosts){
         return registerCqMapper.insertPatientCost(patientcosts);
     };
+
+    public int insertCheckApply(Checkapply checkapply){
+        return registerCqMapper.insertCheckApply(checkapply);
+    };
+    public java.util.List<Medicalrecord> selectM(int id){
+        return registerCqMapper.selectM(id);
+    };
 }

@@ -80,5 +80,13 @@ public class RegisterCqController {
     public int insertPatientCost(Patientcosts patientcosts){
         return iRegisterCqService.insertPatientCost(patientcosts);
     };
+    @RequestMapping("/insertCheckApply")
+    public int insertCheckApply(Checkapply checkapply){
+        return iRegisterCqService.insertCheckApply(checkapply);
+    };
+    @RequestMapping("/selectM")
+    public java.util.List<Medicalrecord> selectM(int id){
+        return iRegisterCqService.selectM(id);
+    };
 }
 

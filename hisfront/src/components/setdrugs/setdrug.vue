@@ -128,6 +128,8 @@
 				Pre:{},
 				dialogVisible:false,
 				Preid:[],
+				PatientCosts:{},
+				checkApply1:{}
 			}
 		},
 		methods:{
@@ -228,7 +230,7 @@
 					let caseNumber=this.caseNumber
 					that.$axios.get("http://localhost:8080/registerCq/selectRegister?realName="+realName+"&caseNumber="+caseNumber).then(function(res){
 						that.register=res.data
-						console.log(res.data)
+						// console.log(res.data)
 						that.$axios.get("http://localhost:8080/registerCq/selectAllP").then(function(res){
 							that.Pre.id=res.data[res.data.length-1].id+1
 							that.$axios.get("http://localhost:8080/registerCq/selectPByRId?id="+that.register[0].id).then(function(res){
@@ -242,6 +244,27 @@
 											if(res.data!=1){
 												that.record=0
 											}
+											// console.log(res.data)
+											that.$axios.get("http://localhost:8080/registerCq/selectM?id="+that.register[0].id).then(function(res){
+												// console.log(res.data)
+												that.checkApply1.medicalId=res.data[0].id
+												that.checkApply1.registId=that.register[0].id
+												that.checkApply1.itemId=3
+												that.checkApply1.name="检测"
+												that.checkApply1.creationTime=that.getTime()
+												that.checkApply1.checkOperId=that.$store.state.emp.id
+												that.checkApply1.resultOperId=that.$store.state.emp.id
+												that.checkApply1.recordType=1
+												that.PatientCosts.registId=that.register[0].id
+												that.PatientCosts.invoiceId=56
+												that.$axios.get("http://localhost:8080/registerCq/selectDrugs?id="+that.register[0].id).then(function(res){
+													// console.log(res.data)
+													that.PatientCosts.itemId=res.data[0].id
+													that.PatientCosts.itemType=2
+													that.PatientCosts.name=res.data[0].drugsName
+													that.PatientCosts.price=res.data[0].drugsPrice
+												})
+											})
 										})
 									}
 									// console.log(that.Preid)
@@ -253,18 +276,44 @@
 					
 				},
 				submitDru(){
+					let that=this
+					that.PatientCosts.amount=that.Pre.amount
+					that.PatientCosts.deptId=1
+					that.PatientCosts.createtime=that.getTime()
+					that.PatientCosts.createOperId=that.$store.state.emp.id
+					that.PatientCosts.payTime=that.getTime()
+					that.PatientCosts.registerId=that.$store.state.emp.id
+					that.PatientCosts.feeType=51
+					
 					console.log(this.Pre)
+					console.log(this.checkApply1)
+					console.log(this.PatientCosts)
 					let ue = this.$qs.stringify(this.Pre)
+					let ue1 = this.$qs.stringify(this.checkApply1)
+					let ue2 = this.$qs.stringify(this.PatientCosts)
 					// console.log(">>>>>>>>>>>>>"+this.Pre.prescriptionId)
 					if(this.Pre.prescriptionId==undefined){
 						// console.log("不允许")
 						this.open()
 					}else{
 						this.$axios.get("http://localhost:8080/registerCq/insertPre?"+ue).then(function(res){
-							
+							that.$axios.get("http://localhost:8080/registerCq/insertCheckApply?"+ue1).then(function(res){
+								that.$axios.get("http://localhost:8080/registerCq/insertPatientcosts?"+ue2).then(function(res){
+									
+								})
+							})
 						})
 						this.dialogVisible=false
 					}
+				},
+				getTime() {
+				      var dateee = new Date().toJSON();
+				      
+					  return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '') 
+				    },
+				enderTime(date) {
+				  var dateee = new Date(date).toJSON();
+				  return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '') 
 				},
 				open() {
 				        this.$alert('请先开处方或选择患者!', '系统提示', {

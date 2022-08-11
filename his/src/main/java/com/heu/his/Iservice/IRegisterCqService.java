@@ -24,5 +24,7 @@ public interface IRegisterCqService {
     java.util.List<Prescriptiondetailed> selectAllP();
     java.util.List<Prescription> selectByRID(int id);
     int insertPatientCost(Patientcosts patientcosts);
+    int insertCheckApply(Checkapply checkapply);
+    java.util.List<Medicalrecord> selectM(int id);
 
 }
