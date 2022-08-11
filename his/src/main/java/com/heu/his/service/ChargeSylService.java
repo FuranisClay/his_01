@@ -19,8 +19,8 @@ public class ChargeSylService implements IChargeSylService {
     PatientCostsSylMapper patientCostsSylMapper;
 
     @Override
-    public List<Patientcosts> selectByRegisterID(String registerid) {
-        return patientCostsSylMapper.selectByRegisterID(registerid);
+    public List<Patientcosts> selectById(String id) {
+        return patientCostsSylMapper.selectById(id);
     }
 
     @Override
