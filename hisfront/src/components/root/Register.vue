@@ -169,6 +169,7 @@
     import {pinyin} from '../../../src/chineseTurnPinyin.js'
 
     export default {
+        inject:['reload'],
         data() {
             return {
                 currentPage: 1,

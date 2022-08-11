@@ -198,6 +198,7 @@
     import {makeDeptType} from '../../../src/TypeFormat'
 
     export default {
+        inject:['reload'],
         data() {
             return {
                 currentPage: 1,

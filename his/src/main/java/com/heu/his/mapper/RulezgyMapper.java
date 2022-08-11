@@ -37,7 +37,7 @@ public interface RulezgyMapper {
 
     @Insert("insert into rule (ID,RuleName,DeptID,UserID,Week,DelMark) " +
             "values (#{id},#{ruleName},#{deptid},#{userid},#{week},1)")
-    int insertRule(int id,String ruleName,int deptid,int userid,String week);
+    int insertRule(@Param("id") int id,@Param("ruleName") String ruleName,@Param("deptid") int deptid,@Param("userid") int userid,@Param("week") String week);
 
 
 }

@@ -25,13 +25,13 @@ public interface SchedulingzgyMapper {
             ">and SchedDate between #{startTime} and #{endTime} </if>" +
             "order by SchedDate,ID" +
             "</script>")
-    List<Scheduling> getSchedulingList(String startTime, String endTime);
+    List<Scheduling> getSchedulingList(@Param("startTime") String startTime,@Param("endTime") String endTime);
 
     @Select("select ID from scheduling order by ID desc limit 1")
     int getSchedulingMaxID();
 
     @Insert("insert into scheduling (ID,SchedDate,DeptID,UserID,Noon,RuleID,DelMark) " +
             "values (#{id},#{scheddate},#{deptid},#{userid},#{noon},#{ruleid},1)")
-    int insertScheduling(int id, Date scheddate, int deptid, int userid, String noon, int ruleid);
+    int insertScheduling(@Param("id") int id,@Param("scheddate") Date scheddate,@Param("deptid") int deptid,@Param("userid") int userid,@Param("noon") String noon,@Param("ruleid") int ruleid);
 
 }

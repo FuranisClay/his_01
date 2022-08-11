@@ -40,7 +40,7 @@ public interface UserzgyMapper {
             "<if test=\"deptno>0\">and DeptID = #{deptno} </if>" +
             "<if test=\"registlevel>0\">and RegistLeID = #{registlevel} </if>" +
             "</script>")
-    List<User> getUserlistByDeptnoAndRegisterlevel(int deptno,int registlevel);
+    List<User> getUserlistByDeptnoAndRegisterlevel(@Param("deptno") int deptno,@Param("registlevel") int registlevel);
 
     @Results({
             @Result(property = "id", column = "ID", id = true),
@@ -57,7 +57,7 @@ public interface UserzgyMapper {
     List<User> getUserList(String name);
 
     @Select("select * from user where DeptID = #{deptno}")
-    List<User> getUserListByDeptno(int deptno);
+    List<User> getUserListByDeptno(@Param("deptno") int deptno);
 
     @Select("select * from user where ID=#{id}")
     User getUserByID(int id);
