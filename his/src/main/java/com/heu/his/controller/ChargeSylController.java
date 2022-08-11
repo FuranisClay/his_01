@@ -24,8 +24,8 @@ public class ChargeSylController {
         return chargeService.selectByNameNumber(realName,caseNumber);
     }
 
-    @RequestMapping("/selectByRegisterid")
-    public java.util.List<Patientcosts> selectByRegisterID(@Param("registerid")String registerid){
-        return chargeService.selectByRegisterID(registerid);
+    @RequestMapping("/selectById")
+    public java.util.List<Patientcosts> selectByID(@Param("registid")String id){
+        return chargeService.selectById(id);
     }
 }
