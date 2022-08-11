@@ -34,9 +34,13 @@ class HisApplicationTests {
 
     @Autowired
     SchedulingchMapper schedulingchMapper;
+
+    @Autowired
+    SchedulingzgyMapper schedulingzgyMapper;
     
     @Test
     void contextLoads() {
+        schedulingzgyMapper.getSchedulingList("","");
 
 //        schedulingchMapper.getusernamelist(1,"2022-08-07","上午");
 

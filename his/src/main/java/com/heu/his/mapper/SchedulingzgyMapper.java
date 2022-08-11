@@ -25,7 +25,7 @@ public interface SchedulingzgyMapper {
             ">and SchedDate between #{startTime} and #{endTime} </if>" +
             "order by SchedDate,ID" +
             "</script>")
-    List<Scheduling> getSchedulingList(String startTime, String endTime);
+    List<Scheduling> getSchedulingList(@Param("startTime") String startTime,@Param("endTime") String endTime);
 
     @Select("select ID from scheduling order by ID desc limit 1")
     int getSchedulingMaxID();
