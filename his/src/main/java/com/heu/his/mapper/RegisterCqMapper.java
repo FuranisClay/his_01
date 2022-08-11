@@ -63,4 +63,10 @@ public interface RegisterCqMapper {
     java.util.List<Prescription> selectByRID(int id);
     @Select("select ConstantName from constantitem where id=#{id}")
     String selectGenderName(int id);
+    @Insert("insert into patientcosts(RegistID,InvoiceID,ItemID,Name,Price,Amount,DeptID,Createtime,CreateOperId,PayTime,RegisterID,FeeType)" +
+            " values(#{registId},#{invoiceId},#{itemId},#{itemType},#{name},#{price},#{amount},#{deptId}" +
+            ",#{createtime},#{createOperId},#{payTime},#{registerId},#{feeType})")
+    int insertPatientCost(Patientcosts patientcosts);
+
+
 }

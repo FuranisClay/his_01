@@ -61,4 +61,8 @@ public class RegisterCqService implements IRegisterCqService {
     public java.util.List<Prescription> selectByRID(int id){
         return registerCqMapper.selectByRID(id);
     };
+
+    public int insertPatientCost(Patientcosts patientcosts){
+        return registerCqMapper.insertPatientCost(patientcosts);
+    };
 }

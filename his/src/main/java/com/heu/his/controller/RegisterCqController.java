@@ -76,5 +76,9 @@ public class RegisterCqController {
     public java.util.List<Prescription> selectByRID(int id){
         return iRegisterCqService.selectByRID(id);
     };
+    @RequestMapping("/insertPatientcosts")
+    public int insertPatientCost(Patientcosts patientcosts){
+        return iRegisterCqService.insertPatientCost(patientcosts);
+    };
 }
 
