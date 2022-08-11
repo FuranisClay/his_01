@@ -67,8 +67,8 @@ public interface RegisterCqMapper {
             " values(#{registId},#{invoiceId},#{itemId},#{itemType},#{name},#{price},#{amount},#{deptId}" +
             ",#{createtime},#{createOperId},#{payTime},#{registerId},#{feeType})")
     int insertPatientCost(Patientcosts patientcosts);
-    @Insert("insert into checkapply(MedicalID,RegistID,ItemID,Name,CreationTime,CheckOperID,ResultOperID,RecordType) values(" +
-            "#{medicalId},#{registId},#{itemId},#{name},#{creationTime},#{checkOperId},#{resultOperId},#{recordType})")
+    @Insert("insert into checkapply(MedicalID,RegistID,ItemID,Name,CreationTime,CheckOperID,ResultOperID,RecordType,ResultTime) values(" +
+            "#{medicalId},#{registId},#{itemId},#{name},#{creationTime},#{checkOperId},#{resultOperId},#{recordType},#{resultTime})")
     int insertCheckApply(Checkapply checkapply);
     @Select("select * from medicalrecord where RegistID=#{id}")
     java.util.List<Medicalrecord> selectM(int id);

@@ -255,6 +255,7 @@
 												that.checkApply1.checkOperId=that.$store.state.emp.id
 												that.checkApply1.resultOperId=that.$store.state.emp.id
 												that.checkApply1.recordType=1
+												that.checkApply1.resultTime=that.getTime()
 												that.PatientCosts.registId=that.register[0].id
 												that.PatientCosts.invoiceId=56
 												that.$axios.get("http://localhost:8080/registerCq/selectDrugs?id="+that.register[0].id).then(function(res){
