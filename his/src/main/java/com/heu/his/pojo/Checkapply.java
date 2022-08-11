@@ -25,15 +25,15 @@ public class Checkapply {
   private long state;
   private long recordType;
 
-  private java.util.List<Fmeditem> fmeditems;
-
-  public List<Fmeditem> getFmeditems() {
-    return fmeditems;
-  }
-
-  public void setFmeditems(List<Fmeditem> fmeditems) {
-    this.fmeditems = fmeditems;
-  }
+//  private java.util.List<Fmeditem> fmeditems;
+//
+//  public List<Fmeditem> getFmeditems() {
+//    return fmeditems;
+//  }
+//
+//  public void setFmeditems(List<Fmeditem> fmeditems) {
+//    this.fmeditems = fmeditems;
+//  }
 
   @Override
   public String toString() {
