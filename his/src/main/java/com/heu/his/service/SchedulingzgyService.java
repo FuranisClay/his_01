@@ -25,8 +25,8 @@ public class SchedulingzgyService implements ISchedulingzgyService {
     }
 
     @Override
-    public int insertScheduling(int id, Date scheddate, int deptid, int userid, String noon, int ruleid) {
-        return schedulingzgyMapper.insertScheduling(id,scheddate,deptid,userid,noon,ruleid);
+    public int insertScheduling(Date scheddate, int deptid, int userid, String noon, int ruleid) {
+        return schedulingzgyMapper.insertScheduling(scheddate,deptid,userid,noon,ruleid);
     }
 
     @Override

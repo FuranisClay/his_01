@@ -49,7 +49,7 @@ public class SchedulingzgyController {
                         num++;
                     }
                     id++;
-                    schedulingService.insertScheduling(id, date, deptid, userid, non, ruleid);
+                    schedulingService.insertScheduling(date, deptid, userid, non, ruleid);
                 }
             }
         }

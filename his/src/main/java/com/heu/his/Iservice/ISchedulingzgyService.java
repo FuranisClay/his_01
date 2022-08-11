@@ -15,6 +15,6 @@ public interface ISchedulingzgyService {
 
     int getSchedulingMaxID();
 
-    int insertScheduling(int id, Date scheddate, int deptid, int userid, String noon, int ruleid);
+    int insertScheduling(Date scheddate, int deptid, int userid, String noon, int ruleid);
 
 }
