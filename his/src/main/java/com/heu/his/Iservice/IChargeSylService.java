@@ -8,5 +8,5 @@ public interface IChargeSylService {
 
     java.util.List<Register> selectByNameNumber(@Param("realName") String realName, @Param("caseNumber") String caseNumber);
 
-    java.util.List<Patientcosts> selectByRegisterID(@Param("registerid")String registerid);
+    java.util.List<Patientcosts> selectById(@Param("id")String id);
 }
