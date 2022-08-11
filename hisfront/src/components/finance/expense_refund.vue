@@ -174,14 +174,14 @@
 					that.patientInfo.sex=res.data[0].gender;
 					//console.log(res.data[0].gender);
 					that.patientInfo.id=res.data[0].idnumber;
-					that.patientInfo.registerid=res.data[0].registerId;
+					that.patientInfo.registerid=res.data[0].id;
 					that.patientInfo.registerLeID=res.data[0].registLeId;
 				});
 			},
 			queryCost(){
-				let registerid=this.patientInfo.registerid;
+				let id=this.patientInfo.registerid;
 				let that=this;
-				that.$axios.get("http://localhost:8080/charge/selectByRegisterid?registerid="+registerid).then(function(res){
+				that.$axios.get("http://localhost:8080/charge/selectById?id="+id).then(function(res){
 					that.tableData=res.data;
 					for(var i in that.tableData){
 						//console.log(that.tableData[i].itemType);
@@ -261,7 +261,7 @@
 				for( var it in this.registerLevel){
 					if(id==this.registerLevel[it].id){
 						this.registerFee=this.registerLevel[it].registFee;
-						sum+=this.registerFee;
+						//sum+=this.registerFee;   //不再单独添加挂号费
 						break;
 					}
 				}
