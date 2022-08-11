@@ -59,7 +59,8 @@
 				record:1,
 				checkApply:[],
 				Prescription:{},
-				Medical:{}
+				Medical:{},
+				checkApply1:{}
 			}
 		},
 		methods:{
@@ -115,7 +116,23 @@
 						let ue = that.$qs.stringify(that.Medical)
 						let ue1 = that.$qs.stringify(that.Prescription)
 						that.$axios.get("http://localhost:8080/registerCq/insertPr?"+ue1).then(function(res){
-							
+							that.$axios.get("http://localhost:8080/registerCq/selectM?id="+that.register[0].id).then(function(res){
+								// console.log(res.data)
+								that.checkApply1.medicalId=res.data[0].id
+								that.checkApply1.registId=that.register[0].id
+								that.checkApply1.itemId=3
+								that.checkApply1.name="检测"
+								that.checkApply1.creationTime=that.getTime()
+								that.checkApply1.checkOperId=that.$store.state.emp.id
+								that.checkApply1.resultOperId=that.$store.state.emp.id
+								that.checkApply1.recordType=1
+								that.checkApply1.resultTime=that.getTime()
+								console.log(that.checkApply1)
+								let ue1 = that.$qs.stringify(that.checkApply1)
+									that.$axios.get("http://localhost:8080/registerCq/insertCheckApply?"+ue1).then(function(res){
+										
+										})
+								})
 						})
 						that.$axios.get("http://localhost:8080/registerCq/insertMedical?"+ue).then(function(res){
 							

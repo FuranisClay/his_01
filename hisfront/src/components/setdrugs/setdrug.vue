@@ -129,7 +129,7 @@
 				dialogVisible:false,
 				Preid:[],
 				PatientCosts:{},
-				checkApply1:{}
+				// checkApply1:{}
 			}
 		},
 		methods:{
@@ -245,27 +245,15 @@
 												that.record=0
 											}
 											// console.log(res.data)
-											that.$axios.get("http://localhost:8080/registerCq/selectM?id="+that.register[0].id).then(function(res){
-												// console.log(res.data)
-												that.checkApply1.medicalId=res.data[0].id
-												that.checkApply1.registId=that.register[0].id
-												that.checkApply1.itemId=3
-												that.checkApply1.name="检测"
-												that.checkApply1.creationTime=that.getTime()
-												that.checkApply1.checkOperId=that.$store.state.emp.id
-												that.checkApply1.resultOperId=that.$store.state.emp.id
-												that.checkApply1.recordType=1
-												that.checkApply1.resultTime=that.getTime()
 												that.PatientCosts.registId=that.register[0].id
 												that.PatientCosts.invoiceId=56
-												that.$axios.get("http://localhost:8080/registerCq/selectDrugs?id="+that.register[0].id).then(function(res){
+												that.$axios.get("http://localhost:8080/drugsCq/list?id="+row.id).then(function(res){
 													// console.log(res.data)
 													that.PatientCosts.itemId=res.data[0].id
 													that.PatientCosts.itemType=2
 													that.PatientCosts.name=res.data[0].drugsName
 													that.PatientCosts.price=res.data[0].drugsPrice
 												})
-											})
 										})
 									}
 									// console.log(that.Preid)
@@ -286,11 +274,11 @@
 					that.PatientCosts.registerId=that.$store.state.emp.id
 					that.PatientCosts.feeType=51
 					
-					console.log(this.Pre)
-					console.log(this.checkApply1)
-					console.log(this.PatientCosts)
+					// console.log(this.Pre)
+					// console.log(this.checkApply1)
+					// console.log(this.PatientCosts)
 					let ue = this.$qs.stringify(this.Pre)
-					let ue1 = this.$qs.stringify(this.checkApply1)
+					
 					let ue2 = this.$qs.stringify(this.PatientCosts)
 					// console.log(">>>>>>>>>>>>>"+this.Pre.prescriptionId)
 					if(this.Pre.prescriptionId==undefined){
@@ -298,11 +286,11 @@
 						this.open()
 					}else{
 						this.$axios.get("http://localhost:8080/registerCq/insertPre?"+ue).then(function(res){
-							that.$axios.get("http://localhost:8080/registerCq/insertCheckApply?"+ue1).then(function(res){
+							
 								that.$axios.get("http://localhost:8080/registerCq/insertPatientcosts?"+ue2).then(function(res){
 									
 								})
-							})
+
 						})
 						this.dialogVisible=false
 					}
